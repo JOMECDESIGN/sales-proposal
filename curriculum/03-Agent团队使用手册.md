@@ -22,6 +22,22 @@
 
 ---
 
+## 角色 → 定义文件(可点名调用)
+
+每个 Agent 的完整人设在仓库根目录,需要调用时直接引用对应文件:
+
+| 角色 | 定义文件(根目录) |
+|---|---|
+| 🛠️ Sales Engineer | `sales-engineer.md` |
+| 🗺️ Account Strategist | `sales-account-strategist.md` |
+| 🏹 Proposal Strategist | `sales-proposal-strategist (1).md` |
+| 🧭 Product Manager | `product-manager.md` |
+| 📐 UX Architect | `design-ux-architect.md` |
+| 🐑 Project Shepherd | `project-management-project-shepherd (1).md` |
+| 🏋️ Sales Coach | `sales-coach.md` |
+
+---
+
 ## 🛠️ Sales Engineer · 售前工程师
 
 **它是谁**:技术发现、Demo 设计、POC 范围、竞争对照、把"产品能力"翻译成"业务结果"的专家。
