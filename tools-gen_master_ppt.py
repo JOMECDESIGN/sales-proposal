@@ -35,6 +35,17 @@ def prep_ship():
     im.crop((l,t,l+nw,t+nh)).save('/tmp/assets/ship_crop.jpg',quality=88)
 prep_ship()
 
+def crop_ar(src,dst,ar,q=90):
+    if not os.path.exists(src): return False
+    im=Image.open(src).convert('RGB'); w,h=im.size
+    if w/h>ar: nw=int(h*ar); nh=h
+    else: nw=w; nh=int(w/ar)
+    l=(w-nw)//2; t=(h-nh)//2; im.crop((l,t,l+nw,t+nh)).save(dst,quality=q); return True
+# iX-2024 红点座舱 → NICE概念页(横构图)
+crop_ar('/tmp/pdfimg/jomec_p37_576.jpeg','/tmp/assets/ix.jpg',3.7/2.05)
+# JoySpace+ 座舱 → 案例页横幅
+crop_ar('/tmp/pdfimg/jomec_p36_572.jpeg','/tmp/assets/joy.jpg',4.1/1.45)
+
 prs=Presentation(); prs.slide_width=Inches(10); prs.slide_height=Inches(5.625)
 BL=prs.slide_layouts[6]
 
@@ -389,10 +400,13 @@ fe=['可进入 — 支持 4 人同时试乘','可试乘 — 4 套零重力座椅
 for i,f in enumerate(fe):
     y=1.95+i*0.44; rect(s,0.78,y+0.05,0.12,0.12,fill=[BLUE,CYAN,LILAC,BLUE,CYAN][i])
     txt(s,1.02,y,4.4,0.4,[[(f,CN,9.5,False,BODY)]])
-ph=rect(s,5.75,1.2,3.7,3.0,fill=PANEL,line=CLINE,sh=MSO_SHAPE.ROUNDED_RECTANGLE,adj=0.05); shadow(ph,blur=50000,dist=16000,alpha=82000)
-circ(s,7.6,2.35,0.7,RGBColor(0xC8,0xD2,0xE2),label='',icon='car',lcolor=WHITE)
-txt(s,5.75,2.85,3.7,0.4,[[('〔 体验舱效果图占位 〕',CN,11,True,MUTE)]],al=CT)
-txt(s,5.75,3.25,3.7,0.3,[[('替换为造型渲染图',CN,8.5,False,MUTE)]],al=CT)
+if os.path.exists('/tmp/assets/ix.jpg'):
+    ph=s.shapes.add_picture('/tmp/assets/ix.jpg',Inches(5.75),Inches(1.2),Inches(3.7),Inches(2.05)); shadow(ph,blur=55000,dist=18000,alpha=78000)
+    txt(s,5.75,3.32,3.7,0.32,[[('卓迈 iX-2024 红点奖座舱',CN,9,True,BLUE)]],al=CT)
+    txt(s,5.75,3.66,3.7,0.5,[[('同类获奖座舱示意 · 待替换为 NICE 专属渲染',CN,8,False,MUTE)]],al=CT,ls=1.1)
+else:
+    ph=rect(s,5.75,1.2,3.7,3.0,fill=PANEL,line=CLINE,sh=MSO_SHAPE.ROUNDED_RECTANGLE,adj=0.05); shadow(ph)
+    txt(s,5.75,2.85,3.7,0.4,[[('〔 体验舱效果图占位 〕',CN,11,True,MUTE)]],al=CT)
 bottom(s,'1:1 可进入 · 可试乘 · 可交互 · 可循环演示 · 可持续迭代')
 cfoot(s,P[0])
 
@@ -494,10 +508,11 @@ cfoot(s,P[0])
 # ============ 24 重点案例(船舶实拍)
 s,_=slide(WHITE); chead(s,pg(),'重点案例:JoySpace+ 与 船舶智慧驾驶舱','FLAGSHIP CASES')
 ccard(s,0.55,1.2,4.4,3.0,topbar=BLUE)
-txt(s,0.8,1.38,4.0,0.4,[[('JoySpace+ × 均胜电子',CN,12.5,True,TITLED)]])
-txt(s,0.8,1.8,4.0,0.32,[[('沉浸式智能座舱 · 头部 Tier1 共创范式',CN,8.5,True,BLUE)]])
-for i,f in enumerate(['赛博机能美学·连续性光导','再生涤纶环保选材','天空之镜水晶极光·飞控旋钮·AI智慧体','折叠方向盘·电子后视镜·星空顶篷']):
-    y=2.22+i*0.45; rect(s,0.8,y+0.05,0.11,0.11,fill=CYAN); txt(s,1.0,y,3.85,0.4,[[(f,CN,8.5,False,BODY)]])
+if os.path.exists('/tmp/assets/joy.jpg'):
+    jp=s.shapes.add_picture('/tmp/assets/joy.jpg',Inches(5.2 if False else 0.7),Inches(1.32),Inches(4.1),Inches(1.45)); shadow(jp,alpha=80000)
+txt(s,0.8,2.86,4.0,0.32,[[('JoySpace+ × 均胜电子',CN,12,True,TITLED)]])
+for i,f in enumerate(['沉浸式智能座舱·头部Tier1共创范式','赛博机能美学·天空之镜水晶极光·AI智慧体','折叠方向盘·电子后视镜·星空顶篷']):
+    y=3.26+i*0.32; rect(s,0.8,y+0.04,0.1,0.1,fill=CYAN); txt(s,1.0,y,3.85,0.32,[[(f,CN,8,False,BODY)]])
 ccard(s,5.05,1.2,4.4,3.0,topbar=CYAN)
 if os.path.exists('/tmp/assets/ship_crop.jpg'):
     pic=s.shapes.add_picture('/tmp/assets/ship_crop.jpg',Inches(5.2),Inches(1.32),Inches(4.1),Inches(1.5)); shadow(pic,alpha=80000)
