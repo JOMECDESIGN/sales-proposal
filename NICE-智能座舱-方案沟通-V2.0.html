@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NICE 智能座舱 — 体验舱整包方案沟通 V2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e1a;--bg2:#0f1525;--bg3:#161d30;--card:#1a2238;--card2:#1e2840;
+    --border:#2a3550;--border2:#3a4a6a;--accent:#3b82f6;--accent2:#60a5fa;--accent3:#93c5fd;
+    --teal:#14b8a6;--teal2:#2dd4bf;--amber:#f59e0b;--amber2:#fbbf24;--rose:#f43f5e;--rose2:#fb7185;
+    --violet:#8b5cf6;--violet2:#a78bfa;--green:#22c55e;--green2:#4ade80;
+    --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans SC','Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+  /* NAV */
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,14,26,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;height:58px;gap:4px}
+  .nav-logo{font-weight:700;font-size:15px;color:var(--accent2);margin-right:20px;letter-spacing:.5px;white-space:nowrap}
+  .nav-logo span{color:var(--text3);font-weight:300}
+  .nav-links{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-btn{background:none;border:none;color:var(--text2);font-family:'Noto Sans SC',sans-serif;font-size:13px;padding:6px 11px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all .2s}
+  .nav-btn:hover{background:var(--card);color:var(--text)}
+  .nav-btn.active{background:var(--accent);color:#fff;font-weight:500}
+  .nav-ver{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;white-space:nowrap;margin-left:8px}
+  /* PAGE */
+  .page{display:none;padding-top:78px;min-height:100vh}
+  .page.active{display:block;animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .page-container{max-width:1180px;margin:0 auto;padding:0 28px 72px}
+  .page-header{padding:36px 0 28px;border-bottom:1px solid var(--border);margin-bottom:36px}
+  .page-tag{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-family:'JetBrains Mono',monospace}
+  .page-title{font-size:30px;font-weight:900;line-height:1.2;margin-bottom:12px}
+  .page-subtitle{font-size:15px;color:var(--text2);line-height:1.65;max-width:760px}
+  /* CARDS / GRID */
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px}
+  .card-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:900px){.grid-3,.grid-4{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+  .stat-label{font-size:12px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+  .stat-value{font-size:24px;font-weight:700;line-height:1.05}
+  .stat-sub{font-size:12px;color:var(--text2);margin-top:5px}
+  .section-title{font-size:19px;font-weight:700;margin:38px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+  .section-title::before{content:'// ';color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:13px}
+  /* BADGE */
+  .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.5px}
+  .badge-A{background:rgba(239,68,68,.15);color:var(--rose2);border:1px solid rgba(239,68,68,.3)}
+  .badge-B{background:rgba(245,158,11,.15);color:var(--amber2);border:1px solid rgba(245,158,11,.3)}
+  .badge-C{background:rgba(59,130,246,.15);color:var(--accent3);border:1px solid rgba(59,130,246,.3)}
+  .badge-green{background:rgba(34,197,94,.12);color:var(--green2);border:1px solid rgba(34,197,94,.25)}
+  .badge-violet{background:rgba(139,92,246,.12);color:var(--violet2);border:1px solid rgba(139,92,246,.25)}
+  .badge-teal{background:rgba(20,184,166,.12);color:var(--teal2);border:1px solid rgba(20,184,166,.25)}
+  /* TABLE */
+  .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);white-space:nowrap}
+  td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.5}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:rgba(59,130,246,.04)}
+  .proto-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600;background:rgba(59,130,246,.15);color:var(--accent3);border:1px solid rgba(59,130,246,.2)}
+  .info-block{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:13px 16px;margin:12px 0;font-size:13px;color:var(--text2);line-height:1.7}
+  .info-block.warn{border-left-color:var(--amber)}.info-block.danger{border-left-color:var(--rose)}.info-block.success{border-left-color:var(--green)}
+  .info-block strong{color:var(--text)}
+  .highlight-box{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(139,92,246,.1));border:1px solid rgba(59,130,246,.3);border-radius:12px;padding:22px;margin:18px 0}
+  .step-list{list-style:none}
+  .step-list li{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2);line-height:1.5}
+  .step-list li:last-child{border-bottom:none}
+  .step-num{min-width:22px;height:22px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px}
+  .scene-card{border-radius:14px;border:1px solid var(--border);overflow:hidden;background:var(--card);margin-bottom:22px}
+  .scene-header{padding:18px 22px 14px;background:linear-gradient(135deg,var(--bg3),var(--card2));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px}
+  .scene-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:21px}
+  .scene-num{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text3);font-weight:600}
+  .scene-name{font-size:17px;font-weight:700}
+  .scene-body{padding:18px 22px}
+  /* HERO / EXEC */
+  .hero{text-align:center;padding:54px 0 36px}
+  .hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;font-family:'JetBrains Mono',monospace}
+  .hero-title{font-size:48px;font-weight:900;line-height:1.1;margin-bottom:16px;background:linear-gradient(135deg,#e2e8f0,#60a5fa,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-size:17px;color:var(--text2);max-width:660px;margin:0 auto 28px;line-height:1.6}
+  .hero-meta{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;font-size:13px;color:var(--text3)}
+  .hero-meta span{display:flex;align-items:center;gap:6px}.hero-meta strong{color:var(--text2)}
+  .commit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0}
+  @media(max-width:900px){.commit-grid,.quick-nav{grid-template-columns:1fr 1fr!important}}
+  .quick-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:36px 0}
+  .qn-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;cursor:pointer;transition:all .2s;text-align:left}
+  .qn-card:hover{border-color:var(--accent);background:var(--card2);transform:translateY(-2px)}
+  .qn-icon{font-size:26px;margin-bottom:10px}.qn-title{font-size:14px;font-weight:600;margin-bottom:4px}.qn-desc{font-size:12px;color:var(--text2);line-height:1.5}
+  /* TOPOLOGY DIAGRAM */
+  .topo{display:flex;flex-direction:column;gap:10px;margin:8px 0 4px}
+  .topo-band{border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;background:var(--card)}
+  .topo-band .lyr{font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace}
+  .topo-nodes{display:flex;gap:8px;flex-wrap:wrap}
+  .node{background:var(--card2);border:1px solid var(--border2);border-radius:7px;padding:6px 11px;font-size:12px;color:var(--text);white-space:nowrap}
+  .node.dc{background:rgba(139,92,246,.16);border-color:var(--violet)}
+  .node.safe{background:rgba(244,63,94,.14);border-color:var(--rose)}
+  .arrow-down{text-align:center;color:var(--text3);font-size:15px;line-height:1}
+  .can-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  @media(max-width:900px){.can-cols{grid-template-columns:1fr 1fr}.topo-band{grid-template-columns:1fr}}
+  .can-col{border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--bg3)}
+  .can-head{padding:7px 10px;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff}
+  .can-body{padding:8px;display:flex;flex-direction:column;gap:5px}
+  .can-body .n{font-size:11px;color:var(--text2);background:var(--card);border:1px solid var(--border);border-radius:5px;padding:4px 7px;line-height:1.3}
+  .safe-rail{border:1px dashed var(--rose);border-radius:10px;padding:12px 14px;background:rgba(244,63,94,.05)}
+  /* POWER TREE */
+  .pwr{display:grid;grid-template-columns:140px 1fr;gap:10px;align-items:start}
+  @media(max-width:700px){.pwr{grid-template-columns:1fr}}
+  .pwr-src{background:rgba(34,197,94,.1);border:1px solid var(--green);border-radius:9px;padding:12px;font-size:12px;text-align:center;align-self:center}
+  .pwr-rails{display:flex;flex-direction:column;gap:8px}
+  .pwr-rail{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center;border:1px solid var(--border);border-radius:8px;padding:9px 11px;background:var(--card)}
+  .pwr-v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px}
+  .pwr-load{font-size:12px;color:var(--text2);line-height:1.4}
+  /* GANTT */
+  .gantt-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--bg3)}
+  .gantt{min-width:920px;font-size:11px}
+  .gantt-head,.gantt-row{display:grid;grid-template-columns:130px repeat(30,1fr)}
+  .gantt-head>div{padding:6px 2px;text-align:center;color:var(--text3);font-family:'JetBrains Mono',monospace;border-bottom:1px solid var(--border);border-left:1px solid rgba(42,53,80,.5)}
+  .gantt-head>div:first-child{text-align:left;padding-left:10px;border-left:none}
+  .gantt-month{display:grid;grid-template-columns:130px repeat(30,1fr);background:var(--bg2)}
+  .gantt-month>div{padding:5px 2px;text-align:center;font-size:10px;color:var(--accent2);border-left:1px solid rgba(42,53,80,.4)}
+  .gantt-month>div:first-child{border-left:none}
+  .gantt-row{align-items:center;border-bottom:1px solid rgba(42,53,80,.45);min-height:30px}
+  .gantt-row .lbl{padding:5px 10px;font-size:12px;color:var(--text);font-weight:500}
+  .gbar{height:13px;border-radius:4px;margin:0 1px;align-self:center}
+  .gms{height:0;position:relative}
+  .gms .dia{position:relative;width:11px;height:11px;background:var(--amber);transform:rotate(45deg);margin:0 auto;border:1.5px solid var(--bg)}
+  .ms-tip{font-size:10px;color:var(--amber2);text-align:center;margin-top:14px;font-family:'JetBrains Mono',monospace;white-space:nowrap}
+  .checklist{list-style:none}
+  .checklist li{display:flex;gap:10px;padding:7px 0;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border);align-items:flex-start}
+  .checklist li:last-child{border-bottom:none}
+  .checklist li::before{content:'✓';color:var(--green2);font-size:12px;flex-shrink:0;margin-top:1px}
+  .flow-col{display:flex;flex-direction:column;gap:7px}
+  .flow-box{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-size:12px;color:var(--text);text-align:center}
+  .foot{margin-top:48px;padding-top:18px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+  @media(max-width:768px){.navbar{padding:0 14px}.page-container{padding:0 14px 48px}.hero-title{font-size:30px}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo">NICE <span>智能座舱体验舱</span></div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="show('exec',this)">★ 执行摘要</button>
+    <button class="nav-btn" onclick="show('over',this)">项目概览</button>
+    <button class="nav-btn" onclick="show('scenes',this)">展示场景</button>
+    <button class="nav-btn" onclick="show('arch',this)">系统架构 & 电气</button>
+    <button class="nav-btn" onclick="show('safe',this)">安全 & 可靠性</button>
+    <button class="nav-btn" onclick="show('func',this)">功能 & 甲乙供边界</button>
+    <button class="nav-btn" onclick="show('hw',this)">硬件 & 机构</button>
+    <button class="nav-btn" onclick="show('sw',this)">软件 & HMI</button>
+    <button class="nav-btn" onclick="show('plan',this)">项目计划</button>
+    <button class="nav-btn" onclick="show('quality',this)">质量 & 保障</button>
+    <button class="nav-btn" onclick="show('risk',this)">风险管理</button>
+  </div>
+  <div class="nav-ver">V2.0 · 依据 Tech&nbsp;Spec&nbsp;V1.3</div>
+</nav>
+
+<!-- ===== EXEC SUMMARY ===== -->
+<div id="page-exec" class="page active">
+  <div class="page-container">
+    <div class="hero">
+      <div class="hero-eyebrow">NICE Smart Cabin · 体验舱整包项目 · 方案沟通 V2.0</div>
+      <h1 class="hero-title">NICE 智能座舱<br>体验舱</h1>
+      <p class="hero-sub">面向 2027 上海车展的「健康舒适 + 智能表面」核心技术展示平台<br>1:1 可进入 · 可试乘 · 可交互 · 可循环演示 · 可持续迭代</p>
+      <div class="hero-meta">
+        <span>📅 首展：<strong>2027.04 上海车展</strong></span>
+        <span>🏢 需求方：<strong>华翔汽车内饰系统</strong></span>
+        <span>🛠️ 总包交付：<strong>设计·工程·软件·集成·保障</strong></span>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <p style="font-size:14px;line-height:1.85;color:var(--text2)">
+      我们以<strong style="color:var(--text)">系统级总包</strong>承接 NICE 智能座舱体验舱：把华翔在健康监测、智能内饰材料、空气管理、舒适系统的核心技术，转译为 4 个完整体验场景，落到一台<strong style="color:var(--text)">真实可动、稳定可演、安全可控</strong>的 1:1 座舱上。本方案以「<strong style="color:var(--text)">展示场景牵引 · 系统架构支撑 · 安全可靠兜底 · 并行工程交付</strong>」为主线，确保首展期间每日连续运行、A 类功能零故障。
+      </p>
+    </div>
+
+    <div class="section-title">关键规模一览</div>
+    <div class="commit-grid">
+      <div class="stat-card"><div class="stat-label">展示场景</div><div class="stat-value">4 大场景</div><div class="stat-sub">S1 迎宾 · S2 健康舒适 · S3 智能表面 · S4 智能空间</div></div>
+      <div class="stat-card"><div class="stat-label">显示体系</div><div class="stat-value">5 块屏</div><div class="stat-sub">P-HUD · 魔术屏 · 吸顶屏 · 后排屏 · PAD</div></div>
+      <div class="stat-card"><div class="stat-label">运动机构</div><div class="stat-value">10 类</div><div class="stat-sub">独立机构评审 · 安全保护 · 一键复位</div></div>
+      <div class="stat-card"><div class="stat-label">开发周期</div><div class="stat-value">30 周</div><div class="stat-sub">2026.07 启动 → 2027.01 终验收 · 并行工程</div></div>
+    </div>
+
+    <div class="section-title">我们对首展的核心承诺</div>
+    <div class="grid-4">
+      <div class="card" style="border-left:3px solid var(--rose)"><div class="card-title" style="color:var(--rose2)">稳定</div><p style="font-size:13px;color:var(--text2);line-height:1.7">每日连续运行 <strong style="color:var(--text)">≥10 小时</strong>无 A 类故障；A 类功能连续触发 ≥100 次；现场故障修复 ≤2 小时。</p></div>
+      <div class="card" style="border-left:3px solid var(--amber)"><div class="card-title" style="color:var(--amber2)">安全</div><p style="font-size:13px;color:var(--text2);line-height:1.7">纯硬件安全回路（急停 + 限位 + 防夹 + 超温自断），<strong style="color:var(--text)">独立于软件</strong>；座椅旋转等机构双限位保护。</p></div>
+      <div class="card" style="border-left:3px solid var(--teal)"><div class="card-title" style="color:var(--teal2)">可控</div><p style="font-size:13px;color:var(--text2);line-height:1.7">任意状态<strong style="color:var(--text)">一键复位 ≤30 秒</strong>；断电上电自动回零恢复；后台平板可独立触发所有 A 类场景。</p></div>
+      <div class="card" style="border-left:3px solid var(--violet)"><div class="card-title" style="color:var(--violet2)">兜底</div><p style="font-size:13px;color:var(--text2);line-height:1.7">每个 A 类场景<strong style="color:var(--text)">视频备用</strong>，全离线运行；关键执行器手动应急；备件包 ×2 随车交付。</p></div>
+    </div>
+
+    <div class="section-title">为什么是我们 — 专业性体现在四个层面</div>
+    <div class="grid-2">
+      <div class="info-block success"><strong>真实电气工程，而非模型搭建：</strong>六层系统架构、CAN FD 五域总线、集中配电电源树、硬件安全回路 —— 按量产级方法治理复杂度。</div>
+      <div class="info-block"><strong>交付有纪律：</strong>30 周并行工程、7 个里程碑、测试从 W18 前置、每日晨检、六件套图纸版本联动。</div>
+      <div class="info-block warn"><strong>边界清晰：</strong>甲乙供责任明确、甲供件三级冻结（T0/T1/T2）、接口待确认清单滚动管理，把风险前置而非后置。</div>
+      <div class="info-block danger"><strong>风险前置：</strong>对座椅旋转、健康数据真实性、多屏联动、展会断电等高风险项给出明确应对，让甲方放心。</div>
+    </div>
+
+    <div class="quick-nav">
+      <div class="qn-card" onclick="show('arch',document.querySelectorAll('.nav-btn')[3])"><div class="qn-icon">🏗</div><div class="qn-title">系统架构 & 电气设计</div><div class="qn-desc">六层架构 · CAN FD 五域拓扑 · 电源树 · 域控平台</div></div>
+      <div class="qn-card" onclick="show('safe',document.querySelectorAll('.nav-btn')[4])"><div class="qn-icon">🛡️</div><div class="qn-title">安全 & 可靠性</div><div class="qn-desc">硬件安全回路 · 一键复位 · 断电恢复 · 备用机制</div></div>
+      <div class="qn-card" onclick="show('plan',document.querySelectorAll('.nav-btn')[8])"><div class="qn-icon">📅</div><div class="qn-title">项目计划 & 里程碑</div><div class="qn-desc">30 周甘特 · 并行工程 · 7 里程碑 · 关键路径</div></div>
+    </div>
+    <div class="foot"><span>NICE-PROPOSAL-V2.0</span><span>内容依据《NICE 智能座舱项目技术要求》V1.3（2026.05）</span><span>机密 · 仅限指定收件方</span></div>
+  </div>
+</div>
+
+<!-- ===== OVERVIEW ===== -->
+<div id="page-over" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 01</div><h2 class="page-title">项目背景与技术路径</h2>
+      <p class="page-subtitle">NICE 智能座舱体验舱是华翔面向 2027 上海车展及后续全球车展打造的核心技术展示平台，并将持续迭代。我们以系统级总包方式，把核心零部件技术整合为可进入、可交互、可循环演示的 1:1 体验舱。</p></div>
+
+    <div class="section-title">「健康舒适 + 智能表面」主题转译</div>
+    <div class="highlight-box" style="background:linear-gradient(135deg,rgba(20,184,166,.08),rgba(59,130,246,.08));border-color:rgba(20,184,166,.3)">
+      <p style="font-size:13px;line-height:1.85;color:var(--text2)">技术实现路径：<strong style="color:var(--text)">甲供核心技术输入 → 主题转译 → 4 大场景编排 → 软硬件系统集成 → 多模态交互 → 展示脚本与动画 → 体验舱制作 → 展会交付运维</strong>。在电子电器层面，建立以<strong style="color:var(--text)">域控制器为核心、CAN FD 为主干</strong>的控制架构；在软件层面，开发多屏 HMI、场景引擎、健康数据可视化、语音交互、后台调试与一键复位；在保障层面，通过视频备用、后台触发、手动应急、备件与驻场确保首展稳定。</p>
+    </div>
+
+    <div class="section-title">4 大展示场景</div>
+    <div class="table-wrap">
+      <table><thead><tr><th>场景</th><th>名称</th><th>优先级</th><th>核心展示技术</th></tr></thead><tbody>
+        <tr><td><strong>S1</strong></td><td>迎宾场景</td><td><span class="badge badge-green">P0 首展必有</span></td><td>P-HUD 星河迎宾 · 氛围灯迎宾序列 · 星空天幕 · 发光字标</td></tr>
+        <tr><td><strong>S2</strong></td><td>健康舒适场景</td><td><span class="badge badge-green">P0 首展必有</span></td><td>健康监测（传感+可视化）· 零重力座椅 · 全车加热 · 空调净化</td></tr>
+        <tr><td><strong>S3</strong></td><td>智能表面场景</td><td><span class="badge badge-teal">P1 重点展示</span></td><td>IMSE 膜激活 · 自发光缝线 · 屏幕消隐内饰一体化</td></tr>
+        <tr><td><strong>S4</strong></td><td>智能空间场景</td><td><span class="badge badge-teal">P1 重点展示</span></td><td>Console Body1/2 · 方向盘收缩 · 座椅 180° 旋转 · 吸顶屏联动</td></tr>
+      </tbody></table>
+    </div>
+    <div class="info-block"><strong>功能分级原则：</strong><span class="badge badge-A">A 类 必达</span> 真实硬件、稳定演示、不可替代（实现率 100%）；<span class="badge badge-B">B 类 增强</span> 实现主要效果、允许适度简化（≥90%，可用模拟数据，须书面确认）；<span class="badge badge-C">C 类 概念</span> 可用动画/样件/屏幕替代，预验收前确认边界。</div>
+
+    <div class="section-title">模型形式定义</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title">形态</div><p style="font-size:13px;color:var(--text2);line-height:1.7">全舱 1:1，含完整外饰（前/后保/侧围/车顶/车门/尾门样式），可进入支持 4 人试乘。</p></div>
+      <div class="card"><div class="card-title">座椅</div><p style="font-size:13px;color:var(--text2);line-height:1.7">前排 2 套（含 180° 旋转）+ 后排 2 套，合计 4 套零重力座椅。</p></div>
+      <div class="card"><div class="card-title">边界</div><p style="font-size:13px;color:var(--text2);line-height:1.7">无实际尾门（仅样式）、车窗无升降、<strong>无底盘驱动系统</strong>；独立展台，可分拆运输，展馆安装 ≤8 小时。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCENES ===== -->
+<div id="page-scenes" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 02</div><h2 class="page-title">展示场景与体验脚本</h2>
+      <p class="page-subtitle">每个场景构成「触发 → 系统响应 → 技术亮点 → 复位」完整闭环，覆盖 ≥2 种交互方式，并配套故事板、联动逻辑图、演示视频与验收用例。</p></div>
+
+    <div class="scene-card">
+      <div class="scene-header"><div class="scene-icon" style="background:rgba(251,191,36,.15)">🌟</div><div><div class="scene-num">SCENE 01 · P0</div><div class="scene-name">S1 — 迎宾场景</div></div><span class="badge badge-A" style="margin-left:auto">A 类 必达</span></div>
+      <div class="scene-body">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:8px">触发：人体接近感应（毫米波/PIR）≤2m</div>
+        <ul class="step-list">
+          <li><span class="step-num">①</span>P-HUD 播放带字标星河迎宾动画（15–20 秒）→ 主界面</li>
+          <li><span class="step-num">②</span>整车氛围灯迎宾序列：由外向内渐亮，暖白→品牌色，≥8 分区流水</li>
+          <li><span class="step-num">③</span>发光字标点亮 + 星空天幕激活（光纤）</li>
+          <li><span class="step-num">④</span>语音播报「您好，欢迎乘坐 NICE 智能座舱」</li>
+        </ul>
+        <div class="info-block success" style="margin-top:12px"><strong>备用演示：</strong>后台平板一键触发；迎宾动画视频备份；氛围灯可独立触发。</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-header"><div class="scene-icon" style="background:rgba(20,184,166,.15)">💚</div><div><div class="scene-num">SCENE 02 · P0</div><div class="scene-name">S2 — 健康舒适场景</div></div><span class="badge badge-A" style="margin-left:auto">A 类 必达</span></div>
+      <div class="scene-body">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:8px">触发：主界面选「健康舒适」或语音「进入健康模式」</div>
+        <ul class="step-list">
+          <li><span class="step-num">①</span>健康监测开始采集（甲供摄像头数据源，乙方域控取流）</li>
+          <li><span class="step-num">②</span>健康画面显示于魔术屏/PAD/吸顶屏：红外画面 + 心率/HRV/血压/血氧</li>
+          <li><span class="step-num">③</span>座椅调整至零重力（靠背角 + 腿托同步联动）</li>
+          <li><span class="step-num">④</span>全车加热膜激活（扶手/门板/头顶/地毯，分区控温，上限 70℃）</li>
+          <li><span class="step-num">⑤</span>氛围灯切换健康色 + 空调富氧离子/花粉过滤</li>
+        </ul>
+        <div class="info-block" style="margin-top:12px"><strong>责任边界：</strong>健康数据算法、准确性与医学边界由甲供方负责；我方负责取流驱动、数据解析、可视化与场景联动。现场数据不稳时支持<strong>模拟数据备用模式</strong>。</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-header"><div class="scene-icon" style="background:rgba(139,92,246,.15)">✨</div><div><div class="scene-num">SCENE 03 · P1</div><div class="scene-name">S3 — 智能表面场景</div></div><span class="badge badge-teal" style="margin-left:auto">P1 重点</span></div>
+      <div class="scene-body">
+        <ul class="step-list">
+          <li><span class="step-num">①</span>P-HUD/魔术屏/吸顶屏全部熄屏，体现「无屏即屏」消隐</li>
+          <li><span class="step-num">②</span>星空顶关闭，扬声器下降收纳</li>
+          <li><span class="step-num">③</span>IMSE 膜激活（隐藏触控 + 背光图案）</li>
+          <li><span class="step-num">④</span>自发光缝线独立发光（独立控制，不与氛围灯联动）</li>
+          <li><span class="step-num">⑤</span>多材质饰条（真木/真铝/碳纤维/金属拉丝）低亮度下呈质感</li>
+        </ul>
+        <div class="info-block warn" style="margin-top:12px"><strong>核心理念：</strong>以材料本身的光学与触觉特性展示华翔智能表面技术，与 S4 的机构运动形成对比。</div>
+      </div>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-header"><div class="scene-icon" style="background:rgba(59,130,246,.15)">🚀</div><div><div class="scene-num">SCENE 04 · P1</div><div class="scene-name">S4 — 智能空间场景</div></div><span class="badge badge-teal" style="margin-left:auto">P1 重点</span></div>
+      <div class="scene-body">
+        <ul class="step-list">
+          <li><span class="step-num">①</span>Console Body1（旋转出）+ Body2（滑出）展开</li>
+          <li><span class="step-num">②</span>方向盘收缩（向前/向上折叠），模拟 L4 接管</li>
+          <li><span class="step-num">③</span>前排座椅旋转 180° 面向后排（电控，≤15 秒，有提示音）</li>
+          <li><span class="step-num">④</span>吸顶屏旋转至播放位 + 后排控制屏接管 + P-HUD 切自动驾驶信息</li>
+        </ul>
+        <div class="info-block danger" style="margin-top:12px"><strong>安全要求：</strong>座椅旋转有限位 + 防夹保护、旋转过程有提示音；方向盘收缩机械 + 电气双限位；一键复位全程 ≤30 秒。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ARCH & EE ===== -->
+<div id="page-arch" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 03</div><h2 class="page-title">系统架构与电气设计</h2>
+      <p class="page-subtitle">系统按「<strong>主域控 + 多子控制器 + 多屏 HMI + CAN FD 主干</strong>」的量产级方法治理。六层架构 + 五域 CAN FD + 集中配电电源树，确保各模块可独立调试、整体联动、一键复位、单节点故障不影响整体。</p></div>
+
+    <div class="section-title">图 3-1 · 系统网络拓扑（六层 + 五域 CAN FD + 硬件安全回路）</div>
+    <div class="topo">
+      <div class="topo-band"><div class="lyr" style="color:var(--accent2)">演示/运维层</div><div class="topo-nodes"><span class="node">演示平板 · Wi-Fi 本地 AP</span><span class="node">后台调试 PC</span><span class="node safe">硬件复位按键</span></div></div>
+      <div class="arrow-down">↓ TCP 心跳 + ACK</div>
+      <div class="topo-band"><div class="lyr" style="color:var(--violet2)">中央控制层</div><div class="topo-nodes"><span class="node dc">域控制器（主控）· 多屏输出 · 5×CAN FD 网关 · 千兆以太网 · USB3 · Wi-Fi6/BT5</span><span class="node safe">运动安全协处理 MCU</span></div></div>
+      <div class="arrow-down">↓</div>
+      <div class="topo-band"><div class="lyr" style="color:var(--teal2)">显示/视频层</div><div class="topo-nodes"><span class="node">P-HUD（HDMI/LVDS）</span><span class="node">魔术屏 9″</span><span class="node">吸顶屏 20.5″</span><span class="node">后排屏 7″</span><span class="node">PAD · Wi-Fi</span><span class="node">健康/吸顶摄像头 · USB3/以太网</span></div></div>
+      <div class="arrow-down">↓ CAN FD ≥5 Mbps</div>
+      <div class="can-cols">
+        <div class="can-col"><div class="can-head" style="background:var(--accent)">CAN-A 灯光</div><div class="can-body"><div class="n">氛围灯 ≥8 分区</div><div class="n">发光字标</div><div class="n">大灯</div></div></div>
+        <div class="can-col"><div class="can-head" style="background:var(--teal)">CAN-B 座椅</div><div class="can-body"><div class="n">前排×2（含旋转）</div><div class="n">后排×2</div><div class="n">加热/通风/按摩</div></div></div>
+        <div class="can-col"><div class="can-head" style="background:var(--violet)">CAN-C 机构</div><div class="can-body"><div class="n">Console B1/B2</div><div class="n">方向盘/手套箱</div><div class="n">无线充电/升降/遮阳/鞋清理</div></div></div>
+        <div class="can-col"><div class="can-head" style="background:var(--amber)">CAN-D 舒适</div><div class="can-body"><div class="n">空调/香氛</div><div class="n">冰箱/吹风机</div><div class="n">垃圾桶/风机</div></div></div>
+        <div class="can-col"><div class="can-head" style="background:var(--rose)">CAN-E 加热&健康</div><div class="can-body"><div class="n">加热膜分区(NTC)</div><div class="n">健康扶手×2</div></div></div>
+      </div>
+      <div class="arrow-down">↑ 状态/到位/温度/电流/限位反馈</div>
+      <div class="safe-rail"><strong style="color:var(--rose2);font-size:12px">硬件安全回路（独立于软件）</strong><div class="topo-nodes" style="margin-top:8px"><span class="node safe">急停×3 → 安全继电器</span><span class="node safe">切断 48V/24V 机构动力</span><span class="node safe">每轴原点+双限位</span><span class="node safe">电流防夹</span><span class="node safe">加热超温自断 ≤70℃</span></div></div>
+      <div class="info-block" style="margin-top:6px"><strong>甲供专控（预留接口）：</strong>IMSE 膜控制器 · 星空天幕光纤控制器 · 健康监测控制器 —— 接口与协议由华翔后期提供，拓扑按预留 CAN FD/以太网接口 + 占位节点处理。</div>
+    </div>
+
+    <div class="section-title">六层架构职责</div>
+    <div class="table-wrap"><table><thead><tr><th>层级</th><th>组成</th><th>职责</th></tr></thead><tbody>
+      <tr><td>演示/运维层</td><td>演示平板、后台调试 PC、硬件复位</td><td>场景触发、一键演示/复位、单功能调试、备用视频、断网降级</td></tr>
+      <tr><td>中央控制层</td><td>域控制器（主控）+ 运动安全协处理 MCU</td><td>多屏 UI、场景编排、健康可视化、状态监控、一键复位、与安全回路握手</td></tr>
+      <tr><td>显示/视频层</td><td>4 屏（HDMI/LVDS）+ PAD（Wi-Fi）+ 摄像头（USB3/以太网）</td><td>高带宽视频分发与采集，独立于 CAN 信令</td></tr>
+      <tr><td>域总线层</td><td>CAN-A 灯光 / B 座椅 / C 机构 / D 舒适 / E 加热&健康</td><td>节点级实时控制指令与状态回传（CAN FD ≥5 Mbps）</td></tr>
+      <tr><td>节点执行层</td><td>各控制板、驱动器、加热膜控制器、健康扶手节点</td><td>本地闭环执行、限位保护、故障上报</td></tr>
+      <tr><td>配电安全层</td><td>PSU×5、PDU-A~E、安全继电器、急停回路</td><td>供电、分路熔断、硬件级安全切断</td></tr>
+    </tbody></table></div>
+
+    <div class="section-title">图 3-2 · 电源树（一进五出 · 集中配电 · 分路熔断）</div>
+    <div class="pwr">
+      <div class="pwr-src">AC 220V<br>市电/展馆电源<br><span style="color:var(--text3);font-size:11px">总开关 + 漏保 + 滤波防雷</span></div>
+      <div class="pwr-rails">
+        <div class="pwr-rail"><div class="pwr-v" style="color:var(--rose2)">48V / 30A</div><div class="pwr-load">大扭矩机构：座椅 180° 旋转伺服 ×2、Console B1/B2 主驱动 · <em>经安全继电器 + STO</em></div></div>
+        <div class="pwr-rail"><div class="pwr-v" style="color:var(--amber2)">24V / 20A</div><div class="pwr-load">步进机构：方向盘/手套箱/无线充电/扬声器升降/吸顶屏旋转/遮阳帘/鞋清理 · <em>经安全继电器</em></div></div>
+        <div class="pwr-rail"><div class="pwr-v" style="color:var(--teal2)">13V / 80A</div><div class="pwr-load">加热膜分区（扶手/门板/头顶/地毯）· NTC 超温自断 · 不经急停</div></div>
+        <div class="pwr-rail"><div class="pwr-v" style="color:var(--accent2)">12V / 40A</div><div class="pwr-load">域控/交换机/5 屏/音响/各控制板逻辑/健康扶手 · 急停后仍可监控报警</div></div>
+        <div class="pwr-rail"><div class="pwr-v" style="color:var(--green2)">5V / 60A</div><div class="pwr-load">氛围灯灯带分 8 回路就近注电，每段 ≤3m，消除末端压降</div></div>
+      </div>
+    </div>
+    <div class="info-block warn" style="margin-top:14px"><strong>断电恢复策略：</strong>采用「机构断电自锁 + 上电自动回零 + 域控关键参数记忆」，重新上电至可演示状态 ≤5 分钟。<em>（UPS 配置为开口项，若需「市电闪断不中断」可为控制电增配在线式 UPS，详见与甲方确认事项。）</em></div>
+
+    <div class="section-title">通信协议主干</div>
+    <div class="table-wrap"><table><thead><tr><th>协议</th><th>应用</th><th>关键规格</th></tr></thead><tbody>
+      <tr><td><span class="proto-tag">CAN FD</span></td><td>五域执行总线（座椅/机构/灯光/舒适/加热健康）</td><td>数据段 ≥5 Mbps；两端 120Ω；负载率 ≤40%；节点 ID 提前规划</td></tr>
+      <tr><td><span class="proto-tag">Ethernet</span></td><td>演示端通信 + 健康/吸顶视频取流</td><td>千兆；TCP 心跳 1Hz + ACK；断网进入本地脚本降级</td></tr>
+      <tr><td><span class="proto-tag">HDMI/LVDS</span></td><td>4 屏高带宽视频</td><td>独立于 CAN 信令</td></tr>
+      <tr><td><span class="proto-tag">Wi-Fi 6 / BT 5</span></td><td>PAD、后台平板、无线充电识别</td><td>独立 AP，不依赖展馆公共网络</td></tr>
+    </tbody></table></div>
+  </div>
+</div>
+
+<!-- ===== SAFETY ===== -->
+<div id="page-safe" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 04</div><h2 class="page-title">安全与可靠性</h2>
+      <p class="page-subtitle">展会环境 4 人进入、参观者高频操作，安全与稳定是首展的生命线。我们以<strong>纯硬件安全回路（独立于软件）</strong>为底线，软件死机或总线掉线均不影响急停有效性。</p></div>
+
+    <div class="grid-4">
+      <div class="stat-card"><div class="stat-label">连续运行</div><div class="stat-value">≥10h</div><div class="stat-sub">24 小时内无需重启</div></div>
+      <div class="stat-card"><div class="stat-label">A 类触发</div><div class="stat-value">≥100 次</div><div class="stat-sub">无故障；修复 ≤2 小时</div></div>
+      <div class="stat-card"><div class="stat-label">一键复位</div><div class="stat-value">≤30s</div><div class="stat-sub">任意状态 → 默认待机</div></div>
+      <div class="stat-card"><div class="stat-label">断电恢复</div><div class="stat-value">≤5min</div><div class="stat-sub">上电自动回零至可演示</div></div>
+    </div>
+
+    <div class="section-title">硬件安全功能矩阵</div>
+    <div class="table-wrap"><table><thead><tr><th>安全功能</th><th>实现方式</th><th>恢复方式</th></tr></thead><tbody>
+      <tr><td>紧急停止</td><td>急停按钮 ×3（中控/舱外/无线遥控）串联安全继电器，断开 48V/24V 机构动力</td><td>排险→旋出急停→面板复位→域控确认后重新使能</td></tr>
+      <tr><td>伺服安全转矩关断</td><td>安全继电器接座椅旋转/Console 伺服 STO 端子</td><td>同急停</td></tr>
+      <tr><td>机构限位</td><td>每运动轴原点 ×1 + 正/负机械限位 ×2，直接接入驱动器</td><td>报警→反向脱离→重新回零</td></tr>
+      <tr><td>电流防夹</td><td>座椅旋转/Console/方向盘/升降/遮阳帘/鞋清理 电流检测，超限停止并反向释放 ≥10mm</td><td>自动释放后等待重新触发</td></tr>
+      <tr><td>加热膜超温保护</td><td>各区 NTC 硬件比较器，超 70℃ 直接切断该区 13V（独立于软件，60℃ 告警/70℃ 断电）</td><td>降温至阈值以下自动恢复</td></tr>
+      <tr><td>断电安全</td><td>机构断电自锁（步进保持/蜗轮自锁），不溜位；上电自动回零</td><td>上电自检→各轴回零→待机场景</td></tr>
+    </tbody></table></div>
+
+    <div class="section-title">一键复位与备用机制</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title" style="color:var(--accent2)">一键复位（≤30 秒）</div>
+        <div class="flow-col"><div class="flow-box">域控广播复位帧 → 暂停新指令</div><div style="text-align:center;color:var(--text3)">↓ 按安全优先级</div><div class="flow-box" style="text-align:left">1. 停加热/风机 · 鞋清理回收锁止</div><div class="flow-box" style="text-align:left">2. 座椅停危险动作并回安全位</div><div class="flow-box" style="text-align:left">3. Console/方向盘/吸顶屏复位</div><div class="flow-box" style="text-align:left">4. 屏幕/灯光/音响回默认</div></div>
+        <div class="info-block danger" style="margin-top:10px">无法自动复位时显示「需人工处理」，<strong>不强行执行</strong>。</div>
+      </div>
+      <div class="card"><div class="card-title" style="color:var(--green2)">A 类功能保障底线</div>
+        <ul class="checklist">
+          <li>后台平板独立触发所有 A 类场景，无需触碰本体</li>
+          <li>每个 A 类场景视频备用版本（1080P），预加载本地，≤2 秒切换</li>
+          <li>系统全离线运行，语音本地模式，不依赖展馆网络</li>
+          <li>每个关键执行器手动应急旁路 + 书面操作说明</li>
+          <li>易损件备件包 ×2 随车交付；硬件复位按键</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-block success"><strong>测试前置：</strong>测试从 W18 开始而非最后 —— 单体功能 → 分系统联调 → 场景联动 → 稳定性（8h×3 次）→ 预验收，问题早暴露早整改。</div>
+  </div>
+</div>
+
+<!-- ===== FUNC & BOUNDARY ===== -->
+<div id="page-func" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 05</div><h2 class="page-title">功能清单与甲乙供边界</h2>
+      <p class="page-subtitle">功能按 A/B/C 分级、甲供/乙供边界清晰。甲供件以华翔确认样件状态为准、可无损取出；接口协议采用三级冻结（T0/T1/T2）滚动管理，把集成风险前置。</p></div>
+
+    <div class="grid-3" style="margin-bottom:28px">
+      <div class="stat-card" style="border-left:3px solid var(--rose)"><div class="stat-label">A 类 必达</div><div class="stat-value" style="color:var(--rose2)">硬件真实</div><div class="stat-sub">展会稳定演示，不可替代</div></div>
+      <div class="stat-card" style="border-left:3px solid var(--amber)"><div class="stat-label">B 类 增强</div><div class="stat-value" style="color:var(--amber2)">主要效果</div><div class="stat-sub">允许适度简化，书面确认</div></div>
+      <div class="stat-card" style="border-left:3px solid var(--accent)"><div class="stat-label">甲供件</div><div class="stat-value" style="color:var(--accent2)">12 类</div><div class="stat-sub">我方负责结构适配与集成</div></div>
+    </div>
+
+    <div class="section-title">核心功能与供应边界（节选）</div>
+    <div class="table-wrap"><table><thead><tr><th>产品/功能</th><th>级别</th><th>供应</th><th>关键规格 / 边界</th></tr></thead><tbody>
+      <tr><td>P-HUD 天际屏</td><td><span class="badge badge-A">A</span></td><td><span style="color:var(--green2)">乙供</span></td><td>乙方推荐屏幕规格、甲方确认；三区分区显示 + 熄屏动画</td></tr>
+      <tr><td>魔术屏 9″</td><td><span class="badge badge-A">A</span></td><td><span style="color:var(--accent3)">甲供 ES</span></td><td>华翔提供样件 + 控制逻辑；乙方设计造型、定义接口协议</td></tr>
+      <tr><td>吸顶屏 20.5″ 1920×1080</td><td><span class="badge badge-A">A</span></td><td><span style="color:var(--accent3)">甲供 ES</span></td><td>乙方制作旋转机构 + 匹配摄像头外框</td></tr>
+      <tr><td>后排控制屏 7″</td><td><span class="badge badge-A">A</span></td><td><span style="color:var(--green2)">乙供</span></td><td>可拆卸；华翔提供升降底座，乙方适配</td></tr>
+      <tr><td>健康监测系统</td><td><span class="badge badge-B">B</span></td><td><span style="color:var(--accent3)">甲供</span></td><td>华翔提供摄像头 + 在乙方域控上开发 APP；乙方做取流驱动 + UI/UE 适配</td></tr>
+      <tr><td>域控制器</td><td><span class="badge badge-A">A</span></td><td><span style="color:var(--green2)">乙供</span></td><td>工控级主控；多屏 + 5×CAN FD 网关 + 以太网 + 后台调试</td></tr>
+      <tr><td>全车氛围灯</td><td><span class="badge badge-A">A</span></td><td><span style="color:var(--green2)">乙供</span></td><td>RGB256；呼吸+流水；≥8 分区；场景联动</td></tr>
+      <tr><td>IMSE 膜 ×4</td><td><span class="badge badge-B">B</span></td><td><span style="color:var(--accent3)">甲供 ES</span></td><td>华翔提供膜+控制器；乙方设计装配骨架；接口后期提供</td></tr>
+      <tr><td>自发光缝线</td><td><span class="badge badge-A">A</span></td><td><span style="color:var(--accent3)">甲供 ES</span></td><td>仅独立控制发光，不与氛围灯联动</td></tr>
+      <tr><td>星空天幕（光纤）</td><td><span class="badge badge-A">A</span></td><td><span style="color:var(--green2)">乙供</span></td><td>华翔提供样件/光纤方案；顶棚光纤丝须隐藏不外露</td></tr>
+      <tr><td>加热膜（各区域）</td><td><span class="badge badge-B">B</span></td><td><span style="color:var(--accent3)">甲供材料</span></td><td>DC13V / 1000W·m⁻² / NTC / 上限 70℃；乙方控制集成</td></tr>
+      <tr><td>零重力座椅 ×4</td><td><span class="badge badge-B">B</span></td><td><span style="color:var(--green2)">乙供</span></td><td>前 2 含 180° 旋转；红外按摩/加热/通风</td></tr>
+    </tbody></table></div>
+
+    <div class="section-title">甲供件接口三级冻结（前置风险管理）</div>
+    <div class="grid-3">
+      <div class="card" style="border-left:3px solid var(--rose)"><div class="card-title" style="color:var(--rose2)">T0 · 样件清单冻结</div><p style="font-size:13px;color:var(--text2);line-height:1.7">明确甲供件清单、数量、状态、责任人、到货时间。<strong style="color:var(--text)">项目启动 W2</strong>。</p></div>
+      <div class="card" style="border-left:3px solid var(--amber)"><div class="card-title" style="color:var(--amber2)">T1 · 接口协议冻结</div><p style="font-size:13px;color:var(--text2);line-height:1.7">电源、通信、SDK、接插件、数据格式、安装界面。<strong style="color:var(--text)">W4–W8</strong>。</p></div>
+      <div class="card" style="border-left:3px solid var(--green)"><div class="card-title" style="color:var(--green2)">T2 · 集成样件冻结</div><p style="font-size:13px;color:var(--text2);line-height:1.7">实物样件到位，可用于结构安装、线束制作、软件联调。<strong style="color:var(--text)">W8–W12</strong>。</p></div>
+    </div>
+    <div class="info-block"><strong>协同与边界：</strong>我方作为总包对自身工作包质量与进度负责，并对甲供件做无损集成与接口适配；甲供件本体功能、接口协议交付时点由华翔负责，相关待确认项以《接口协议待确认清单》每周滚动同步，确保依赖关系透明、可控。</div>
+  </div>
+</div>
+
+<!-- ===== HW ===== -->
+<div id="page-hw" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 06</div><h2 class="page-title">硬件系统与运动机构</h2>
+      <p class="page-subtitle">含 <strong>10 类运动机构</strong>，均在方案阶段提交独立机构评审（运动参数、安全保护、噪音、连续可靠性、手动应急、一键复位）。电子电器满足展车级工艺标准。</p></div>
+
+    <div class="section-title">10 类运动机构关键指标</div>
+    <div class="table-wrap"><table><thead><tr><th>机构</th><th>关键参数</th><th>验收指标</th></tr></thead><tbody>
+      <tr><td>Console Body1 旋转</td><td>角度/行程/速度乙方自定义；与 B2 联动或独立</td><td>连续 100 次无卡死；噪音 ≤45dB；限位有效</td></tr>
+      <tr><td>Console Body2 滑动</td><td>行程乙方自定义；独立或联动</td><td>连续 100 次；平稳无抖动；≤45dB</td></tr>
+      <tr><td>水晶扬声器升降（集成液晶屏）</td><td>行程 ≥80mm；音乐/语音唤醒自动升降</td><td>升降 3–5 秒；左右平衡 ≤2mm；≤42dB</td></tr>
+      <tr><td>手套箱电控开合</td><td>密码保护逻辑联动主屏</td><td>顺畅无卡，连续 100 次；密码稳定</td></tr>
+      <tr><td>无线充电座上翘</td><td>5–15°；充电触发；Qi/MagSafe</td><td>平稳无晃；充电 ≥15W 实测</td></tr>
+      <tr><td>前排座椅 180° 旋转</td><td>定位 180°；电控；限位 + 防夹</td><td>≤15 秒；定位 ±2°；≤45dB</td></tr>
+      <tr><td>吸顶屏旋转</td><td>旋转至合适视角；场景联动</td><td>到位 ±3°；≤40dB；稳定不晃</td></tr>
+      <tr><td>方向盘伸缩折叠</td><td>UI 开关选项</td><td>机械 + 电气双限位；可手动应急</td></tr>
+      <tr><td>电控前风挡遮阳帘</td><td>全幅覆盖；车停手动操作</td><td>平稳无晃；≤48dB；连续 50 次</td></tr>
+      <tr><td>鞋清理烘干装置<span class="badge badge-B" style="margin-left:6px">简化单轴</span></td><td>副驾座位底部地毯中后部；单轴滑出/收回</td><td>平稳无晃；限位 + 断电自锁</td></tr>
+    </tbody></table></div>
+
+    <div class="section-title">电子电器子系统</div>
+    <div class="table-wrap"><table><thead><tr><th>子系统</th><th>规格要点</th></tr></thead><tbody>
+      <tr><td>域控制器（主控）</td><td>统筹多屏/场景/联动/健康可视化/语音/后台调试/一键复位</td></tr>
+      <tr><td>CAN FD 网关</td><td>波特率 ≥5 Mbps；网关节点统一管理；节点 ID 提前规划</td></tr>
+      <tr><td>灯光控制系统</td><td>氛围灯 RGB256/≥8 分区、字标、大灯、自发光缝线（DMX512 或私有协议）</td></tr>
+      <tr><td>机构控制系统</td><td>独立 MCU；位置反馈；机械 + 电气双限位保护</td></tr>
+      <tr><td>座椅控制系统</td><td>CAN FD；多轴独立控制；位置记忆</td></tr>
+      <tr><td>加热膜控制系统</td><td>DC13V；NTC 温度监测；各区独立；超温自断 ≤70℃</td></tr>
+      <tr><td>健康监测系统</td><td>甲供摄像头数据源接入乙方域控，华翔基于域控开发 APP</td></tr>
+      <tr><td>电源管理系统</td><td>AC220V → DC 48/24/13/12/5V 分配；过流/过压/短路保护</td></tr>
+      <tr><td>线束系统</td><td>带屏蔽 + 防水连接器；标签（模块名+接插件编号）；防错设计</td></tr>
+    </tbody></table></div>
+
+    <div class="section-title">车身骨架与品质</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title">结构</div><ul class="checklist"><li>方钢焊接，4 人试乘（静载 ≥400kg 无永久变形）</li><li>所有安装点定位误差 ≤±1mm，骨架阶段预埋</li><li>可分段运输（单段 ≤500kg）；展台高度可调 ±50mm</li></ul></div>
+      <div class="card"><div class="card-title">车展展车级外观</div><ul class="checklist"><li>缝隙变化 ≤0.5mm；面差 ≤0.5mm</li><li>色差 ΔE ≤2.0（D65/10°，以确认色板为基准）</li><li>包覆无鼓包气泡皱褶；缝线间距偏差 ≤0.5mm</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SW ===== -->
+<div id="page-sw" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 07</div><h2 class="page-title">软件系统与 HMI</h2>
+      <p class="page-subtitle">域控软件统筹多屏 UI、场景联动、语音交互、健康可视化、后台工具与一键复位。核心是<strong>基于统一状态机和场景引擎</strong>实现跨屏状态同步、设备反馈、场景联动与异常提示 —— 而非孤立地「做几套界面」。</p></div>
+
+    <div class="section-title">软件工作包拆分</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title" style="color:var(--accent2)">基础平台层</div><ul class="checklist"><li>域控基础平台（OS/驱动/通信服务/日志）</li><li>多屏内容管理框架（5 屏统一渲染调度）</li><li>场景引擎（S1–S4 触发/切换/复位状态机）</li><li>CAN FD 通信中间件（设备状态/数据解析）</li></ul></div>
+      <div class="card"><div class="card-title" style="color:var(--teal2)">应用逻辑层</div><ul class="checklist"><li>多屏 UI（基于统一状态机，非孤立页面）</li><li>健康数据可视化（取流驱动 + 华翔 APP 适配）</li><li>语音交互（唤醒「你好，华翔」+ 连续对话 + 指令库）</li><li>机构控制逻辑（10 类机构状态机与互锁）</li></ul></div>
+      <div class="card"><div class="card-title" style="color:var(--violet2)">联动逻辑层</div><ul class="checklist"><li>氛围灯/加热/座椅/Console 场景联动</li><li>S1–S4 场景预设与情绪联动</li></ul></div>
+      <div class="card"><div class="card-title" style="color:var(--rose2)">运维工具层</div><ul class="checklist"><li>后台调试（功能独立触发/日志/参数/状态监控）</li><li>一键复位（安全优先级）+ 备用视频（≤2 秒切换）</li><li>故障日志与状态监控 + 离线部署/版本管理</li></ul></div>
+    </div>
+
+    <div class="section-title">多屏 HMI 主从关系</div>
+    <div class="table-wrap"><table><thead><tr><th>屏幕</th><th>定位</th><th>核心职责</th></tr></thead><tbody>
+      <tr><td>魔术屏 9″</td><td><span class="badge badge-A">主交互入口</span></td><td>车辆设置、场景控制、健康数据、语音反馈、P-HUD 控制</td></tr>
+      <tr><td>P-HUD 天际屏</td><td><span class="badge badge-C">品牌展示</span></td><td>迎宾动画、驾驶/导航/娱乐三区、自动驾驶状态模拟</td></tr>
+      <tr><td>吸顶屏 20.5″</td><td><span class="badge badge-teal">大屏展示</span></td><td>视频、健康大屏、AED 急救引导、迎宾内容</td></tr>
+      <tr><td>后排控制屏 7″</td><td><span class="badge badge-violet">后排控制</span></td><td>后排座椅、温控、娱乐、Console、舒适功能</td></tr>
+      <tr><td>PAD</td><td><span class="badge badge-green">辅助/后台</span></td><td>辅助控制终端 / 后台演示终端</td></tr>
+    </tbody></table></div>
+    <div class="info-block warn"><strong>域控选型框架：</strong>工控级 ≥8 核 X86/ARM、≥16GB RAM、≥256GB SSD、多路 HDMI/DP、5×CAN FD、千兆以太网、USB3.0、Wi-Fi6/BT5；连续运行 ≥10 小时无重启；断电恢复 ≤5 分钟；语音识别率 ≥95%（安静环境）、唤醒 ≤1 秒；触控响应 ≤100ms。</div>
+  </div>
+</div>
+
+<!-- ===== PLAN ===== -->
+<div id="page-plan" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 08</div><h2 class="page-title">项目计划与里程碑</h2>
+      <p class="page-subtitle">总周期 <strong style="color:var(--amber2)">30 周</strong>，以 <strong>2026 年 7 月 1 日启动</strong>倒排至 2027 年 1 月终验收，留 2 个月余量对接 2027.04 上海车展。关键不是压缩所有工作，而是<strong>并行工程</strong>：造型并行结构、硬件并行软件、制作并行单体测试、总装并行联调。</p></div>
+
+    <div class="section-title">图 8-1 · 30 周项目甘特图（7/1 启动）</div>
+    <div class="gantt-wrap"><div class="gantt">
+      <div class="gantt-month">
+        <div>团队 \ 月份</div>
+        <div style="grid-column:span 4">2026.07</div><div style="grid-column:span 4">08</div><div style="grid-column:span 5">09</div><div style="grid-column:span 4">10</div><div style="grid-column:span 4">11</div><div style="grid-column:span 5">12</div><div style="grid-column:span 4">2027.01</div>
+      </div>
+      <div class="gantt-head">
+        <div>里程碑</div>
+        <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div>
+      </div>
+      <!-- milestone row -->
+      <div class="gantt-row" style="min-height:34px">
+        <div class="lbl" style="color:var(--amber2)">M1–M7</div>
+        <div class="gms" style="grid-column:6"><div class="dia"></div><div class="ms-tip">M1·7-29</div></div>
+        <div class="gms" style="grid-column:9"><div class="dia"></div><div class="ms-tip">M2·8-19</div></div>
+        <div class="gms" style="grid-column:12"><div class="dia"></div><div class="ms-tip">M3·9-9</div></div>
+        <div class="gms" style="grid-column:15"><div class="dia" style="background:var(--rose)"></div><div class="ms-tip" style="color:var(--rose2)">M4骨架·9-30</div></div>
+        <div class="gms" style="grid-column:21"><div class="dia"></div><div class="ms-tip">M5·11-11</div></div>
+        <div class="gms" style="grid-column:27"><div class="dia" style="background:var(--green)"></div><div class="ms-tip" style="color:var(--green2)">M6预验收·12-23</div></div>
+        <div class="gms" style="grid-column:31"><div class="dia" style="background:var(--rose)"></div><div class="ms-tip" style="color:var(--rose2)">M7终验收·1-20</div></div>
+      </div>
+      <div class="gantt-row"><div class="lbl">造型 / CAS</div><div class="gbar" style="grid-column:2 / span 16;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div>
+      <div class="gantt-row"><div class="lbl">交互 / 动效</div><div class="gbar" style="grid-column:2 / span 21;background:linear-gradient(90deg,var(--violet),var(--violet2))"></div></div>
+      <div class="gantt-row"><div class="lbl">动画制作</div><div class="gbar" style="grid-column:15 / span 16;background:linear-gradient(90deg,var(--violet2),var(--accent))"></div></div>
+      <div class="gantt-row"><div class="lbl">硬件开发</div><div class="gbar" style="grid-column:3 / span 22;background:linear-gradient(90deg,var(--rose),var(--violet))"></div></div>
+      <div class="gantt-row"><div class="lbl">软件开发</div><div class="gbar" style="grid-column:5 / span 24;background:linear-gradient(90deg,var(--teal),var(--green))"></div></div>
+      <div class="gantt-row"><div class="lbl">展车模型</div><div class="gbar" style="grid-column:6 / span 25;background:linear-gradient(90deg,var(--amber),#f87171)"></div></div>
+      <div class="gantt-row"><div class="lbl">测试（前置）</div><div class="gbar" style="grid-column:19 / span 12;background:linear-gradient(90deg,var(--green),var(--teal))"></div></div>
+    </div></div>
+    <div class="info-block" style="margin-top:6px"><strong>说明：</strong>条形为各团队主要工作区间（并行）；◆ 为里程碑。上述为<strong>执行计划口径</strong>（7 里程碑/30 周）；合同关键节点（M1 概念评审 / M2 数据冻结 / M3 骨架完成 / M4 预验收零 A 类）以正式合同为准，两套口径在项目计划书中对应映射。</div>
+
+    <div class="section-title">7 个里程碑（7/1 启动顺延）</div>
+    <div class="table-wrap"><table><thead><tr><th>里程碑</th><th>周</th><th>日期</th><th>核心通过条件</th></tr></thead><tbody>
+      <tr><td>M1 需求/概念冻结</td><td>W5</td><td>2026-07-29</td><td>≥1 套造型方向 + S1–S4 初版脚本 + 甲供件清单冻结（T0）</td></tr>
+      <tr><td>M2 概念方向确认</td><td>W8</td><td>2026-08-19</td><td>造型方向 + 故事板（≥6 帧）+ 技术植入策略</td></tr>
+      <tr><td>M3 方案冻结</td><td>W11</td><td>2026-09-09</td><td>系统拓扑 + 机构方案（10 类）+ 软件架构 + CMF 方向</td></tr>
+      <tr><td><strong>M4 骨架完成</strong></td><td>W14</td><td>2026-09-30</td><td>CAS/A 面、骨架、线束、IO/CAN FD 协议冻结</td></tr>
+      <tr><td>M5 单体调试完成</td><td>W20</td><td>2026-11-11</td><td>硬件/机构/屏幕/控制器单体调试，具备联调条件</td></tr>
+      <tr><td><strong>M6 预验收</strong></td><td>W26</td><td>2026-12-23</td><td>A 类通过、B 类 ≥90%、S1–S4 可完整演示、稳定性 8h×3</td></tr>
+      <tr><td><strong>M7 终验收交付</strong></td><td>W30</td><td>2027-01-20</td><td>终验收、运输、安装、展会保障准备</td></tr>
+    </tbody></table></div>
+
+    <div class="section-title">并行工程策略</div>
+    <div class="grid-2">
+      <div class="info-block success"><strong>造型 ∥ 结构：</strong>造型设计并行结构可行性，避免串行等待。</div>
+      <div class="info-block success"><strong>硬件 ∥ 软件：</strong>软件侧先用 Mock 数据，与硬件并行。</div>
+      <div class="info-block success"><strong>制作 ∥ 单体测试：</strong>模型制作并行单体测试，早发现早整改。</div>
+      <div class="info-block success"><strong>总装 ∥ 联调：</strong>测试从 W18 前置启动，总装并行联调整改。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== QUALITY ===== -->
+<div id="page-quality" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 09</div><h2 class="page-title">验收、交付与展会保障</h2>
+      <p class="page-subtitle">多维度验收体系 + 展会现场驻场 + 售后质保，确保从工厂到展馆、从首展到后续巡展全链路可控。</p></div>
+
+    <div class="section-title">验收维度</div>
+    <div class="table-wrap"><table><thead><tr><th>验收类别</th><th>关键指标</th></tr></thead><tbody>
+      <tr><td>外观验收</td><td>缝隙变化 ≤0.5mm；面差 ≤0.5mm；色差 ΔE ≤2.0</td></tr>
+      <tr><td>结构验收</td><td>4 人静载无变形；运动机构噪音达标</td></tr>
+      <tr><td>功能验收</td><td>A 类 100%；B 类 ≥90%；C 类书面确认边界</td></tr>
+      <tr><td>场景联动验收</td><td>S1–S4 每场景联动要素 ≥6 类；演示全程无中断</td></tr>
+      <tr><td>软件验收</td><td>触控 ≤100ms；一键复位 ≤30 秒；语音唤醒 ≤1 秒</td></tr>
+      <tr><td>稳定性验收</td><td>8 小时 ×3 次；A 类零故障；断电恢复 ≤5 分钟</td></tr>
+      <tr><td>专项模块验收</td><td>健康监测 / 加热膜 / 多屏联动 / 运动机构 / 一键复位 逐项</td></tr>
+    </tbody></table></div>
+
+    <div class="section-title">展会现场保障（首展 2027 上海车展）</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title" style="color:var(--accent2)">驻场与响应</div><ul class="checklist"><li>展前 72 小时完成全场景演示测试 + 报告</li><li>展前 24 小时现场工程师到位、最终调试</li><li>展会期间 ≥2 名技术工程师全程驻场</li><li>A 类故障响应 ≤15 分钟、修复 ≤2 小时</li><li>每日开展前 A 类功能晨检并提交报告</li></ul></div>
+      <div class="card"><div class="card-title" style="color:var(--teal2)">售后与持续保障</div><ul class="checklist"><li>免费质保期不少于 1 年（非人为损坏免费维修）</li><li>远程支持 7×24，≤2 小时响应</li><li>质保期内免费软件迭代 ≤3 次</li><li>关键易损件供应保障 ≥3 年</li><li>质保期内展会现场支持（不少于 10 次 / 16 天）</li></ul></div>
+    </div>
+
+    <div class="section-title">交付物（六件套图纸 + 实物 + 软件 + 动画）</div>
+    <div class="grid-3">
+      <div class="card"><div class="card-title">工程数据</div><ul class="checklist"><li>CAS/A 面数据、结构数据</li><li>整车 BOM、10 类机构方案</li><li>系统拓扑图、电气原理图、线束图</li><li>IO 点表 + CAN FD 协议表</li></ul></div>
+      <div class="card"><div class="card-title">软件 & 动画</div><ul class="checklist"><li>全部屏幕 UI 设计文件</li><li>域控源代码 + 后台调试工具</li><li>主宣传片、S1–S4 场景动画</li><li>技术原理动画、备用演示视频</li></ul></div>
+      <div class="card"><div class="card-title">实物 & 管理</div><ul class="checklist"><li>1:1 体验舱 + 展台</li><li>备件包 ×2 随车交付</li><li>安装手册（图文 + 视频）</li><li>周报、纪要、风险/变更台账</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RISK ===== -->
+<div id="page-risk" class="page">
+  <div class="page-container">
+    <div class="page-header"><div class="page-tag">CHAPTER 10</div><h2 class="page-title">风险识别与应对</h2>
+      <p class="page-subtitle">把高风险项前置识别、明确应对，是总包专业度的直接体现。我们在项目启动即建立风险台账并持续更新。</p></div>
+
+    <div class="grid-2">
+      <div class="card" style="border-left:3px solid var(--rose)"><div style="font-weight:600;margin-bottom:6px">座椅 180° 旋转 — 安全与可靠性</div><p style="font-size:13px;color:var(--text2);line-height:1.6"><strong>应对：</strong>机械 + 电气双限位、旋转提示音；独立机构评审；≥100 次连续可靠性测试；现场工程师待命。</p></div>
+      <div class="card" style="border-left:3px solid var(--rose)"><div style="font-weight:600;margin-bottom:6px">甲供件接口协议交付时点</div><p style="font-size:13px;color:var(--text2);line-height:1.6"><strong>应对：</strong>三级冻结（T0/T1/T2）+ 接口待确认清单周同步；接口未到位时优先推进不依赖项（造型/骨架/乙供硬件），协议到位即并行启动。</p></div>
+      <div class="card" style="border-left:3px solid var(--rose)"><div style="font-weight:600;margin-bottom:6px">多屏多设备实时联动稳定性</div><p style="font-size:13px;color:var(--text2);line-height:1.6"><strong>应对：</strong>域控算力留余量；异步消息解耦；单场景压测后再联调；降级策略 + 全场景视频备用兜底。</p></div>
+      <div class="card" style="border-left:3px solid var(--rose)"><div style="font-weight:600;margin-bottom:6px">健康数据真实性 vs 展示效果</div><p style="font-size:13px;color:var(--text2);line-height:1.6"><strong>应对：</strong>方案阶段明确 A/B 边界；实测稳定则展示真实值，否则书面确认采用模拟数据替代。</p></div>
+      <div class="card" style="border-left:3px solid var(--amber)"><div style="font-weight:600;margin-bottom:6px">展会断电恢复（无 UPS）</div><p style="font-size:13px;color:var(--text2);line-height:1.6"><strong>应对：</strong>断电自锁 + 上电自动回零 + 参数记忆；如需「闪断不中断」可增配控制电 UPS（与甲方确认）。</p></div>
+      <div class="card" style="border-left:3px solid var(--amber)"><div style="font-weight:600;margin-bottom:6px">车展展车级外观 — 多次运输保持</div><p style="font-size:13px;color:var(--text2);line-height:1.6"><strong>应对：</strong>定制防护包装；可调节安装方式；备件含易损外观件；安装手册提供缝隙调整方法。</p></div>
+    </div>
+
+    <div class="section-title">需与华翔共同确认的开口项</div>
+    <div class="info-block warn">① 取消 UPS 与技术要求 UPS 条款的偏差确认；② 加热膜各区面积/功率/控制器；③ 甲供专控（IMSE/星空天幕/健康）接口协议与接入方式；④ 魔术屏分辨率口径统一（9″ 规格）；⑤ 展馆供电容量（建议预留 16A×N 路）；⑥ 健康监测取流驱动 + 华翔 APP 的接口边界。</div>
+    <div class="foot"><span>NICE-PROPOSAL-V2.0</span><span>依据《技术要求》V1.3 · 项目计划 7/1 启动顺延</span><span>机密 · 仅限指定收件方</span></div>
+  </div>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
