@@ -20,6 +20,7 @@
 - 学:`01-认知篇` · `02-方法论-招式卡片`(16招)· `03-Agent团队使用手册` · `04-流程篇`
 - 练:`案例标杆/`(太空舱、船舶两份标杆)· `练习/`(E1/E2/E3)
 - 产:`模板库/`(4 件可填模板)
+- 出片:`05-排版篇-把方案变好看.md`(开源 Markdown → 专业 PDF / 答辩 deck;Marp · Slidev · Pandoc)
 
 ## 怎么用这个仓库
 
@@ -27,6 +28,7 @@
 - **要查某个方法/招式** → 看 [curriculum/02-方法论-招式卡片.md](curriculum/02-方法论-招式卡片.md)(16 招,分三组,每招标注由哪个 Agent 执行)。
 - **要知道该叫哪个 Agent、怎么喂料** → 看 [curriculum/03-Agent团队使用手册.md](curriculum/03-Agent团队使用手册.md)。
 - **新人入门** → 从 [curriculum/00-README](curriculum/00-README-学习路径.md) 选一条学习路径。
+- **要把方案排成好看的版面 / 出 PDF / 出答辩 deck** → 看 [curriculum/05-排版篇](curriculum/05-排版篇-把方案变好看.md)(开源 Markdown 出片选型 + 植入步骤)。
 
 ## 业务领域(两大主营,各有标杆)
 - 智能座舱 / 展陈 / 人机交互 → 标杆:`curriculum/案例标杆/太空舱方案-*.md`
