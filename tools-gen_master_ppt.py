@@ -45,6 +45,19 @@ def crop_ar(src,dst,ar,q=90):
 crop_ar('/tmp/pdfimg/jomec_p37_576.jpeg','/tmp/assets/ix.jpg',3.7/2.05)
 # JoySpace+ 座舱 → 案例页横幅
 crop_ar('/tmp/pdfimg/jomec_p36_572.jpeg','/tmp/assets/joy.jpg',4.1/1.45)
+import glob as _glob
+def gpath(k):
+    r=_glob.glob('/tmp/pdfimg/%s.*'%k); return r[0] if r else ''
+crop_ar('/tmp/pdfimg/jomec_p37_576.jpeg','/tmp/assets/cover.jpg',3.9/2.7)   # iX红点座舱→封面hero
+crop_ar(gpath('jomec_p33_553'),'/tmp/assets/bench.jpg',2.6/1.0)        # 测试台架实拍
+crop_ar(gpath('jomec_p29_504'),'/tmp/assets/seat.jpg',2.6/1.0)         # 座椅/机构渲染
+crop_ar(gpath('jomec_p26_430'),'/tmp/assets/ctrl.jpg',2.6/1.0)        # 代码/软硬件
+def pic(s,x,y,w,h,path,border=None,shd=True):
+    if not os.path.exists(path): return None
+    p=s.shapes.add_picture(path,Inches(x),Inches(y),Inches(w),Inches(h))
+    if border: p.line.color.rgb=border; p.line.width=Pt(1.2)
+    if shd: shadow(p,alpha=78000)
+    return p
 
 prs=Presentation(); prs.slide_width=Inches(10); prs.slide_height=Inches(5.625)
 BL=prs.slide_layouts[6]
@@ -178,11 +191,13 @@ techlines(s,NAVY)
 rect(s,0,0,10,0.09,fill=MAG); rect(s,0,5.535,10,0.09,fill=BLUE)
 rect(s,0.7,1.08,0.08,0.5,fill=CYAN)
 txt(s,0.96,1.05,8,0.4,[[('JOMEC ｜ 卓迈   ·   智能座舱创新 DEMO 样机解决方案',EN,11,True,CYAN)]])
-txt(s,0.7,1.7,8.8,1.5,[[('把硬件优势,变成主机厂',CN,33,True,WHITE)],[('面前的 ',CN,33,True,WHITE),('体验话语权',CN,33,True,LILAC)]],ls=1.05)
-txt(s,0.72,3.62,8.6,0.4,[[('NICE 智能座舱体验舱 · 整包样机方案',CN,13,False,FOG)]])
+txt(s,0.7,1.7,5.4,1.5,[[('把硬件优势,变成',CN,31,True,WHITE)],[('主机厂面前的',CN,31,True,WHITE)],[('体验话语权',CN,31,True,LILAC)]],ls=1.05)
+pic(s,5.6,1.55,3.9,2.7,'/tmp/assets/cover.jpg',border=RGBColor(0x35,0x46,0x80))
+txt(s,5.6,4.28,3.9,0.3,[[('卓迈 iX-2024 · 红点奖座舱',CN,8.5,True,CYAN)]],al=CT)
+txt(s,0.72,3.7,5.0,0.4,[[('NICE 智能座舱体验舱 · 整包样机方案',CN,13,False,FOG)]])
 rect(s,0.72,4.2,2.6,0.025,fill=RGBColor(0x35,0x46,0x80))
-txt(s,0.7,4.4,8.8,0.4,[[('呈送:宁波华翔',CN,12,True,WHITE),('      面向头部零部件企业(Tier 1)',CN,11,False,MUTE)]])
-txt(s,0.7,4.92,8.8,0.3,[[('上海卓迈 JOMEC   |   2026.06   |   机密·仅限指定收件方',CN,9.5,False,MUTE)]])
+txt(s,0.7,4.55,5.0,0.4,[[('呈送:宁波华翔',CN,12,True,WHITE),('   面向 Tier 1',CN,11,False,MUTE)]])
+txt(s,0.7,5.02,8.8,0.3,[[('上海卓迈 JOMEC   |   2026.06   |   机密·仅限指定收件方',CN,9.5,False,MUTE)]])
 pg()
 
 # ============ 2 目录
@@ -249,9 +264,9 @@ for i,(c,d) in enumerate(bases):
     x=0.55+i*1.78; bw=1.7; ac=[BLUE,CYAN,VIO,MAG,BLUE][i]
     ccard(s,x,1.42,bw,1.28,topbar=ac)
     circ(s,x+bw/2,1.86,0.5,ac,fill2=VIO,icon=None,label='',)
-    pic=AS%LOC[i]
-    if os.path.exists(pic):
-        s.shapes.add_picture(pic,Inches(x+bw/2-0.13),Inches(1.73),Inches(0.26),Inches(0.26))
+    lp=AS%LOC[i]
+    if os.path.exists(lp):
+        s.shapes.add_picture(lp,Inches(x+bw/2-0.13),Inches(1.73),Inches(0.26),Inches(0.26))
     txt(s,x,2.18,bw,0.3,[[(c,CN,13,True,TITLED)]],al=CT)
     txt(s,x+0.08,2.46,bw-0.16,0.3,[[(d,CN,7.5,False,BODY)]],al=CT,ls=1.05)
 ccard(s,0.55,2.92,4.35,1.32,topbar=BLUE)
@@ -336,17 +351,16 @@ cfoot(s,P[0])
 
 # ============ 13 工程底座
 s,_=slide(WHITE); chead(s,pg(),'差异化证据:能动样机背后,是量产级工程','THE ENGINEERING BASE')
-eng=[('测试台架','把风险提前到样机阶段','样机进评审室前先在台架把问题出完:总线/信号干涉/娱乐/氛围灯/机构/多屏/散热/多模态/识别','9 项联调验证',BLUE,'bench'),
-     ('运动机构','最难的开闭件已到量产级','折叠方向盘达上汽乘用车量产级并完成装车联调;鸥翼门/侧门应用于百度 Apollo','上汽量产级',CYAN,'gears'),
-     ('自研车规控制器','软硬件是自己的,不外包','已自研 5 类实物控制器:通用/多路通断/RGB 氛围灯/三相电机驱动/小型舵机','5 类自研控制器',MAG,'chip')]
-for i,(t,sub,d,tag,c,ic) in enumerate(eng):
+eng=[('测试台架','把风险提前到样机阶段','样机进评审室前先在台架把问题出完:总线/信号干涉/氛围灯/机构/多屏/散热/识别','9 项联调验证',BLUE,'/tmp/assets/bench.jpg'),
+     ('运动机构','最难的开闭件已到量产级','折叠方向盘达上汽乘用车量产级并装车联调;鸥翼门/侧门应用于百度 Apollo','上汽量产级',CYAN,'/tmp/assets/seat.jpg'),
+     ('自研车规控制器','软硬件是自己的,不外包','已自研 5 类实物控制器:通用/多路通断/RGB氛围灯/三相电机/小型舵机','5 类自研控制器',MAG,'/tmp/assets/ctrl.jpg')]
+for i,(t,sub,d,tag,c,im) in enumerate(eng):
     x=C3[i]; ccard(s,x,1.2,W3,3.0,topbar=c)
-    circ(s,x+0.5,1.66,0.56,c,fill2=VIO,icon=ic)
-    txt(s,x+0.88,1.44,W3-0.95,0.45,[[(t,CN,12,True,TITLED)]],an=MID)
-    txt(s,x+0.2,2.06,W3-0.4,0.32,[[(sub,CN,9,True,c)]])
-    txt(s,x+0.2,2.44,W3-0.4,1.3,[[(d,CN,8.5,False,BODY)]],ls=1.25)
-    tg=rect(s,x+0.2,3.76,W3-0.4,0.38,fill=PANEL,line=c,sh=MSO_SHAPE.ROUNDED_RECTANGLE,adj=0.4)
-    txt(s,x+0.2,3.76,W3-0.4,0.38,[[(tag,CN,9,True,c)]],al=CT,an=MID)
+    pic(s,x+0.15,1.33,W3-0.3,1.0,im,border=c)
+    txt(s,x+0.2,2.44,W3-0.4,0.32,[[(t,CN,12,True,TITLED),('  '+sub,CN,8.5,True,c)]])
+    txt(s,x+0.2,2.82,W3-0.4,0.95,[[(d,CN,8.5,False,BODY)]],ls=1.22)
+    tg=rect(s,x+0.2,3.74,W3-0.4,0.38,fill=PANEL,line=c,sh=MSO_SHAPE.ROUNDED_RECTANGLE,adj=0.4)
+    txt(s,x+0.2,3.74,W3-0.4,0.38,[[(tag,CN,9,True,c)]],al=CT,an=MID)
 bottom(s,'反复出现的『量产级』『车规』『通过性能测试』','这是 JOMEC 与造型模型公司的根本分野。')
 cfoot(s,P[0])
 
