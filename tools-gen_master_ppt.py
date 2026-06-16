@@ -312,22 +312,12 @@ for i,(t,c) in enumerate(chips):
 bottom(s,'既懂德系高标准,又懂中国量产节奏','这是大多数本土与外资团队都给不齐的组合。')
 cfoot(s,P[0])
 
-# ============ 10 组织
-s,_=slide(WHITE); chead(s,pg(),'组织协同:四大能力中心,收敛于一个责任主体','ONE-STOP ACCOUNTABILITY')
-cen=[('造型设计','前瞻·内外造型·CMF·CAS',BLUE,'palette'),('交互系统开发','UI/UX·动效·VR 内容',CYAN,'touch'),
-     ('软硬件开发','座舱系统·嵌入式·测试',VIO,'chip'),('展车模型制作','原型车·工艺·交付',MAG,'cube')]
-for i,(t,d,c,ic) in enumerate(cen):
-    x=C4[i]; ccard(s,x,1.2,W4,1.5,topbar=c)
-    circ(s,x+W4/2,1.62,0.56,c,fill2=VIO,icon=ic)
-    txt(s,x+0.1,2.05,W4-0.2,0.35,[[(t,CN,11.5,True,TITLED)]],al=CT)
-    txt(s,x+0.1,2.4,W4-0.2,0.3,[[(d,CN,7.5,False,BODY)]],al=CT,ls=1.1)
-ben=[('协同合作','各团队无缝对接'),('效率提升','减少沟通壁垒'),('同步工作','并行模式推进'),('责任归属','清晰界定·根源解决')]
-for i,(t,d) in enumerate(ben):
-    x=C4[i]; rr=rect(s,x,2.9,W4,1.3,fill=PANEL,line=CLINE,sh=MSO_SHAPE.ROUNDED_RECTANGLE,adj=0.06); shadow(rr,blur=45000,dist=14000,alpha=85000)
-    txt(s,x+0.1,3.1,W4-0.2,0.4,[[(t,CN,11,True,(MAG if i==3 else BLUE))]],al=CT)
-    txt(s,x+0.1,3.52,W4-0.2,0.5,[[(d,CN,8,False,BODY)]],al=CT,ls=1.1)
-bottom(s,'智能座舱 · 一站式 · 解决方案','你只对接一个责任主体,协同出的问题由我们兜底。')
-cfoot(s,P[0])
+# ============ 10 组织(放射图·满铺暗底 hero)
+s,bgr=slide(DARK)
+n10=pg()
+if os.path.exists('/tmp/assets/hub.png'):
+    s.shapes.add_picture('/tmp/assets/hub.png',0,0,prs.slide_width,prs.slide_height)
+txt(s,8.55,5.31,0.85,0.24,[[(f'{n10:02d}',EN,8,True,RGBColor(0x8A,0x98,0xB6))]],al=RT)
 
 # ============ 11 PART03
 divider('PART 03','样机解决方案','THE DEMO SOLUTION',
