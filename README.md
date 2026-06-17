@@ -3,13 +3,12 @@ This agent team is designed for developing high-quality pre-sales technical prop
 
 本仓库 = **一支售前 Agent 团队** + **一套培养新人驾驭它的训练营**。
 
-## 🤖 Agent 团队(7 个售前专家)
+## 🤖 Agent 团队(6 个售前专家)
 
 | 角色 | 文件 | 职责 |
 |---|---|---|
 | 🏹 Proposal Strategist | [sales-proposal-strategist.md](sales-proposal-strategist.md) | 赢主题、叙事架构、执行摘要 |
-| 🛠️ Sales Engineer | [sales-engineer.md](sales-engineer.md) | 技术发现、Demo/POC、能力→价值翻译 |
-| 🗺️ Account Strategist | [sales-account-strategist.md](sales-account-strategist.md) | 干系人地图、受众分层、商务路径 |
+| 🛠️ Sales Engineer | [sales-engineer.md](sales-engineer.md) | 技术发现、Demo/POC、能力→价值翻译、干系人地图 |
 | 🧭 Product Manager | [product-manager.md](product-manager.md) | 产品全景、平台演进、路线图 |
 | 📐 UX Architect | [design-ux-architect.md](design-ux-architect.md) | 技术架构、UX、可视化 |
 | 🐑 Project Shepherd | [project-management-project-shepherd.md](project-management-project-shepherd.md) | 交付计划、验收、风险 |
