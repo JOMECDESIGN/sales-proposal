@@ -30,10 +30,10 @@
 |---|---|
 | 🛠️ Sales Engineer | `sales-engineer.md` |
 | 🗺️ Account Strategist | `sales-account-strategist.md` |
-| 🏹 Proposal Strategist | `sales-proposal-strategist (1).md` |
+| 🏹 Proposal Strategist | `sales-proposal-strategist.md` |
 | 🧭 Product Manager | `product-manager.md` |
 | 📐 UX Architect | `design-ux-architect.md` |
-| 🐑 Project Shepherd | `project-management-project-shepherd (1).md` |
+| 🐑 Project Shepherd | `project-management-project-shepherd.md` |
 | 🏋️ Sales Coach | `sales-coach.md` |
 
 ---
