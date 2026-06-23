@@ -6,6 +6,21 @@
 >
 > **选 Python 的理由**:与本仓库文档调性、新人上手成本最匹配。若团队想要**全 Go 一套**,可改用官方 [larksuite/cli](https://github.com/larksuite/cli)(⭐14.6k,200+ 命令)+ 社区 [chyroc/lark](https://github.com/chyroc/lark)(⭐472,全量 Open API)重写本层脚本,能力等价。
 
+## 官方 SDK(纳入方式 = 锁版本依赖,不入库源码)
+
+| 项 | 值 |
+|---|---|
+| 仓库 | [larksuite/oapi-sdk-python](https://github.com/larksuite/oapi-sdk-python)(官方) |
+| 包名 / 版本 | `lark-oapi` == **1.6.8**(已钉在 `requirements.txt`) |
+| 许可 | MIT |
+| 默认域 | **中国版飞书 `open.feishu.cn`**(`.domain(lark.LARK)` 才切国际版) |
+| 运行依赖 | httpx · requests · requests-toolbelt · pycryptodome · websockets(`pip install` 自动带上) |
+
+**为什么只锁版本、不把源码复刻进仓**:该 SDK 是按 API spec **自动生成**的,源码树达 **104MB / 1.1 万文件 / 60 个服务模块**;直接入库会让仓库膨胀百倍、冻结版本、且无法连带它的 5 个三方依赖,得不偿失。锁版本依赖才能可复现 + 可 `pip` 升级。
+- **升级**:改 `requirements.txt` 的版本号即可。
+- **离线/内网**:`pip download lark-oapi==1.6.8 -d vendor/` 拿 7.8MB 的 wheel,部署端 `pip install --no-index --find-links vendor/ lark-oapi`。
+- 本层脚本若遇网页版 SDK 网络抖动,可改走同目录 `feishu_api.py`(纯 urllib 直连,无需 SDK)。
+
 ## 装环境
 
 ```bash

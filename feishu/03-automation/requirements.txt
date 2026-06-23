@@ -1,4 +1,6 @@
 # 官方飞书 SDK(v2)+ 本地 .env 加载 + YAML(供 ../02-doc-sync/sync.sh 复用)
-lark-oapi>=1.4
+# lark-oapi 钉版本:官方 larksuite/oapi-sdk-python,MIT,默认域=中国版飞书 open.feishu.cn。
+# 升级:改下方版本号即可(勿把 104MB 源码树入库,详见 README「官方 SDK」)。
+lark-oapi==1.6.8
 python-dotenv>=1.0
 PyYAML>=6.0
