@@ -1,0 +1,29 @@
+# 文件 ↔ 飞书云文档映射模板
+# 复制为 sync-map.yaml(已 gitignore)并回填真实 doc_id。
+# CI 经 Secret FEISHU_SYNC_MAP 注入完整内容(含 id 不入库)。
+#
+# doc_id 留空的条目:
+#   - 普通 push:若未设 SYNC_UPDATE_ONLY 则新建文档;
+#   - update-only(CI 默认):直接跳过(首次入库见 README)。
+
+domain: https://open.feishu.cn
+
+groups:
+  curriculum:                       # 训练营教材
+    - file: curriculum/00-README-学习路径.md
+      title: 售前训练营 · 学习路径
+      doc_id: ""
+    - file: curriculum/02-方法论-招式卡片.md
+      title: 售前方法论 · 16 招
+      doc_id: ""
+    - file: curriculum/03-Agent团队使用手册.md
+      title: Agent 团队使用手册
+      doc_id: ""
+
+  proposals:                        # 方案标杆 / 模板
+    - file: curriculum/案例标杆/船舶方案-架构思路.md
+      title: 标杆 · 船舶智能化方案
+      doc_id: ""
+    - file: curriculum/模板库/升级对比矩阵.md
+      title: 模板 · 升级对比矩阵
+      doc_id: ""

@@ -21,12 +21,20 @@
 - 练:`案例标杆/`(太空舱、船舶两份标杆)· `练习/`(E1/E2/E3)
 - 产:`模板库/`(4 件可填模板)
 
+### 飞书打通(`feishu/`)
+把产线与飞书三层打通(共用一份应用凭证,可单独启用)。总览见 [feishu/README.md](feishu/README.md),新人用法见 [curriculum/05-飞书打通-使用手册.md](curriculum/05-飞书打通-使用手册.md)。
+- ① Agent 层:根 [.mcp.json](.mcp.json) 挂官方 `lark-openapi-mcp`,让 7 个 Agent 原生读写飞书。
+- ② 文档同步层:`feishu/02-doc-sync/`(feishu-cli,Markdown ↔ 云文档)。
+- ③ 自动化层:`feishu/03-automation/`(oapi-sdk-python,卡片播报 + 多维表格看板)。
+- 定时同步 CI:[.github/workflows/feishu-sync.yml](.github/workflows/feishu-sync.yml)。
+
 ## 怎么用这个仓库
 
 - **要做一份方案** → 按 [curriculum/04-流程篇](curriculum/04-流程篇-从挖需求到拿单.md) 的五段流程,依次召唤对应 Agent。
 - **要查某个方法/招式** → 看 [curriculum/02-方法论-招式卡片.md](curriculum/02-方法论-招式卡片.md)(16 招,分三组,每招标注由哪个 Agent 执行)。
 - **要知道该叫哪个 Agent、怎么喂料** → 看 [curriculum/03-Agent团队使用手册.md](curriculum/03-Agent团队使用手册.md)。
 - **新人入门** → 从 [curriculum/00-README](curriculum/00-README-学习路径.md) 选一条学习路径。
+- **要把产出接进飞书**(协作 / 播报 / 看板)→ 看 [feishu/README.md](feishu/README.md) 与 [curriculum/05-飞书打通-使用手册.md](curriculum/05-飞书打通-使用手册.md)。
 
 ## 业务领域(两大主营,各有标杆)
 - 智能座舱 / 展陈 / 人机交互 → 标杆:`curriculum/案例标杆/太空舱方案-*.md`
@@ -35,3 +43,4 @@
 ## 维护约定
 - 教材内所有交叉引用使用相对路径,改文件名时同步更新引用(根 README、CLAUDE.md、curriculum 内部)。
 - 16 招与 7 个 Agent 是一一对应关系(招式由 Agent 执行);新增招式时,同步更新 `02` 速查表和 `03` 对应 Agent 卡片。
+- 飞书凭证(App ID/Secret、chat_id、表 token)只进 `feishu/.env` 或 GitHub Secret,**永不入库**(已 gitignore);仓库内 `*.example.*` 均为脱敏模板。

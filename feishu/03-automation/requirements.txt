@@ -1,0 +1,4 @@
+# ③ 自动化层依赖(官方 Python SDK)
+lark-oapi>=1.4.0
+python-dotenv>=1.0.0
+PyYAML>=6.0

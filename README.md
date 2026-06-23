@@ -25,6 +25,18 @@ This agent team is designed for developing high-quality pre-sales technical prop
 - **练** — [太空舱标杆批注](curriculum/案例标杆/太空舱方案-逐段批注.md) · [船舶标杆思路](curriculum/案例标杆/船舶方案-架构思路.md) · [练习 E1/E2/E3](curriculum/练习/)
 - **产** — [模板库](curriculum/模板库/)(对比矩阵 / 验收表 / 风险登记 / 关键路径)
 
+## 🔗 飞书打通(产出协作 / 播报 / 看板)
+
+把产线与飞书三层打通,让方案与教材能在飞书侧协作、播报、看板化管理。详见 **[feishu/README.md](feishu/README.md)** 与新人手册 **[curriculum/05-飞书打通-使用手册.md](curriculum/05-飞书打通-使用手册.md)**。
+
+| 层 | 组件 | 解决什么 |
+|---|---|---|
+| ① Agent 层 | lark-openapi-mcp(官方 MCP) | 7 个 Agent 在对话中原生读写飞书云文档 / 多维表格 / 消息 |
+| ② 文档同步层 | feishu-cli(社区) | 方案 / 教材 Markdown ↔ 飞书云文档双向无损同步 |
+| ③ 自动化层 | oapi-sdk-python(官方 SDK) | 方案状态 → 卡片播报;销售管道 → 多维表格看板 |
+
+> 凭证只进 `feishu/.env` / GitHub Secret(已 gitignore);定时同步 CI 见 [.github/workflows/feishu-sync.yml](.github/workflows/feishu-sync.yml)。
+
 ## 快速上手
 
 | 你想做什么 | 去哪 |
@@ -33,3 +45,4 @@ This agent team is designed for developing high-quality pre-sales technical prop
 | 查某个方法/招式 | [02 方法论·16招](curriculum/02-方法论-招式卡片.md) |
 | 不知道该叫哪个 Agent | [03 Agent 团队使用手册](curriculum/03-Agent团队使用手册.md) |
 | 新人从零入门 | [00 学习路径](curriculum/00-README-学习路径.md) |
+| 把产出接进飞书 | [feishu/](feishu/) · [05 飞书打通手册](curriculum/05-飞书打通-使用手册.md) |

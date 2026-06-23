@@ -1,0 +1,16 @@
+# —— 飞书打通:凭证与本地状态,永不入库 ——
+feishu/.env
+.env
+*.local.env
+# 含真实 doc_id 的同步映射(用 .example 模板入库,真实表走 Secret/本地)
+feishu/02-doc-sync/sync-map.yaml
+
+# —— Python ——
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# —— 杂项 ——
+.DS_Store
+*.log

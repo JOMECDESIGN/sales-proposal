@@ -1,0 +1,14 @@
+{
+  "_comment": "销售管道多维表格字段模板。在飞书手建表时按此创建字段(字段名需与 pipeline_base.py 中一致),建好后把 app_token / table_id 回填到 feishu/.env。",
+  "table_name": "销售管道",
+  "fields": [
+    { "field_name": "方案名称",     "type": "文本",     "note": "主字段" },
+    { "field_name": "客户",         "type": "文本" },
+    { "field_name": "阶段",         "type": "单选",     "options": ["立项", "挖需求", "撰写中", "自检", "答辩中", "已提交", "赢单", "丢单", "搁置"] },
+    { "field_name": "负责人",       "type": "人员或文本" },
+    { "field_name": "预计金额(万)", "type": "数字" },
+    { "field_name": "预计签约日",   "type": "日期(文本 YYYY-MM-DD 亦可)" },
+    { "field_name": "方案链接",     "type": "超链接" },
+    { "field_name": "备注",         "type": "文本" }
+  ]
+}
