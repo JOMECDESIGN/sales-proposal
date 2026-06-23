@@ -16,14 +16,40 @@ cp ../.env.example ../.env     # 然后填凭证
 source ../.env
 ```
 
-## 两个脚本
+## 脚本清单
+
+**业务脚本**
 
 | 脚本 | 干什么 | 给谁用 |
 |---|---|---|
 | [`notify.py`](notify.py) | 方案状态 → 群里一张**消息卡片**(配色分 🟢🟡🔴) | 🏋️ Coach 自检完、🐑 Shepherd 到节点 |
 | [`pipeline_base.py`](pipeline_base.py) | 销售管道 → **多维表格**看板增删改查 | 🐑 Shepherd、🗺️ Account Strategist |
 | [`wiki_publish.py`](wiki_publish.py) | 把 Markdown **直接发布到知识库指定节点下**(导入→移动入库一步到位) | 🧭 PM · 🏹 Strategist |
-| [`lark_client.py`](lark_client.py) | 共享鉴权(其它脚本 import 它) | — |
+
+**搭建/运维脚本(一次性或偶发)**
+
+| 脚本 | 干什么 |
+|---|---|
+| [`init_pipeline.py`](init_pipeline.py) | 创建销售管道多维表格(字段照 fields.example.json),打印 app_token/table_id |
+| [`grant_access.py`](grant_access.py) | 给群/用户开放某资源(多维表格/文档/wiki)的 view/edit 权限 |
+| [`list_chats.py`](list_chats.py) | 列出机器人所在的群 + chat_id(配 notify 播报群时用) |
+
+**共享模块**
+
+| 文件 | 干什么 |
+|---|---|
+| [`feishu_api.py`](feishu_api.py) | 直连 OpenAPI 小工具(取 token / 请求 / 加载 .env),`init/grant/list` 共用;纯 urllib,网页版可用 |
+| [`lark_client.py`](lark_client.py) | 官方 SDK 鉴权(notify/pipeline 用) |
+
+> 另:[`../tools/gen_material_docx.py`](../tools/gen_material_docx.py) 生成《飞书深度打通-技术选型与实施材料》Word(依赖 `python-docx`)。
+
+### 一次性搭建三连(配 .env 前)
+
+```bash
+python init_pipeline.py                  # 建管道表 → 拿 app_token/table_id 填进 .env
+python list_chats.py --grep 群名关键字     # 找播报群 chat_id 填进 .env
+python grant_access.py --token <app_token> --type bitable --chat <chat_id> --perm edit  # 给群授权
+```
 
 ### notify.py —— 状态卡片
 
