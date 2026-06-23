@@ -20,6 +20,7 @@ source ../.env
 |---|---|---|
 | [`notify.py`](notify.py) | 方案状态 → 群里一张**消息卡片**(配色分 🟢🟡🔴) | 🏋️ Coach 自检完、🐑 Shepherd 到节点 |
 | [`pipeline_base.py`](pipeline_base.py) | 销售管道 → **多维表格**看板增删改查 | 🐑 Shepherd、🗺️ Account Strategist |
+| [`wiki_publish.py`](wiki_publish.py) | 把 Markdown **直接发布到知识库指定节点下**(导入→移动入库一步到位) | 🧭 PM · 🏹 Strategist |
 | [`lark_client.py`](lark_client.py) | 共享鉴权(其它脚本 import 它) | — |
 
 ### notify.py —— 状态卡片
@@ -44,10 +45,34 @@ python pipeline_base.py set-stage --record recXXXX --stage "答辩自检"
 ```
 阶段取值与 [`curriculum/04-流程篇`](../../curriculum/04-流程篇-从挖需求到拿单.md) 的五段一一对齐。
 
+### wiki_publish.py —— 直接发布到知识库指定节点
+
+填补 lark-mcp / feishu-cli 都缺的「移动到指定 wiki 节点」能力,直接走 OpenAPI 四步链路:
+取 token → `get_node` 解析父节点拿 space_id → 导入 Markdown 成 docx(`medias/upload_all` 带
+`extra` → `import_tasks` 轮询)→ `move_docs_to_wiki`(带 `parent_wiki_token`)。
+
+```bash
+# 凭证用 FEISHU_APP_ID/SECRET 或 LARK_APP_ID/SECRET 均可
+python wiki_publish.py \
+  --md ../../飞书深度打通-技术选型与实施材料.md \
+  --node "https://<租户>.feishu.cn/wiki/<父节点token>" \
+  --title "文档标题"
+# 输出:✓ 已发布到知识库 + 新节点链接
+```
+
+- `--node` 既收 wiki 节点 token,也收完整 URL(自动提取 token)。
+- 幂等性:**每次运行都会新建一个子节点**(非更新)。需要更新已有节点内容请走第②层 feishu-cli `doc import --doc-id`。
+- 关键坑:`ccm_import_open` 上传通道必须带 `extra={"obj_type":"docx","file_extension":"md"}`,否则报 `1061004 forbidden`。
+
+> **网络注记**:在 Claude Code 网页版环境里,飞书官方 MCP 走的代理会拦截飞书 API 域名
+> (报 `Host resolves to a private/reserved IP`),但 **Bash 工具能直连** `open.feishu.cn`。
+> 因此自动化层脚本(本文件)在网页版里可直接跑通,而 MCP 工具未必可用。
+
 ## 最小权限集
 
 - `notify.py`:`im:message`(发消息)。机器人需**先被拉进目标群**。
 - `pipeline_base.py`:`bitable:app`(读写多维表格)。应用需对该表格有协作者权限。
+- `wiki_publish.py`:`drive:drive`(云盘读写,用于导入)+ `wiki:wiki`(知识库写)。应用需是目标知识库成员且有编辑权限。
 
 ## 给 Agent 当工具
 
