@@ -1,0 +1,98 @@
+name: 教材同步到飞书知识库
+
+# 定时把教材/标杆目录 push 到飞书云文档(知识库内的节点),保持知识库内容最新。
+#
+# 幂等说明:本流程以 SYNC_UPDATE_ONLY=1 运行,只更新映射表里【已有 doc_id】的条目,
+# 绝不新建文档——避免每次定时跑都往知识库塞重复文档。
+# 首次把某篇 Markdown 放进知识库,仍由人工执行一次:
+#   feishu-cli doc import <file> --title <t>     # 建文档,记下 doc token
+#   feishu-cli wiki move-docs <token> --space-id <知识库space_id>   # 移入知识库
+# 然后把 doc_id 写进 sync-map(即 FEISHU_SYNC_MAP secret),CI 之后便自动保鲜。
+#
+# 需要的仓库 Secrets:
+#   FEISHU_APP_ID      自建应用 App ID
+#   FEISHU_APP_SECRET  自建应用 App Secret
+#   FEISHU_SYNC_MAP    sync-map.yaml 的完整内容(含各教材文件 ↔ doc_id);未配则用脱敏 example
+# 可选 Variables:
+#   FEISHU_DOMAIN      cn(默认)或 intl
+
+on:
+  schedule:
+    - cron: '0 1 * * 1'        # 每周一 09:00(北京时间 UTC+8 → UTC 01:00)
+  workflow_dispatch:
+    inputs:
+      group:
+        description: '只同步某个分组(留空=全部,如 benchmarks / templates）'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: feishu-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查飞书凭证是否已配置
+        id: guard
+        env:
+          APP_ID: ${{ secrets.FEISHU_APP_ID }}
+        run: |
+          if [ -z "$APP_ID" ]; then
+            echo "::notice::未配置 FEISHU_APP_ID,跳过同步(请在仓库 Settings → Secrets 配置)。"
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.guard.outputs.configured == 'true'
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        if: steps.guard.outputs.configured == 'true'
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: 安装 feishu-cli
+        if: steps.guard.outputs.configured == 'true'
+        run: go install github.com/riba2534/feishu-cli@latest
+
+      - name: Setup Python
+        if: steps.guard.outputs.configured == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装 PyYAML
+        if: steps.guard.outputs.configured == 'true'
+        run: pip install --quiet PyYAML
+
+      - name: 生成 sync-map.yaml
+        if: steps.guard.outputs.configured == 'true'
+        env:
+          SYNC_MAP: ${{ secrets.FEISHU_SYNC_MAP }}
+        run: |
+          if [ -n "$SYNC_MAP" ]; then
+            printf '%s' "$SYNC_MAP" > feishu/02-doc-sync/sync-map.yaml
+            echo "已从 FEISHU_SYNC_MAP secret 生成映射表。"
+          else
+            cp feishu/02-doc-sync/sync-map.example.yaml feishu/02-doc-sync/sync-map.yaml
+            echo "::warning::未配置 FEISHU_SYNC_MAP,使用脱敏 example(无 doc_id,update-only 模式下不会同步任何内容)。"
+          fi
+
+      - name: 推送教材到飞书知识库
+        if: steps.guard.outputs.configured == 'true'
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+          FEISHU_DOMAIN: ${{ vars.FEISHU_DOMAIN || 'cn' }}
+          SYNC_UPDATE_ONLY: '1'        # 只更新已有 doc_id,定时跑保证幂等
+        run: |
+          export PATH="$(go env GOPATH)/bin:$PATH"
+          bash feishu/02-doc-sync/sync.sh push "${{ github.event.inputs.group }}"

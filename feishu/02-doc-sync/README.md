@@ -60,6 +60,24 @@ feishu/02-doc-sync/sync.sh push proposals   # 只同步某个分组
 | 教材发到知识库 | `feishu-cli wiki ...`(子命令见上游 README 的 `wiki` 组) |
 | 整批方案/教材一键推 | `sync.sh push` |
 
+## 定时同步到知识库(GitHub Actions CI)
+
+仓库已带工作流 [`.github/workflows/feishu-sync.yml`](../../.github/workflows/feishu-sync.yml):**每周一**(可手动触发)自动把教材/标杆目录 `sync.sh push` 到飞书知识库,保持内容最新。
+
+- **幂等**:CI 以 `SYNC_UPDATE_ONLY=1` 运行,**只更新已有 `doc_id` 的条目,绝不新建**,不会往知识库塞重复文档。
+- **首次入库一次性人工操作**(把一篇 Markdown 放进知识库):
+  ```bash
+  feishu-cli doc import curriculum/案例标杆/船舶方案-架构思路.md --title "船舶方案-架构思路"
+  feishu-cli wiki spaces                       # 取目标知识库 space_id
+  feishu-cli wiki move-docs <doc_token> --space-id <space_id>   # 移入知识库
+  ```
+  然后把该文档的 `doc_id` 写进映射表,CI 之后便自动保鲜。
+- **配置 CI**:在仓库 `Settings → Secrets and variables → Actions` 配置
+  - Secret `FEISHU_APP_ID` / `FEISHU_APP_SECRET`:应用凭证
+  - Secret `FEISHU_SYNC_MAP`:`sync-map.yaml` 的完整内容(含各教材文件 ↔ `doc_id`;因含具体 id 不入库,故走 Secret)
+  - 可选 Variable `FEISHU_DOMAIN`:`cn`(默认)或 `intl`
+- **改 cron**:编辑工作流 `on.schedule.cron`(用的是 UTC)。
+
 ## 最小权限集
 
 云文档读写 `docx:document` + 云空间 `drive:drive`;要发知识库再加 `wiki:wiki`。

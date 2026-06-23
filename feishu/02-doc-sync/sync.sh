@@ -6,6 +6,10 @@
 #   ./sync.sh pull  [group]     飞书 → 本地(把云端修改拉回,连图片)
 #   ./sync.sh list              列出映射表里的全部条目
 # 省略 group 则处理全部分组。
+#
+# 环境变量:
+#   SYNC_UPDATE_ONLY=1  push 时只更新已有 doc_id 的条目,跳过无 id 的(不新建)。
+#                       定时 CI 必开,避免每次跑都新建文档造成知识库重复。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -48,6 +52,9 @@ case "$CMD" in
     while IFS=$'\t' read -r g f t d; do
       src="$REPO_ROOT/$f"
       [[ -f "$src" ]] || { echo "⚠ 跳过(文件不存在):$f"; continue; }
+      if [[ -z "$d" && -n "${SYNC_UPDATE_ONLY:-}" ]]; then
+        echo "↷ 跳过(update-only,无 doc_id):$f"; continue
+      fi
       if [[ -z "$d" ]]; then
         echo "↑ [新建] $f  →  「$t」"
         feishu-cli doc import "$src" --title "$t" --verbose
