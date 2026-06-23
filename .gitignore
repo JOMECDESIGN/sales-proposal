@@ -9,3 +9,6 @@ feishu/03-automation/__pycache__/
 # feishu-cli / lark-mcp 本地登录态
 .feishu-cli/
 .lark-mcp/
+
+# Claude 本地设置(含凭证别名,勿入库)
+.claude/settings.local.json
