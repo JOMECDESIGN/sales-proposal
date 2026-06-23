@@ -34,6 +34,8 @@
 - **② 文档同步层**:[feishu-cli](https://github.com/riba2534/feishu-cli),Markdown ↔ 云文档双向无损;批量同步脚本 `feishu/02-doc-sync/sync.sh`。
 - **③ 自动化层**:官方 [oapi-sdk-python](https://github.com/larksuite/oapi-sdk-python),`notify.py`(状态卡片播报)、`pipeline_base.py`(管道多维表格看板)。
 - 凭证只进 `feishu/.env`(已 `.gitignore`);仓库内 `*.example.*` 均为脱敏模板,勿强加 `.env` / `sync-map.yaml`。
+- 凭证变量名兼容两组:`FEISHU_APP_ID/SECRET` 与 `LARK_APP_ID/SECRET`(网页版默认注入后者),脚本与 MCP 包装脚本均自动识别。
+- **网页版限制**:Claude Code 网页版给 MCP 子进程套了出口代理白名单,`open.feishu.cn` 不在内,`mcp__lark__*` 可能报 `private IP`/`Missing access token`;此为平台网络策略,非代码问题。要原生 MCP 用桌面/本地版,或放开环境网络策略。第③层直连脚本不受影响,已验证可用。
 
 ## 业务领域(两大主营,各有标杆)
 - 智能座舱 / 展陈 / 人机交互 → 标杆:`curriculum/案例标杆/太空舱方案-*.md`
