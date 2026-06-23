@@ -27,6 +27,13 @@
 - **要查某个方法/招式** → 看 [curriculum/02-方法论-招式卡片.md](curriculum/02-方法论-招式卡片.md)(16 招,分三组,每招标注由哪个 Agent 执行)。
 - **要知道该叫哪个 Agent、怎么喂料** → 看 [curriculum/03-Agent团队使用手册.md](curriculum/03-Agent团队使用手册.md)。
 - **新人入门** → 从 [curriculum/00-README](curriculum/00-README-学习路径.md) 选一条学习路径。
+- **要把方案产线接进飞书** → 看 [curriculum/05-飞书打通-使用手册.md](curriculum/05-飞书打通-使用手册.md)(用法)与 [feishu/README.md](feishu/README.md)(工程实现)。
+
+## 飞书集成(`feishu/`,三层)
+- **① Agent 层**:官方 MCP [lark-openapi-mcp](https://github.com/larksuite/lark-openapi-mcp),根目录 [.mcp.json](.mcp.json) 已内置,让 7 个 Agent 直接读写飞书云文档/多维表格/消息。
+- **② 文档同步层**:[feishu-cli](https://github.com/riba2534/feishu-cli),Markdown ↔ 云文档双向无损;批量同步脚本 `feishu/02-doc-sync/sync.sh`。
+- **③ 自动化层**:官方 [oapi-sdk-python](https://github.com/larksuite/oapi-sdk-python),`notify.py`(状态卡片播报)、`pipeline_base.py`(管道多维表格看板)。
+- 凭证只进 `feishu/.env`(已 `.gitignore`);仓库内 `*.example.*` 均为脱敏模板,勿强加 `.env` / `sync-map.yaml`。
 
 ## 业务领域(两大主营,各有标杆)
 - 智能座舱 / 展陈 / 人机交互 → 标杆:`curriculum/案例标杆/太空舱方案-*.md`
@@ -35,3 +42,4 @@
 ## 维护约定
 - 教材内所有交叉引用使用相对路径,改文件名时同步更新引用(根 README、CLAUDE.md、curriculum 内部)。
 - 16 招与 7 个 Agent 是一一对应关系(招式由 Agent 执行);新增招式时,同步更新 `02` 速查表和 `03` 对应 Agent 卡片。
+- `feishu/` 下脚本改了命令/接口,同步更新对应层 README 与 `curriculum/05-飞书打通-使用手册.md` 的命令示例;新增飞书能力时,先在 `05` 的「Agent → 飞书能力对照」表登记由哪个 Agent 经哪一层使用。

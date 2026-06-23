@@ -1,0 +1,32 @@
+# ── 文档同步映射表 ──────────────────────────────────────────
+# 复制为 sync-map.yaml(不入库)后填入真实 doc_id。
+#   cp sync-map.example.yaml sync-map.yaml
+#
+# 结构:按"分组"组织;每条记录一个本地文件 ↔ 一个飞书文档。
+#   - doc_id 留空时,push 会新建文档(import)并提示你回填;pull 会跳过。
+#   - 路径相对仓库根目录。
+
+groups:
+  # 标杆案例:推到知识库给新人和客户看
+  benchmarks:
+    - file: curriculum/案例标杆/太空舱方案-逐段批注.md
+      title: 太空舱方案-逐段批注
+      doc_id: ""          # 首次 push 后把新建文档的 id 回填到这里
+    - file: curriculum/案例标杆/船舶方案-架构思路.md
+      title: 船舶方案-架构思路
+      doc_id: ""
+
+  # 可填模板:推给销售当协作底板
+  templates:
+    - file: curriculum/模板库/交付物与验收表.md
+      title: 模板-交付物与验收表
+      doc_id: ""
+    - file: curriculum/模板库/待定项与风险登记.md
+      title: 模板-待定项与风险登记
+      doc_id: ""
+
+  # 在做的方案:与客户双向协作的活文档(示例,按项目自行增减)
+  proposals:
+    - file: 方案/示例项目-执行摘要.md
+      title: 示例项目-执行摘要
+      doc_id: ""

@@ -1,0 +1,11 @@
+# 飞书集成 —— 凭证与本地产物,永不入库
+.env
+feishu/**/.env
+feishu/**/*.local.*
+feishu/03-automation/.venv/
+feishu/03-automation/__pycache__/
+*.pyc
+
+# feishu-cli / lark-mcp 本地登录态
+.feishu-cli/
+.lark-mcp/

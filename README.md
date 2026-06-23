@@ -24,6 +24,11 @@ This agent team is designed for developing high-quality pre-sales technical prop
 - **学** — [01 认知篇](curriculum/01-认知篇-售前与方案.md) · [02 方法论·16招](curriculum/02-方法论-招式卡片.md) · [03 Agent 团队使用手册](curriculum/03-Agent团队使用手册.md) · [04 流程篇](curriculum/04-流程篇-从挖需求到拿单.md)
 - **练** — [太空舱标杆批注](curriculum/案例标杆/太空舱方案-逐段批注.md) · [船舶标杆思路](curriculum/案例标杆/船舶方案-架构思路.md) · [练习 E1/E2/E3](curriculum/练习/)
 - **产** — [模板库](curriculum/模板库/)(对比矩阵 / 验收表 / 风险登记 / 关键路径)
+- **通** — [05 飞书打通使用手册](curriculum/05-飞书打通-使用手册.md) · 工程实现见 [`feishu/`](feishu/)
+
+## 🪶 飞书打通(`feishu/`)
+
+把方案产线与飞书深度集成,三层可单独启用:① 官方 [lark-openapi-mcp](https://github.com/larksuite/lark-openapi-mcp) 让 7 个 Agent 直接操作飞书(根 [`.mcp.json`](.mcp.json) 已内置);② [feishu-cli](https://github.com/riba2534/feishu-cli) 做方案/教材 Markdown ↔ 云文档双向同步;③ 官方 [oapi-sdk-python](https://github.com/larksuite/oapi-sdk-python) 做状态卡片播报与销售管道多维表格看板。落地步骤见 [`feishu/README.md`](feishu/README.md)。
 
 ## 快速上手
 

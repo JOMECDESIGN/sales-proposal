@@ -1,0 +1,4 @@
+# 官方飞书 SDK(v2)+ 本地 .env 加载 + YAML(供 ../02-doc-sync/sync.sh 复用)
+lark-oapi>=1.4
+python-dotenv>=1.0
+PyYAML>=6.0
