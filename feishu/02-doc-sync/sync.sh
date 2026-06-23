@@ -58,12 +58,12 @@ push_one() {
   [[ -f "$abs" ]] || { echo "  跳过(本地缺文件): $file" >&2; return; }
   if [[ -n "$doc_id" ]]; then
     echo "  更新 <- $file"
-    feishu-cli doc update --doc-id "$doc_id" --file "$abs"
+    feishu-cli doc content-update "$doc_id" --mode overwrite --markdown "$(cat "$abs")"
   elif [[ "$UPDATE_ONLY" == "1" ]]; then
     echo "  跳过(update-only 且无 doc_id): $file"
   else
     echo "  新建 <- $file"
-    feishu-cli doc import "$abs" --title "${title:-$file}"
+    feishu-cli doc import "$abs" --title "${title:-$file}" --upload-images
   fi
 }
 
@@ -71,7 +71,7 @@ pull_one() {
   local file="$1" doc_id="$2"
   [[ -n "$doc_id" ]] || { echo "  跳过(无 doc_id): $file"; return; }
   echo "  拉取 -> $file"
-  feishu-cli doc export "$doc_id" --output "$ROOT/$file"
+  feishu-cli doc export "$doc_id" -o "$ROOT/$file" --download-images
 }
 
 echo "[$ACTION] 条目数: ${#ENTRIES[@]}  update_only=$UPDATE_ONLY  group='${GROUP:-ALL}'"
