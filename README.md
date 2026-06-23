@@ -1,6 +1,23 @@
 # sales-proposal
 This agent team is designed for developing high-quality pre-sales technical proposals for complex innovation prototype projects, especially smart cabin, intelligent cockpit, vehicle exhibition demo, human-machine interaction, and ship/marine intelligence (smart shipping) scenarios.
 
+> ## ⚡ 一页速览
+>
+> **这是什么**:一条**售前方案产线** = 🤖 7 个角色化 Agent + 📚 学练产训练营(`curriculum/` 00–06)+ 🪶 飞书三层深度集成。方案与教材皆为 Markdown,可一键同步到飞书协作。
+>
+> **目录速记**
+> - 根目录 7 个 `*.md` = **7 个 Agent 人设**(每个顶部有「🎯 本仓库售前用法」)
+> - `curriculum/` = 01 认知 · 02 方法论 16 招 · 03 Agent 手册 · 04 流程 · **05 飞书打通** · **06 排版出片** · 案例标杆 · 练习 · 模板库
+> - `feishu/` = ① MCP ② 文档双向同步 ③ 自动化脚本;`.github/` = 教材定时同步知识库 CI
+>
+> **飞书三步上手**
+> 1. `cp feishu/.env.example feishu/.env` 填凭证(脚本认 `FEISHU_*` 或 `LARK_*`)
+> 2. 搭建:`python feishu/03-automation/init_pipeline.py`(建管道表)· `list_chats.py`(找群 id)· `grant_access.py`(授权)
+> 3. 日常:`pipeline_base.py`(管道看板)· `notify.py`(群卡片播报)· `wiki_publish.py`(发知识库指定节点)
+>
+> **状态**:第②③层(直连脚本)已实测可用——发布文档进知识库 / 销售管道多维表格 / 群卡片播报全部跑通。
+> 第①层 `mcp__lark__*` 在**网页版**受平台出口代理白名单限制可能不通,改用桌面/本地版或放开环境网络策略;脚本不受影响。详见 [`feishu/README.md`](feishu/README.md)。
+
 本仓库 = **一支售前 Agent 团队** + **一套培养新人驾驭它的训练营**。
 
 ## 🤖 Agent 团队(7 个售前专家)
