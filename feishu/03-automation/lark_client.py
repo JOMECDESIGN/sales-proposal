@@ -27,9 +27,18 @@ def env(key: str, default: str | None = None, *, required: bool = False) -> str:
 
 
 def build_client() -> lark.Client:
-    """用 App ID/Secret 构造应用态(tenant_access_token)客户端。"""
-    app_id = env("FEISHU_APP_ID", required=True)
-    app_secret = env("FEISHU_APP_SECRET", required=True)
+    """用 App ID/Secret 构造应用态(tenant_access_token)客户端。
+
+    凭证兼容两组命名:FEISHU_APP_ID/SECRET(本仓库约定)与
+    LARK_APP_ID/SECRET(Claude Code 网页版环境的默认注入),任一组即可。
+    """
+    app_id = os.getenv("FEISHU_APP_ID") or os.getenv("LARK_APP_ID")
+    app_secret = os.getenv("FEISHU_APP_SECRET") or os.getenv("LARK_APP_SECRET")
+    if not app_id or not app_secret:
+        raise SystemExit(
+            "✗ 缺少应用凭证:请设置 FEISHU_APP_ID/SECRET 或 LARK_APP_ID/SECRET"
+            "(参考 feishu/.env.example)。"
+        )
 
     builder = (
         lark.Client.builder()
