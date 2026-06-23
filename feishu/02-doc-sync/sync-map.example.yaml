@@ -7,6 +7,27 @@
 #   - 路径相对仓库根目录。
 
 groups:
+  # 培训教材正文:推到知识库当团队 wiki(新人入门 / 内部沉淀)
+  curriculum:
+    - file: curriculum/00-README-学习路径.md
+      title: 售前训练营-学习路径
+      doc_id: ""
+    - file: curriculum/01-认知篇-售前与方案.md
+      title: 售前训练营-01认知篇
+      doc_id: ""
+    - file: curriculum/02-方法论-招式卡片.md
+      title: 售前训练营-02方法论16招
+      doc_id: ""
+    - file: curriculum/03-Agent团队使用手册.md
+      title: 售前训练营-03Agent使用手册
+      doc_id: ""
+    - file: curriculum/04-流程篇-从挖需求到拿单.md
+      title: 售前训练营-04流程篇
+      doc_id: ""
+    - file: curriculum/05-飞书打通-使用手册.md
+      title: 售前训练营-05飞书打通
+      doc_id: ""
+
   # 标杆案例:推到知识库给新人和客户看
   benchmarks:
     - file: curriculum/案例标杆/太空舱方案-逐段批注.md

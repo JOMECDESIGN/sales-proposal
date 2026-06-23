@@ -3,6 +3,8 @@
 > 目标:把方案产线接上飞书的**主动能力**——状态变更**机器人卡片通知**、销售管道**多维表格看板**。脚本化、可进 CI、可被 Agent 调用。
 >
 > 上游:[larksuite/oapi-sdk-python](https://github.com/larksuite/oapi-sdk-python)(官方,⭐525),包名 `lark-oapi`。
+>
+> **选 Python 的理由**:与本仓库文档调性、新人上手成本最匹配。若团队想要**全 Go 一套**,可改用官方 [larksuite/cli](https://github.com/larksuite/cli)(⭐14.6k,200+ 命令)+ 社区 [chyroc/lark](https://github.com/chyroc/lark)(⭐472,全量 Open API)重写本层脚本,能力等价。
 
 ## 装环境
 

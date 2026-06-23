@@ -3,6 +3,8 @@
 > 目标:本仓库里的**方案、教材、模板**是 Markdown;客户和销售在飞书云文档/知识库里协作。这一层做**双向无损同步**——推上去给人看,改回来进 Git。
 >
 > 上游:[riba2534/feishu-cli](https://github.com/riba2534/feishu-cli)(社区,⭐1.2k),核心能力是 Markdown ↔ 飞书文档 40+ 块类型无损互转(含表格、代码块、Mermaid)。
+>
+> **导出兜底**:个别复杂文档若 feishu-cli 导出效果不理想,可用 [Wsine/feishu2md](https://github.com/Wsine/feishu2md)(⭐2.2k)单独把飞书文档拉成 Markdown 作为补充。
 
 ## 安装
 
