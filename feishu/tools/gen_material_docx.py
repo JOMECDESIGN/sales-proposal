@@ -400,8 +400,8 @@ handover = [
      ["按各层 README 列出的最小权限集,在应用后台开通对应 scope;",
       "改完权限必须在开放平台发布新版本才生效——这一步最容易漏。"]),
     ("③ 拉群、建表、回填 id",
-     ["把应用机器人拉进目标通知群,用 feishu-cli chat list 取 chat_id;",
-      "在飞书手建销售管道多维表格(字段照 fields.example.json),取 app_token / table_id;",
+     ["把应用机器人拉进目标通知群,用 list_chats.py(或 feishu-cli msg search-chats --query)取 chat_id;",
+      "建销售管道多维表格(init_pipeline.py 或手建,字段照 fields.example.json),取 app_token / table_id;",
       "把 chat_id / app_token / table_id 回填进 feishu/.env(对应 FEISHU_NOTIFY_CHAT_ID / "
       "FEISHU_PIPELINE_APP_TOKEN / FEISHU_PIPELINE_TABLE_ID)。"]),
     ("④ 启用 CI 定时同步(可选)",

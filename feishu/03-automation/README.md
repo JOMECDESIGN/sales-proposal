@@ -89,7 +89,7 @@ python wiki_publish.py \
 ```
 
 - `--node` 既收 wiki 节点 token,也收完整 URL(自动提取 token)。
-- 幂等性:**每次运行都会新建一个子节点**(非更新)。需要更新已有节点内容请走第②层 feishu-cli `doc import --doc-id`。
+- 幂等性:**每次运行都会新建一个子节点**(非更新)。需要更新已有节点内容请走第②层 feishu-cli `doc content-update <id> --mode overwrite --markdown ...`。
 - 关键坑:`ccm_import_open` 上传通道必须带 `extra={"obj_type":"docx","file_extension":"md"}`,否则报 `1061004 forbidden`。
 
 > **网络注记**:在 Claude Code 网页版环境里,飞书官方 MCP 走的代理会拦截飞书 API 域名

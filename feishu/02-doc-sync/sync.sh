@@ -57,13 +57,13 @@ case "$CMD" in
       fi
       if [[ -z "$d" ]]; then
         echo "↑ [新建] $f  →  「$t」"
-        feishu-cli doc import "$src" --title "$t" --verbose
+        feishu-cli doc import "$src" --title "$t" --upload-images --verbose
         echo "  ⮑ 记得把新建文档的 doc_id 回填到 sync-map.yaml 的该条目"
       else
         echo "↑ [更新] $f  →  $d"
-        # 已知 id:覆盖更新(feishu-cli 支持以 import 指定目标文档更新内容)
-        feishu-cli doc import "$src" --doc-id "$d" --verbose \
-          || echo "  ⚠ 更新失败,若该版本 feishu-cli 不支持 --doc-id,请改用先 export 比对再手动处理"
+        # 已知 id:整篇覆盖更新(feishu-cli 用 doc content-update,不是 doc import/update)
+        feishu-cli doc content-update "$d" --mode overwrite --markdown "$(cat "$src")" \
+          || echo "  ⚠ 更新失败:确认 feishu-cli 版本支持 doc content-update"
       fi
     done < <(read_map "$GROUP")
     ;;
