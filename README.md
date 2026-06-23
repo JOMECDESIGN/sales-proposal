@@ -11,6 +11,7 @@ This agent team is designed for developing high-quality pre-sales technical prop
 > - `feishu/` = ① MCP ② 文档双向同步 ③ 自动化脚本;`.github/` = 教材定时同步知识库 CI
 >
 > **飞书三步上手**
+> 0. 装依赖:`pip install -r requirements.txt`(纯 urllib 的脚本可跳过;notify/pipeline/出片才需要)
 > 1. `cp feishu/.env.example feishu/.env` 填凭证(脚本认 `FEISHU_*` 或 `LARK_*`)
 > 2. 搭建:`python feishu/03-automation/init_pipeline.py`(建管道表)· `list_chats.py`(找群 id)· `grant_access.py`(授权)
 > 3. 日常:`pipeline_base.py`(管道看板)· `notify.py`(群卡片播报)· `wiki_publish.py`(发知识库指定节点)

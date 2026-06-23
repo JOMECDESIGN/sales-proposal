@@ -1,0 +1,11 @@
+# 本仓库飞书工具链的全部 Python 依赖 —— 一条命令装齐:
+#     pip install -r requirements.txt
+#
+# 说明:纯标准库脚本(feishu_api.py / wiki_publish.py / init_pipeline.py /
+# grant_access.py / list_chats.py,均走 urllib)无需任何三方包;下面只列真正用到的。
+
+# ① 自动化层:官方 SDK(lark-oapi==1.6.8,默认域=中国版飞书)+ .env 加载 + YAML
+-r feishu/03-automation/requirements.txt
+
+# ② 出片材料生成器:feishu/tools/gen_material_docx.py
+python-docx>=1.1
