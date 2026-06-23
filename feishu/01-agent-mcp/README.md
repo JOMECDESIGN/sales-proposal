@@ -6,24 +6,31 @@
 
 ## 它怎么接进来
 
-仓库根目录已内置 [`/.mcp.json`](../../.mcp.json),Claude Code 启动时会自动发现这个 MCP server。你只需要:
+仓库根目录已内置 [`/.mcp.json`](../../.mcp.json),它通过包装脚本 [`run-mcp.sh`](run-mcp.sh) 拉起官方 lark-mcp。脚本按以下优先级解析凭证,**多环境兼容**:
 
-1. 安装 Node ≥ 18(`npx` 会按需拉起 `@larksuiteoapi/lark-mcp`,无需全局安装)。
-2. 在 shell 里导出凭证(与 `feishu/.env` 同源):
-   ```bash
-   export FEISHU_APP_ID=cli_xxx
-   export FEISHU_APP_SECRET=xxx
-   ```
-   `.mcp.json` 用 `${FEISHU_APP_ID}` / `${FEISHU_APP_SECRET}` 占位,Claude Code 会做环境变量展开。
-3. 重启 Claude Code,在 `/mcp` 里确认 `lark` 已连接、批准其工具。
+1. `feishu/.env`(若存在)
+2. 进程环境变量 `FEISHU_APP_ID` / `FEISHU_APP_SECRET`(本仓库约定 / 本地 / 桌面版)
+3. 进程环境变量 `LARK_APP_ID` / `LARK_APP_SECRET`(**Claude Code 网页版默认注入**)
 
-> 国际版 Lark:在 `.mcp.json` 的 args 里追加 `"--domain", "https://open.larksuite.com"`。
+所以:
+
+- **网页版**:环境已注入 `LARK_*`,无需任何操作,凭证自动被脚本认出。
+- **本地 / 桌面版**:`cp feishu/.env.example feishu/.env` 填好,或 `export FEISHU_APP_ID/SECRET`。
+
+配置或凭证变更后,在 Claude Code 里 **`/mcp` → reconnect `lark`**(或重启会话),再批准其工具即可。
+
+> 国际版 Lark:在 `feishu/.env` 设 `FEISHU_DOMAIN=intl`,脚本会自动加 `--domain`。
+
+> **为什么改成包装脚本**:旧版 `.mcp.json` 直接写 `-a ${FEISHU_APP_ID}`,但网页版注入的是 `LARK_*`,
+> `${FEISHU_APP_ID}` 展开为空 → lark-mcp 报 `Missing access token`。包装脚本统一解析两种命名,根治此问题。
 
 ## 手动验证(不依赖 Claude Code)
 
 ```bash
-# 前台跑一次,看是否正常握手
-npx -y @larksuiteoapi/lark-mcp mcp -a "$FEISHU_APP_ID" -s "$FEISHU_APP_SECRET"
+# 只验凭证解析(不真正起服务)
+LARK_MCP_CHECK=1 bash feishu/01-agent-mcp/run-mcp.sh
+# 前台真正握手一次
+bash feishu/01-agent-mcp/run-mcp.sh
 ```
 
 ## 工具预设(`-t`)

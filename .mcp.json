@@ -1,18 +1,8 @@
 {
   "mcpServers": {
     "lark": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@larksuiteoapi/lark-mcp",
-        "mcp",
-        "-a",
-        "${FEISHU_APP_ID}",
-        "-s",
-        "${FEISHU_APP_SECRET}",
-        "-t",
-        "preset.default,preset.doc.default,preset.bitable.default,preset.im.default"
-      ]
+      "command": "bash",
+      "args": ["feishu/01-agent-mcp/run-mcp.sh"]
     }
   }
 }
