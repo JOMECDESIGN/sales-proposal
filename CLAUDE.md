@@ -24,7 +24,7 @@
 
 ## 怎么用这个仓库
 
-- **要做一份方案** → 按 [curriculum/04-流程篇](curriculum/04-流程篇-从挖需求到拿单.md) 的五段流程,依次召唤对应 Agent。
+- **要做一份方案** → 按 [curriculum/04-流程篇](curriculum/04-流程篇-从挖需求到拿单.md) 的五段流程,依次召唤对应 Agent。**方案产出落在 [`方案/`](方案/)**(已有:`方案/船舶-智能船机交互系统-核心产品方案-初稿.md`,6 章决策弧产品级模板)。
 - **要查某个方法/招式** → 看 [curriculum/02-方法论-招式卡片.md](curriculum/02-方法论-招式卡片.md)(16 招,分三组,每招标注由哪个 Agent 执行)。
 - **要知道该叫哪个 Agent、怎么喂料** → 看 [curriculum/03-Agent团队使用手册.md](curriculum/03-Agent团队使用手册.md)。
 - **新人入门** → 从 [curriculum/00-README](curriculum/00-README-学习路径.md) 选一条学习路径。
