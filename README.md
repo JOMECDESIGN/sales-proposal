@@ -40,7 +40,7 @@ This agent team is designed for developing high-quality pre-sales technical prop
 > **总入口:[curriculum/00-README-学习路径.md](curriculum/00-README-学习路径.md)**
 
 - **学** — [01 认知篇](curriculum/01-认知篇-售前与方案.md) · [02 方法论·16招](curriculum/02-方法论-招式卡片.md) · [03 Agent 团队使用手册](curriculum/03-Agent团队使用手册.md) · [04 流程篇](curriculum/04-流程篇-从挖需求到拿单.md)
-- **练** — [太空舱标杆批注](curriculum/案例标杆/太空舱方案-逐段批注.md) · [船舶标杆思路](curriculum/案例标杆/船舶方案-架构思路.md) · [船舶核心产品·智能船机交互系统](curriculum/案例标杆/船舶-智能船机交互系统-核心产品说明.md) · [船舶 Yog IOT 技术底座](curriculum/案例标杆/船舶-Yog-IOT-技术底座解读.md) · [岸基远控综合平台·项目素材](curriculum/案例标杆/船舶-岸基远控综合平台-中远海运重工舟山-项目素材.md) · [造船制造标杆卡](curriculum/案例标杆/造船智能制造-AI无纸化-知识卡片.md) · [练习 E1/E2/E3](curriculum/练习/)
+- **练** — [太空舱标杆批注](curriculum/案例标杆/太空舱方案-逐段批注.md) · [船舶标杆思路](curriculum/案例标杆/船舶方案-架构思路.md) · [船舶核心产品·智能船机交互系统](curriculum/案例标杆/船舶-智能船机交互系统-核心产品说明.md) · [船舶 Yog IOT 技术底座](curriculum/案例标杆/船舶-Yog-IOT-技术底座解读.md) · [岸基远控综合平台·项目素材](curriculum/案例标杆/船舶-岸基远控综合平台-中远海运重工舟山-项目素材.md) · [态势感知与远程控制·技术方案素材](curriculum/案例标杆/船舶-态势感知与远程控制-技术方案素材.md) · [造船制造标杆卡](curriculum/案例标杆/造船智能制造-AI无纸化-知识卡片.md) · [练习 E1/E2/E3](curriculum/练习/)
 - **产** — [模板库](curriculum/模板库/)(对比矩阵 / 验收表 / 风险登记 / 关键路径) · 方案产出 [`方案/`](方案/)（[智能船机交互系统·核心产品方案初稿](方案/船舶-智能船机交互系统-核心产品方案-初稿.md)）
 - **出片** — [06 排版篇](curriculum/06-排版篇-把方案变好看.md)(把 `.md` 一键变专业 PDF 文档 / 答辩 deck;Marp · Slidev · Pandoc)
 - **通** — [05 飞书打通使用手册](curriculum/05-飞书打通-使用手册.md) · 工程实现见 [`feishu/`](feishu/)
