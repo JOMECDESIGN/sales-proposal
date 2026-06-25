@@ -21,6 +21,7 @@
 - 练:`案例标杆/`(太空舱、船舶两份标杆)· `练习/`(E1/E2/E3)
 - 产:`模板库/`(4 件可填模板)
 - 出片:`06-排版篇-把方案变好看.md`(开源 Markdown → 专业 PDF / 答辩 deck;Marp · Slidev · Pandoc)
+- 弹药:`07-行业知识采集-MVP方案评审与落地.md`(公开行业知识采集 → 带引用的售前问答助手;含合规红线与溯源元数据规范)
 
 ## 怎么用这个仓库
 
@@ -30,6 +31,7 @@
 - **新人入门** → 从 [curriculum/00-README](curriculum/00-README-学习路径.md) 选一条学习路径。
 - **要把方案产线接进飞书** → 看 [curriculum/05-飞书打通-使用手册.md](curriculum/05-飞书打通-使用手册.md)(用法)与 [feishu/README.md](feishu/README.md)(工程实现)。
 - **要把方案排成好看的版面 / 出 PDF / 出答辩 deck** → 看 [curriculum/06-排版篇](curriculum/06-排版篇-把方案变好看.md)(开源 Markdown 出片选型 + 植入步骤)。
+- **要采集行业公开知识 / 搭售前问答助手** → 看 [curriculum/07-行业知识采集](curriculum/07-行业知识采集-MVP方案评审与落地.md)(采集→清洗→入库→带引用问答的 MVP 落地路径 + 合规红线 + 溯源元数据规范)。
 
 ## 飞书集成(`feishu/`,三层)
 - **① Agent 层**:官方 MCP [lark-openapi-mcp](https://github.com/larksuite/lark-openapi-mcp),根目录 [.mcp.json](.mcp.json) 已内置,让 7 个 Agent 直接读写飞书云文档/多维表格/消息。
