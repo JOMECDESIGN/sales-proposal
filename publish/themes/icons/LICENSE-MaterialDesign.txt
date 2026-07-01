@@ -1,0 +1,8 @@
+Icons in this directory are a curated subset of Material Design Icons
+(https://github.com/Templarian/MaterialDesign-SVG), licensed under the
+Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0).
+
+Copyright (c) Austin Andrews / Material Design Icons contributors.
+Downloaded verbatim, unmodified, for use in this repository's
+system-topology diagrams (see curriculum/案例标杆/*.d2 and
+publish/slides/*.md).

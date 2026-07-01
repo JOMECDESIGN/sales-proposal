@@ -1,0 +1,204 @@
+# 华翔 NICE 智能座舱体验舱 · 系统拓扑图
+# 依据《NICE 智能座舱体验舱 方案沟通 V2.0》(Tech Spec V1.3)
+#
+# 架构口诀:一舱 · 一域(五域 CAN FD 总线) · 一环境(域控+安全MCU+配电+硬件安全回路) · 三端
+#
+# 「三端」定义(对齐 V2.0 图3-1/表 六层架构,非套用云-边-端模板):
+#   ① 控制端 = 演示/运维层  —— 人向系统下指令(PAD/调试PC/硬件复位)
+#   ② 视像端 = 显示/视频层  —— 系统向人呈现 + 采集(5屏 + 2摄像头,HDMI/LVDS/USB3,独立于CAN)
+#   ③ 执行端 = 节点执行层  —— 系统驱动物理机构(挂在五域CAN总线末端的执行器/控制板)
+# 三者是文档六层架构表里三个"末梢层"的直接对应,与"甲供/乙供"(采购责任维度,非功能维度)
+# 严格区分——甲供属性仅作为具体节点上的标签(甲供ES/甲供),不单独立"端"。
+# 控制端、视像端在数据流上游(接近域控),执行端在下游(接近CAN总线末端),故图上分置上下,
+# 同色系(深蓝边框)标识三者同属"端"家族。
+#
+# 电气修正:电源树(48/24/13/12/5V)与硬件安全回路(急停)直接作用于执行端的物理节点,
+# 不作用于 CAN 总线本身(CAN 只传信令);上一版将电源/急停连到总线是电气建模错误,已修正。
+#
+# 渲染: d2 --theme 0 华翔NICE座舱-系统拓扑图.d2 out.svg
+
+direction: down
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+  }
+}
+
+classes: {
+  # "端"家族(控制端/视像端/执行端)统一深蓝边框,标识同属末梢层
+  dend:   {style: {fill: "#EEF4FF"; stroke: "#1E3A8A"; stroke-width: 2; border-radius: 10; font-size: 15; bold: true}}
+  denv:   {style: {fill: "#F3F4F6"; stroke: "#6B7280"; stroke-width: 2; border-radius: 10; font-size: 15; bold: true}}
+  dhub:   {style: {fill: "#EDE7FB"; stroke: "#7A4FD6"; stroke-width: 3; border-radius: 12; font-size: 16; bold: true; multiple: true}}
+  dsafe:  {style: {fill: "#FDECEC"; stroke: "#E23B3B"; stroke-width: 2; border-radius: 10; font-size: 15; bold: true}}
+  dpwr:   {style: {fill: "#EAF7EE"; stroke: "#1F9D57"; stroke-width: 2; border-radius: 10; font-size: 15; bold: true}}
+  bus:    {style: {fill: "#FAFAFB"; stroke: "#9CA3AF"; stroke-width: 2; border-radius: 8; font-size: 13; bold: true}}
+  cA:     {style: {fill: "#EAF1FE"; stroke: "#3B82F6"; border-radius: 9; font-size: 14; bold: true}}
+  cB:     {style: {fill: "#E7F7F4"; stroke: "#14B8A6"; border-radius: 9; font-size: 14; bold: true}}
+  cC:     {style: {fill: "#EFEAFC"; stroke: "#8B5CF6"; border-radius: 9; font-size: 14; bold: true}}
+  cD:     {style: {fill: "#FEF3E2"; stroke: "#F59E0B"; border-radius: 9; font-size: 14; bold: true}}
+  cE:     {style: {fill: "#FDEBEF"; stroke: "#F43F5E"; border-radius: 9; font-size: 14; bold: true}}
+  resv:   {style: {fill: "#F8FAFC"; stroke: "#94A3B8"; stroke-dash: 4; border-radius: 6; font-size: 12; italic: true}}
+}
+
+title: |md
+  # 华翔 NICE 智能座舱体验舱 · 系统拓扑
+  **一舱 · 一域(五域 CAN FD) · 一环境 · 三端(控制端·视像端·执行端)** — 依据方案 V2.0 / Tech Spec V1.3
+| {near: top-center; style: {font-size: 23; bold: true}}
+
+# ══════════════ 一舱 ══════════════
+cabin: "🚘 一舱 · NICE 智能座舱体验舱(1:1 可进入 · 4 人试乘)" {
+  style: {fill: "#FFFDF6"; stroke: "#E08A00"; stroke-width: 3; border-radius: 16; font-size: 19; bold: true}
+
+  # ────────── 三端·① 控制端(演示/运维层) ──────────
+  ctrl: "三端·① 控制端 · 演示/运维层(人→系统下指令)" {
+    class: dend
+    icon: ../../publish/themes/icons/tablet.svg
+    pad: "演示平板 PAD · 一键触发/复位" {icon: ../../publish/themes/icons/tablet.svg}
+    pc: "后台调试 PC · 有线调试" {icon: ../../publish/themes/icons/laptop.svg}
+    rstbtn: "硬件复位按键 · 强制安全态+回零(独立硬线)" {icon: ../../publish/themes/icons/shield-lock.svg}
+    vbak: "备用视频/断网降级 · 丢心跳 5s 切入"
+  }
+
+  # ────────── 三端·② 视像端(显示/视频层) ──────────
+  vid: "三端·② 视像端 · 显示/视频层(系统↔人 呈现+采集,独立于CAN)" {
+    class: dend
+    icon: ../../publish/themes/icons/monitor.svg
+    phud: "P-HUD 天际屏 · 三区+熄屏动画" {icon: ../../publish/themes/icons/monitor.svg}
+    magic: "魔术屏 9″ · 主交互入口/触控(甲供 ES)" {icon: ../../publish/themes/icons/monitor.svg}
+    roof: "吸顶屏 20.5″ · 1920×1080 旋转(甲供 ES)" {icon: ../../publish/themes/icons/monitor.svg}
+    rear: "后排控制屏 7″ · 可拆卸+升降底座" {icon: ../../publish/themes/icons/monitor.svg}
+    camh: "健康监测摄像头 · USB3/车载以太网(甲供)" {icon: ../../publish/themes/icons/camera.svg}
+    camr: "吸顶摄像头 · USB3" {icon: ../../publish/themes/icons/camera.svg}
+  }
+
+  # ────────── 一环境 · 域控 + 安全MCU + 配电 + 硬件安全回路 ──────────
+  env: "一环境 · 座舱运行与安全底座" {
+    style: {fill: "#F5F6F8"; stroke: "#6B7280"; stroke-width: 2; border-radius: 12; font-size: 16; bold: true}
+
+    dc: "🧠 域控制器(工控级主控)\n≥8核 X86/ARM · ≥16GB · ≥256GB SSD\n5×CAN FD 网关 · 多路 HDMI/DP · USB3 · 千兆以太网 · Wi-Fi6/BT5" {class: dhub; icon: ../../publish/themes/icons/chip.svg}
+    sw: "软件底座 · 场景引擎 S1–S4 状态机\n多屏统一渲染 · 健康可视化 · 语音「你好,华翔」· 一键复位≤30s" {class: denv; icon: ../../publish/themes/icons/application-cog.svg}
+    mcu: "🛡️ 运动安全协处理 MCU\n与域控并行 · 软件死机/掉线不影响急停" {class: dsafe; icon: ../../publish/themes/icons/shield-check.svg}
+
+    pwr: "⚡ 配电安全层 · 电源树(AC220V 一进五出 · 无 UPS)" {
+      class: dpwr
+      icon: ../../publish/themes/icons/flash.svg
+      p1: "PSU1·PDU-A · 48V/30A · 大扭矩伺服(经安全继电器+STO)"
+      p2: "PSU2·PDU-B · 24V/20A · 步进机构(经安全继电器)"
+      p3: "PSU3·PDU-C · 13V/80A · 加热膜4区(NTC 70℃硬切·不经急停)"
+      p4: "PSU4·PDU-D · 12V/40A · 逻辑/屏/音响(不经急停,保监控)"
+      p5: "PSU5·PDU-E · 5V/60A · 氛围灯带 8 回路就近注电"
+    }
+    safe: "🚨 硬件安全回路(纯硬件 · 独立于软件)\n3×急停(中控/舱外/无线)常闭串联 → 安全继电器\n切断上游 48V/24V 动力母线 · 每轴原点+双限位 · 电流防夹反向释放≥10mm" {class: dsafe; icon: ../../publish/themes/icons/shield-lock.svg}
+  }
+
+  # ────────── 一域 · 五域 CAN FD 总线(域总线层,仅信令管线) ──────────
+  domains: "一域 · 五域 CAN FD 总线(域总线层 · 仲裁 0.5M · 各域两端 120Ω · 负载率≤40% · 仅传信令不传电)" {
+    style: {fill: "#FCFCFD"; stroke: "#9CA3AF"; stroke-width: 1; border-radius: 12; font-size: 15; bold: true}
+
+    A: "CAN-A · 灯光氛围 · 2M · 0x100–0x17F" {class: bus}
+    B: "CAN-B · 座椅 · 5M · 0x200–0x2FF" {class: bus}
+    C: "CAN-C · 机构 · 5M · 0x300–0x37F(故障帧 0x360–0x37F)" {class: bus}
+    D: "CAN-D · 舒适 · 2M · 0x380–0x3FF" {class: bus}
+    E: "CAN-E · 加热&健康 · 2M · 0x400–0x47F" {class: bus}
+  }
+
+  # ────────── 三端·③ 执行端(节点执行层,挂在五域CAN末端) ──────────
+  exec: "三端·③ 执行端 · 节点执行层(本地闭环执行 · 限位保护 · 故障上报)" {
+    style: {fill: "#FBFCFE"; stroke: "#1E3A8A"; stroke-width: 2; border-radius: 12; font-size: 15; bold: true}
+    icon: ../../publish/themes/icons/cog-outline.svg
+
+    lights: "挂载 CAN-A" {
+      class: cA
+      icon: ../../publish/themes/icons/led-strip-variant.svg
+      a1: "头部/仪表氛围灯 (5V)"
+      a2: "门板氛围灯 ×4 (5V)"
+      a3: "顶/尾氛围灯 (5V)"
+      a4: "发光字标 / 大灯 (12V)"
+    }
+    seats: "挂载 CAN-B" {
+      class: cB
+      icon: ../../publish/themes/icons/car-seat.svg
+      b1: "左前座椅 · 180°旋转伺服 (48V)"
+      b2: "右前座椅 · 180°旋转伺服 (48V)"
+      b3: "左后座椅 (24V)"
+      b4: "右后座椅 (24V)"
+    }
+    mech: "挂载 CAN-C" {
+      class: cC
+      icon: ../../publish/themes/icons/steering.svg
+      c1: "Console B1 主驱动 (48V)"
+      c2: "Console B2 主驱动 (48V)"
+      c3: "方向盘伸缩 (24V)"
+      c4: "手套箱 · 无线充 (24V)"
+      c5: "扬声器升降 (24V)"
+      c6: "吸顶屏旋转 · 遮阳帘 (24V)"
+      c7: "鞋清理(简化单轴) (24V)"
+      c8: "后排升降底座 (24V)"
+    }
+    comfort: "挂载 CAN-D" {
+      class: cD
+      icon: ../../publish/themes/icons/air-conditioner.svg
+      d1: "空调面板 ×2 (12V)"
+      d2: "香氛机 ×2 (12V)"
+      d3: "半导体冰箱 (12V)"
+      d4: "雨伞烘干 / 风机 (12V)"
+      d5: "垃圾桶换袋 (12V)"
+    }
+    heat_health: "挂载 CAN-E" {
+      class: cE
+      icon: ../../publish/themes/icons/radiator.svg
+      e1: "加热膜控制器 · 4区·NTC (13V)"
+      e2: "健康扶手(Console) · 封装数据 (12V)"
+      e3: "健康扶手(门板) · 封装数据 (12V)"
+      e4: "甲供专控预留接口(占位)\nIMSE膜/星空天幕光纤/健康监测控制器\nCAN FD/以太网待定" {class: resv}
+    }
+  }
+}
+
+# ══════════════ 主干连接 ══════════════
+# 控制端 → 域控/安全
+cabin.ctrl.pad -> cabin.env.dc: "千兆以太网 · TCP心跳1Hz+ACK" {style: {stroke: "#1E3A8A"; stroke-width: 2; bold: true}}
+cabin.ctrl.pc -> cabin.env.dc: "有线调试" {style: {stroke: "#1E3A8A"; stroke-dash: 3}}
+cabin.ctrl.rstbtn -> cabin.env.safe: "独立硬线 · 强制安全态" {style: {stroke: "#E23B3B"; stroke-width: 2; bold: true}}
+
+# 域控 ↔ 视像端(视频独立于CAN)
+cabin.env.dc <-> cabin.vid: "HDMI/LVDS 下发 · USB3/ETH 取流" {style: {stroke: "#1E3A8A"; stroke-width: 2; bold: true}}
+
+# 域控 ↔ 软件底座 / 安全MCU
+cabin.env.dc <-> cabin.env.sw: "运行" {style: {stroke: "#6B7280"; stroke-dash: 3}}
+cabin.env.dc <-> cabin.env.mcu: "握手(状态/使能)" {style: {stroke: "#E23B3B"; stroke-dash: 4}}
+
+# 域控 → 五域总线(5×CAN FD 网关)
+cabin.env.dc -> cabin.domains.A: "CAN-A" {style: {stroke: "#3B82F6"; stroke-width: 2}}
+cabin.env.dc -> cabin.domains.B: "CAN-B" {style: {stroke: "#14B8A6"; stroke-width: 2}}
+cabin.env.dc -> cabin.domains.C: "CAN-C" {style: {stroke: "#8B5CF6"; stroke-width: 2}}
+cabin.env.dc -> cabin.domains.D: "CAN-D" {style: {stroke: "#F59E0B"; stroke-width: 2}}
+cabin.env.dc -> cabin.domains.E: "CAN-E" {style: {stroke: "#F43F5E"; stroke-width: 2}}
+
+# 五域总线 ↔ 执行端(总线挂载各自节点组)
+cabin.domains.A <-> cabin.exec.lights: "控制/状态" {style: {stroke: "#3B82F6"; stroke-width: 2}}
+cabin.domains.B <-> cabin.exec.seats: "控制/状态" {style: {stroke: "#14B8A6"; stroke-width: 2}}
+cabin.domains.C <-> cabin.exec.mech: "控制/状态" {style: {stroke: "#8B5CF6"; stroke-width: 2}}
+cabin.domains.D <-> cabin.exec.comfort: "控制/状态" {style: {stroke: "#F59E0B"; stroke-width: 2}}
+cabin.domains.E <-> cabin.exec.heat_health: "控制/状态" {style: {stroke: "#F43F5E"; stroke-width: 2}}
+
+# 电源树 → 执行端(集中配电,直接供电物理节点,不经CAN总线)
+cabin.env.pwr -> cabin.exec: "48/24/13/12/5V 集中配电 · 分路熔断" {style: {stroke: "#1F9D57"; stroke-width: 2; bold: true}}
+
+# 硬件安全回路 → 切断执行端动力(仅48V/24V,急停边界)
+cabin.env.safe -> cabin.exec.seats: "急停切断 48V/24V" {style: {stroke: "#E23B3B"; stroke-width: 3; bold: true}}
+cabin.env.safe -> cabin.exec.mech: "急停切断 48V/24V" {style: {stroke: "#E23B3B"; stroke-width: 3; bold: true}}
+
+# ══════════════ 图例 ══════════════
+legend: "图例" {
+  near: bottom-right
+  style: {fill: "#FFFFFF"; stroke: "#9CA3AF"; border-radius: 8; font-size: 12}
+  l1: "深蓝框 = 三端家族(控制端/视像端/执行端)"
+  l2: "深蓝线 = 视频/以太网/调试链路(独立于CAN)"
+  l3: "彩线 = 五域 CAN FD 信令(总线↔执行端节点)"
+  l4: "红粗线 = 硬件急停切断 48V/24V 动力(仅座椅/机构)"
+  l5: "绿线 = 电源树集中配电(直供执行端,不经总线)"
+  l6: "虚线框 = 甲供预留/占位接口"
+  l7: "图标:Material Design Icons(Apache-2.0),见 publish/themes/icons/"
+}

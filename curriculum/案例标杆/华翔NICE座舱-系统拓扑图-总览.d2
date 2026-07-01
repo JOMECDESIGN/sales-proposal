@@ -1,0 +1,43 @@
+# 华翔 NICE 智能座舱体验舱 · 系统拓扑总览图(答辩 deck 用 · 5 秒抓重点)
+# 详细工程版(带 CAN ID/电压/节点)见同目录 华翔NICE座舱-系统拓扑图.d2 —— 技术附件专用
+# 渲染: d2 --theme 0 华翔NICE座舱-系统拓扑图-总览.d2 out.svg
+
+direction: down
+
+vars: {
+  d2-config: {
+    layout-engine: elk
+  }
+}
+
+classes: {
+  dend:  {style: {fill: "#EEF4FF"; stroke: "#1E3A8A"; stroke-width: 3; border-radius: 14; font-size: 22; bold: true}}
+  denv:  {style: {fill: "#F3F4F6"; stroke: "#6B7280"; stroke-width: 3; border-radius: 14; font-size: 22; bold: true}}
+  dbus:  {style: {fill: "#FCFCFD"; stroke: "#9CA3AF"; stroke-width: 3; border-radius: 14; font-size: 22; bold: true}}
+}
+
+title: |md
+  # 华翔 NICE 智能座舱体验舱 · 系统拓扑总览
+  **一舱 · 一域 · 一环境 · 三端**
+| {near: top-center; style: {font-size: 30; bold: true}}
+
+cabin: "🚘 一舱 · NICE 智能座舱体验舱(1:1 可进入 · 4 人试乘)" {
+  style: {fill: "#FFFDF6"; stroke: "#E08A00"; stroke-width: 4; border-radius: 18; font-size: 26; bold: true}
+
+  inputs: "" {
+    style: {fill: transparent; stroke: transparent}
+    ctrl: "三端·① 控制端\n演示PAD · 调试PC · 硬件复位" {class: dend; icon: ../../publish/themes/icons/tablet.svg}
+    vid: "三端·② 视像端\n5 屏 + 2 摄像头(HDMI/LVDS)" {class: dend; icon: ../../publish/themes/icons/monitor.svg}
+  }
+
+  env: "一环境 · 域控 + 安全MCU + 电源树 + 硬件安全回路\n(纯硬件急停,独立于软件)" {class: denv; icon: ../../publish/themes/icons/chip.svg}
+
+  domains: "一域 · 五域 CAN FD 总线\nA灯光 · B座椅 · C机构 · D舒适 · E加热健康" {class: dbus; icon: ../../publish/themes/icons/swap-horizontal-bold.svg}
+
+  exec: "三端·③ 执行端\n氛围灯 · 座椅 · Console/方向盘 · 空调香氛 · 加热膜" {class: dend; icon: ../../publish/themes/icons/cog-outline.svg}
+
+  inputs -> env: "指令/视频" {style: {stroke: "#1E3A8A"; stroke-width: 3; bold: true}}
+  env -> domains: "5×CAN FD" {style: {stroke: "#6B7280"; stroke-width: 3; bold: true}}
+  domains -> exec: "控制/状态" {style: {stroke: "#9CA3AF"; stroke-width: 3; bold: true}}
+  env -> exec: "配电 + 急停切断48V/24V" {style: {stroke: "#1F9D57"; stroke-width: 3; bold: true}}
+}
