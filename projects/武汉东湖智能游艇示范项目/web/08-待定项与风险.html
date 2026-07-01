@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八、待定项与风险登记 · 驾控台及智控系统技术方案</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+<label for="nav-toggle" class="nav-toggle-btn" aria-label="打开导航">☰ 目录</label>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-title">驾控台及智控系统</div>
+    <div class="brand-sub">技术方案 · 网页版</div>
+  </div>
+  <nav class="chapter-nav">
+    <a class="nav-link " href="index.html">🏠 总览与导航</a>
+    <a class="nav-link " href="01-项目概述.html">一、项目概述</a>
+    <a class="nav-link " href="02-总体架构.html">二、总体架构</a>
+    <a class="nav-link " href="03-数据流架构.html">三、数据流架构</a>
+    <a class="nav-link " href="04-关键设计主线.html">四、关键设计主线</a>
+    <a class="nav-link " href="05-追溯矩阵.html">五、追溯矩阵</a>
+    <a class="nav-link " href="06-设备规格速查.html">六、设备规格速查</a>
+    <a class="nav-link " href="07-约束checklist.html">七、约束 Checklist</a>
+    <a class="nav-link active" href="08-待定项与风险.html">八、待定项与风险登记</a>
+    <a class="nav-link " href="09-交付物与验收.html">九、交付物与验收表</a>
+    <a class="nav-link " href="10-后续建议.html">十、后续建议</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../驾控台及智控系统-技术方案.docx">⬇ 下载 Word 版</a>
+  </div>
+</aside>
+
+<main class="content">
+  <div class="breadcrumb"><a href="index.html">总览</a> ／ <span>八、待定项与风险登记</span></div>
+  <h1 class="chapter-h1">八、待定项与风险登记</h1><nav class="mini-toc"><div class="mini-toc-title">本页导航</div><ul><li><a href="#sec-1">表 A · 待定项(未决事项)</a></li><li><a href="#sec-2">表 B · 风险登记</a></li></ul></nav><blockquote class="callout">对应招式10"开放项闭环"——摊开比藏着更显专业可控。</blockquote>
+<h2 id="sec-1">表 A · 待定项(未决事项)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>待定项</th><th>类型</th><th>建议闭环方式</th><th>是否影响关键路径</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>副驾控台"控制面板"设备清单 与 注释"副驾控台不带按键面板"<strong>表述矛盾</strong>(框图P2)</td><td>材料内部矛盾</td><td>与设计方澄清:副台是否仅含急停/消音等精简按键,还是命名重叠</td><td>是</td></tr>
+<tr><td>2</td><td>智控→手动的<strong>退出条件</strong>材料未注明(吊舱方案仅写了进入条件)</td><td>待客户/设计确认</td><td>联调阶段与甲方确认退出条件是否需要转速归零</td><td>是</td></tr>
+<tr><td>3</td><td>控制接线板"3套"、动力与转向控制系统"3套"的数量构成</td><td>待确认</td><td>确认是否含主台+副台+机舱柜内接线板,或含备件</td><td>否</td></tr>
+<tr><td>4</td><td>ICC/IGS 系列采集单元的<strong>上行总线介质</strong>(CAN或以太网/Modbus TCP)未逐一标注</td><td>待设计澄清</td><td>Excel电池相关行出现"Modbus TCP"字样但未指明挂载单元,需在正式接线图明确</td><td>是</td></tr>
+<tr><td>5</td><td>推进手柄、电子方向机<strong>是否需要独立供电</strong></td><td>框图P4明确写"待确认"</td><td>电气详设阶段确认</td><td>是</td></tr>
+<tr><td>6</td><td>惯导馈线长度(标准10m)、雷达通信线长度(标准4m)</td><td>待确认</td><td>按实际船体布局测量确认,超长部分由无疆按需另行提供</td><td>否</td></tr>
+<tr><td>7</td><td>动态声呐安装位置</td><td>"根据实际需求,进行沟通确认"</td><td>现场踏勘后确定安装支架方案</td><td>否</td></tr>
+<tr><td>8</td><td>吊舱0-330°回转角 与 满舵方向盘圈数的<strong>映射关系</strong></td><td>智控参数待标定</td><td>联调阶段实测标定,写入智控角度闭环参数</td><td>是</td></tr>
+<tr><td>9</td><td>总用泵启停/运行状态、舵角传感器</td><td>Excel标注"若有""预留"</td><td>确认本船是否配置,若无则删减对应端子</td><td>否</td></tr>
+<tr><td>10</td><td>显控屏端口级信号分配(如惯导落在左/右屏哪路CAN/串口)</td><td>材料仅到功能级</td><td>正式接线图阶段明确端口分配</td><td>否</td></tr>
+<tr><td>11</td><td>出厂试验项目<strong>仅列2项</strong>(外观检查、电气性能检查),且标记"△"含义未注明</td><td>验收颗粒度不足</td><td>见第九章"建议新增验收项"</td><td>是</td></tr>
+</tbody></table></div>
+<h2 id="sec-2">表 B · 风险登记</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>风险</th><th>可能性</th><th>影响</th><th>应对措施</th><th>责任方</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>副驾控台按键面板范围理解偏差,导致现场安装/接线返工</td><td>中</td><td>中</td><td>详设前书面确认副台面板元器件清单</td><td>无疆+设计院</td></tr>
+<tr><td>2</td><td>智控退出条件缺失,存在切回人工时推进器仍带速度/角度的安全隐患</td><td>中</td><td>高</td><td>联调前锁定退出条件并做安全测试</td><td>无疆+船厂</td></tr>
+<tr><td>3</td><td>采集单元上行总线未明确,现场布线阶段临时变更CAN/以太网走线</td><td>中</td><td>中</td><td>提前出正式接线图并会签</td><td>无疆</td></tr>
+<tr><td>4</td><td>验收标准过于笼统,交船前甲乙双方对"合格"标准产生争议</td><td>中</td><td>高</td><td>出厂前补充可量化验收大纲(见第九章)</td><td>双方共同</td></tr>
+</tbody></table></div>
+<hr class="divider">
+  <div class="prevnext">
+<a class="pn-btn pn-prev" href="07-约束checklist.html">← 上一章：七、约束 Checklist</a>
+<a class="pn-btn pn-next" href="09-交付物与验收.html">下一章：九、交付物与验收表 →</a>
+</div>
+  <footer class="page-footer">
+    武汉东湖智能游艇示范项目 · 驾控台及智控系统技术方案 · 网页版 V1.0　|　依据材料:技术协议 V1.0 / 电气配盘框图 V1.1 / 接线定义清单 / 外装安装示意图
+  </footer>
+</main>
+</body>
+</html>

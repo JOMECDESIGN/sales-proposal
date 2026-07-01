@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一、项目概述 · 驾控台及智控系统技术方案</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+<label for="nav-toggle" class="nav-toggle-btn" aria-label="打开导航">☰ 目录</label>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-title">驾控台及智控系统</div>
+    <div class="brand-sub">技术方案 · 网页版</div>
+  </div>
+  <nav class="chapter-nav">
+    <a class="nav-link " href="index.html">🏠 总览与导航</a>
+    <a class="nav-link active" href="01-项目概述.html">一、项目概述</a>
+    <a class="nav-link " href="02-总体架构.html">二、总体架构</a>
+    <a class="nav-link " href="03-数据流架构.html">三、数据流架构</a>
+    <a class="nav-link " href="04-关键设计主线.html">四、关键设计主线</a>
+    <a class="nav-link " href="05-追溯矩阵.html">五、追溯矩阵</a>
+    <a class="nav-link " href="06-设备规格速查.html">六、设备规格速查</a>
+    <a class="nav-link " href="07-约束checklist.html">七、约束 Checklist</a>
+    <a class="nav-link " href="08-待定项与风险.html">八、待定项与风险登记</a>
+    <a class="nav-link " href="09-交付物与验收.html">九、交付物与验收表</a>
+    <a class="nav-link " href="10-后续建议.html">十、后续建议</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../驾控台及智控系统-技术方案.docx">⬇ 下载 Word 版</a>
+  </div>
+</aside>
+
+<main class="content">
+  <div class="breadcrumb"><a href="index.html">总览</a> ／ <span>一、项目概述</span></div>
+  <h1 class="chapter-h1">一、项目概述</h1><nav class="mini-toc"><div class="mini-toc-title">本页导航</div><ul><li><a href="#sec-1">1.1 一句话定位</a></li><li><a href="#sec-2">1.2 船型与配置速记</a></li><li><a href="#sec-3">1.3 供货范围总览(协议§1.2)</a></li></ul></nav><h2 id="sec-1">1.1 一句话定位</h2>
+<blockquote class="callout">一套<strong>双驾控台(主/副对等冗余) + 双 VCU 权限仲裁 + 8 类采控单元 + 四总线骨架</strong>的智能游艇驾驶舱,把推进/电池/导航/视频/报警/应急六大船载子系统汇聚到双屏,支持<strong>手动/智控双模、主/副台双站、电子/物理双通道、供电/急停双冗余</strong>。</blockquote>
+<h2 id="sec-2">1.2 船型与配置速记</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>维度</th><th>参数</th></tr></thead>
+<tbody>
+<tr><td>推进型式</td><td>2 × 吊舱推进器,单台 40kW,回转角 0–330°</td></tr>
+<tr><td>电池</td><td>357kWh,2 个电池仓(左/右)</td></tr>
+<tr><td>日用电源</td><td>DC24V</td></tr>
+<tr><td>驾控台数量</td><td>2 个:主驾控台(驾驶室,室内) + 副驾控台(飞桥,室外)</td></tr>
+<tr><td>手柄型式</td><td>712 手柄:CAN + 模拟量</td></tr>
+<tr><td>推进急停</td><td>硬接线,不经 VCU</td></tr>
+<tr><td>电池/推进通信</td><td>CAN</td></tr>
+<tr><td>报警与数采</td><td>淡水箱×1(模拟量)、黑水箱×2(模拟量)、舱底水高位×6(开关量)</td></tr>
+<tr><td>报警设备</td><td>消防设备报警板、可燃气体报警板、通用报警板(均有)</td></tr>
+</tbody></table></div>
+<h2 id="sec-3">1.3 供货范围总览(协议§1.2)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>类别</th><th>组成</th><th>数量/说明</th></tr></thead>
+<tbody>
+<tr><td>驾控台</td><td>台架 + 控制接线板 + 电气设备及安装附件</td><td>控制接线板 3 套(<strong>含义待确认</strong>,见第八章)</td></tr>
+<tr><td>智控系统·动力与转向控制</td><td>推进电机控制/状态、转舵控制/角度获取</td><td>3 套</td></tr>
+<tr><td>智控系统·电池监测</td><td>电池域/簇/包参数采集、监控诊断</td><td>—</td></tr>
+<tr><td>智控系统·报警和数据采集与通信</td><td>淡黑水液位、舱底水高位、报警器通信</td><td>—</td></tr>
+<tr><td>智控系统·综合显示与报警</td><td>指点航行、轨迹航行、紧急避停</td><td>—</td></tr>
+<tr><td>智控系统·导航集成</td><td>雷达、惯导、时间/经纬度/航速/航向/横纵摇、深度</td><td>—</td></tr>
+<tr><td>智控系统·声呐系统</td><td>动态声呐探头</td><td>1</td></tr>
+<tr><td>智控系统·毫米波雷达</td><td>低速避障雷达</td><td>1</td></tr>
+<tr><td>智控系统·视频监控</td><td>前后左右广角+电池仓摄像头+NVR</td><td>5 摄像头</td></tr>
+<tr><td>智控系统·音频系统</td><td>音频功放 + 语音喇叭</td><td>3 只(可扩展)</td></tr>
+<tr><td>智控系统·4G/5G 云端通信</td><td>船岸数据交互</td><td>1 路由器</td></tr>
+<tr><td>智控系统·急停开关</td><td>两常闭+带保护盖,多点串联</td><td>—</td></tr>
+</tbody></table></div>
+<hr class="divider">
+  <div class="prevnext">
+<a class="pn-btn pn-prev" href="index.html">← 返回总览</a>
+<a class="pn-btn pn-next" href="02-总体架构.html">下一章：二、总体架构 →</a>
+</div>
+  <footer class="page-footer">
+    武汉东湖智能游艇示范项目 · 驾控台及智控系统技术方案 · 网页版 V1.0　|　依据材料:技术协议 V1.0 / 电气配盘框图 V1.1 / 接线定义清单 / 外装安装示意图
+  </footer>
+</main>
+</body>
+</html>

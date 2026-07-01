@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>二、总体架构 · 驾控台及智控系统技术方案</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+<label for="nav-toggle" class="nav-toggle-btn" aria-label="打开导航">☰ 目录</label>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-title">驾控台及智控系统</div>
+    <div class="brand-sub">技术方案 · 网页版</div>
+  </div>
+  <nav class="chapter-nav">
+    <a class="nav-link " href="index.html">🏠 总览与导航</a>
+    <a class="nav-link " href="01-项目概述.html">一、项目概述</a>
+    <a class="nav-link active" href="02-总体架构.html">二、总体架构</a>
+    <a class="nav-link " href="03-数据流架构.html">三、数据流架构</a>
+    <a class="nav-link " href="04-关键设计主线.html">四、关键设计主线</a>
+    <a class="nav-link " href="05-追溯矩阵.html">五、追溯矩阵</a>
+    <a class="nav-link " href="06-设备规格速查.html">六、设备规格速查</a>
+    <a class="nav-link " href="07-约束checklist.html">七、约束 Checklist</a>
+    <a class="nav-link " href="08-待定项与风险.html">八、待定项与风险登记</a>
+    <a class="nav-link " href="09-交付物与验收.html">九、交付物与验收表</a>
+    <a class="nav-link " href="10-后续建议.html">十、后续建议</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../驾控台及智控系统-技术方案.docx">⬇ 下载 Word 版</a>
+  </div>
+</aside>
+
+<main class="content">
+  <div class="breadcrumb"><a href="index.html">总览</a> ／ <span>二、总体架构</span></div>
+  <h1 class="chapter-h1">二、总体架构:主/副驾控台双中枢拓扑</h1><nav class="mini-toc"><div class="mini-toc-title">本页导航</div><ul><li><a href="#sec-1">2.1 架构设计要点(核心发现)</a></li><li><a href="#sec-2">2.2 分层拓扑图</a></li><li><a href="#sec-3">2.3 主 / 副驾控台配置差异对照表</a></li></ul></nav><h2 id="sec-1">2.1 架构设计要点(核心发现)</h2>
+<p>细读框图第 2 页"副驾控台相关电气配盘"后确认三个关键架构特征,这是理解整套系统的前提:</p>
+<p>1. <strong>双 VCU,而非单中枢</strong>:主驾控台内有 VCU-主(712),副驾控台(飞桥)<strong>同样配置一套独立的 VCU-副(712) + DC/DC 转换模块(24→12) + 8 位 DC12V 保险汇流排 + 一键急停旋钮</strong>。两台 VCU 通过 CAN 互联做权限仲裁,而不是所有信号都汇总到唯一中枢。</p>
+<p>2. <strong>副驾控台是"级联简配"而非"独立全配"</strong>:副驾控台<strong>没有</strong>协议转换盒、交换机、按键/电源采集单元等采控单元,其双屏数据来自主驾控台<strong>级联</strong>——1 根 CAN 网线级联双屏数据、1 根 6 类 RJ45 网线级联摄像头/交换机数据(Excel"驾控台相关接线(副)"第 1–2 行)。</p>
+<p>3. <strong>控制通道与安全通道物理分离</strong>:凡是"启停/故障/复位"类操作信号经 VCU 走 CAN;凡是"急停/电池急停/电源启停"类安全信号<strong>硬接线直连</strong>,不经 VCU、不经计算单元(Excel 逐条标注"是否经过驾控台内 VCU")。</p>
+<h2 id="sec-2">2.2 分层拓扑图</h2>
+<figure class="diagram"><img src="assets/img/diagram1-hd.png" alt="图 1　主 / 副驾控台双中枢分层拓扑图" loading="lazy"><figcaption>图 1　主 / 副驾控台双中枢分层拓扑图</figcaption></figure>
+<h2 id="sec-3">2.3 主 / 副驾控台配置差异对照表</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>配置项</th><th>主驾控台(驾驶室)</th><th>副驾控台(飞桥)</th></tr></thead>
+<tbody>
+<tr><td>按键面板</td><td>完整(电源/推进/急停/复位/消音/SOC/主副权限切换)</td><td>精简版,<strong>表述存疑</strong>(见§8)</td></tr>
+<tr><td>VCU(712)</td><td>有</td><td><strong>有</strong>(独立一套,经 CAN 与主台仲裁)</td></tr>
+<tr><td>协议转换盒/采集单元/串口解析/交换机</td><td>全套</td><td><strong>无</strong>,数据经主台级联而来</td></tr>
+<tr><td>双屏</td><td>有</td><td>有(级联主台数据)</td></tr>
+<tr><td>音频功放+喇叭</td><td>有</td><td>有(独立一套)</td></tr>
+<tr><td>一键急停旋钮</td><td>有</td><td>有(与主台串联进整体急停回路)</td></tr>
+<tr><td>供电模块</td><td>双路 AC220+DC24 完整链路</td><td>DC/DC(24→12)+8位DC12汇流排(简配)</td></tr>
+<tr><td>推进手柄/电子方向机</td><td>有</td><td>有</td></tr>
+</tbody></table></div>
+<blockquote class="callout">权限切换硬约束(Excel + 框图一致):<strong>主副驾驶权限切换前,两个驾控台手柄必须回空挡</strong>。</blockquote>
+<hr class="divider">
+  <div class="prevnext">
+<a class="pn-btn pn-prev" href="01-项目概述.html">← 上一章：一、项目概述</a>
+<a class="pn-btn pn-next" href="03-数据流架构.html">下一章：三、数据流架构 →</a>
+</div>
+  <footer class="page-footer">
+    武汉东湖智能游艇示范项目 · 驾控台及智控系统技术方案 · 网页版 V1.0　|　依据材料:技术协议 V1.0 / 电气配盘框图 V1.1 / 接线定义清单 / 外装安装示意图
+  </footer>
+</main>
+</body>
+</html>

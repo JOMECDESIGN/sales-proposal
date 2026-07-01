@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四、关键设计主线 · 驾控台及智控系统技术方案</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+<label for="nav-toggle" class="nav-toggle-btn" aria-label="打开导航">☰ 目录</label>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-title">驾控台及智控系统</div>
+    <div class="brand-sub">技术方案 · 网页版</div>
+  </div>
+  <nav class="chapter-nav">
+    <a class="nav-link " href="index.html">🏠 总览与导航</a>
+    <a class="nav-link " href="01-项目概述.html">一、项目概述</a>
+    <a class="nav-link " href="02-总体架构.html">二、总体架构</a>
+    <a class="nav-link " href="03-数据流架构.html">三、数据流架构</a>
+    <a class="nav-link active" href="04-关键设计主线.html">四、关键设计主线</a>
+    <a class="nav-link " href="05-追溯矩阵.html">五、追溯矩阵</a>
+    <a class="nav-link " href="06-设备规格速查.html">六、设备规格速查</a>
+    <a class="nav-link " href="07-约束checklist.html">七、约束 Checklist</a>
+    <a class="nav-link " href="08-待定项与风险.html">八、待定项与风险登记</a>
+    <a class="nav-link " href="09-交付物与验收.html">九、交付物与验收表</a>
+    <a class="nav-link " href="10-后续建议.html">十、后续建议</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../驾控台及智控系统-技术方案.docx">⬇ 下载 Word 版</a>
+  </div>
+</aside>
+
+<main class="content">
+  <div class="breadcrumb"><a href="index.html">总览</a> ／ <span>四、关键设计主线</span></div>
+  <h1 class="chapter-h1">四、三条关键设计主线</h1><nav class="mini-toc"><div class="mini-toc-title">本页导航</div><ul><li><a href="#sec-1">4.1 有人驾驶 ⇄ 智控自主 切换(吊舱方案,本船适用)</a></li><li><a href="#sec-2">4.2 双驾控台站点权限切换</a></li><li><a href="#sec-3">4.3 安全冗余设计</a></li></ul></nav><h2 id="sec-1">4.1 有人驾驶 ⇄ 智控自主 切换(吊舱方案,本船适用)</h2>
+<figure class="diagram"><img src="assets/img/diagram3-hd.png" alt="图 3　有人驾驶 ⇄ 智控自主 模式切换状态图" loading="lazy"><figcaption>图 3　有人驾驶 ⇄ 智控自主 模式切换状态图</figcaption></figure>
+<div class="table-wrap"><table>
+<thead><tr><th>要点</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>切换方式</td><td>控制盒按钮,屏显 INT(手柄)/EXT(智控)</td></tr>
+<tr><td>通信</td><td>手柄经 CAN 与智控系统通信,做模式/功能切换</td></tr>
+<tr><td>切入前置条件</td><td>推进转速归零 + 吊舱自动垂直归位(初始位置)</td></tr>
+<tr><td>待标定参数</td><td>吊舱 0–330° 与满舵方向盘圈数的映射关系,需联调阶段标定</td></tr>
+<tr><td>退出条件</td><td><strong>材料未明确</strong>,列入第八章待确认</td></tr>
+<tr><td>备选架构(非本船)</td><td>材料同时给出"螺旋桨方案":驾控台增设智控/有人旋钮,两路信号分别到 1#/2# 推进控制箱并做<strong>信号隔离</strong>,增加两路 4-20mA 转速反馈采集;退出人工前不要求转速为 0。仅供其它船型参考,本船以吊舱方案为准。</td></tr>
+</tbody></table></div>
+<h2 id="sec-2">4.2 双驾控台站点权限切换</h2>
+<figure class="diagram"><img src="assets/img/diagram4-hd.png" alt="图 4　主 / 副驾控台站点权限切换状态图" loading="lazy"><figcaption>图 4　主 / 副驾控台站点权限切换状态图</figcaption></figure>
+<h2 id="sec-3">4.3 安全冗余设计</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>冗余维度</th><th>设计</th></tr></thead>
+<tbody>
+<tr><td>急停</td><td>多点硬接线<strong>串联</strong>,任一急停触发即整体推进急停;两对常闭触点分别隔离 1#/2# 推进;主/副驾控台急停旋钮+甲板扩展急停(1–2 路)全部串联,示意图见协议图"急停串联接线-2路/3路"</td></tr>
+<tr><td>供电</td><td>驾控台<strong>必须支持双路供电</strong>(DC24V + AC220V);导轨开关电源(AC220→DC24 主电源)+ DCDC 隔离稳压(DC24→DC24 电源隔离)+ 二极管模块(双路转单路)+ 独立应急电源</td></tr>
+<tr><td>操舵</td><td>配备应急舵,偏航/转舵失效时人员可随时接管操舵机构</td></tr>
+<tr><td>控制/安全通道解耦</td><td>启停/故障/复位等常规操作经 VCU→CAN;急停/电池急停/电源启停等安全信号硬接线直连,不经 VCU、不经计算单元 —— <strong>能停船的都是硬线,能优化操作的才上 CAN</strong></td></tr>
+<tr><td>环境适应性</td><td>采控单元普遍满足 IP67、-30~70℃工作温度、GJB150.16A 振动、GJB150.11 盐雾;显控屏 IP66;驾控台台体 IP44</td></tr>
+</tbody></table></div>
+<hr class="divider">
+  <div class="prevnext">
+<a class="pn-btn pn-prev" href="03-数据流架构.html">← 上一章：三、数据流架构</a>
+<a class="pn-btn pn-next" href="05-追溯矩阵.html">下一章：五、追溯矩阵 →</a>
+</div>
+  <footer class="page-footer">
+    武汉东湖智能游艇示范项目 · 驾控台及智控系统技术方案 · 网页版 V1.0　|　依据材料:技术协议 V1.0 / 电气配盘框图 V1.1 / 接线定义清单 / 外装安装示意图
+  </footer>
+</main>
+</body>
+</html>

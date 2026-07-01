@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三、数据流架构 · 驾控台及智控系统技术方案</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+<label for="nav-toggle" class="nav-toggle-btn" aria-label="打开导航">☰ 目录</label>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-title">驾控台及智控系统</div>
+    <div class="brand-sub">技术方案 · 网页版</div>
+  </div>
+  <nav class="chapter-nav">
+    <a class="nav-link " href="index.html">🏠 总览与导航</a>
+    <a class="nav-link " href="01-项目概述.html">一、项目概述</a>
+    <a class="nav-link " href="02-总体架构.html">二、总体架构</a>
+    <a class="nav-link active" href="03-数据流架构.html">三、数据流架构</a>
+    <a class="nav-link " href="04-关键设计主线.html">四、关键设计主线</a>
+    <a class="nav-link " href="05-追溯矩阵.html">五、追溯矩阵</a>
+    <a class="nav-link " href="06-设备规格速查.html">六、设备规格速查</a>
+    <a class="nav-link " href="07-约束checklist.html">七、约束 Checklist</a>
+    <a class="nav-link " href="08-待定项与风险.html">八、待定项与风险登记</a>
+    <a class="nav-link " href="09-交付物与验收.html">九、交付物与验收表</a>
+    <a class="nav-link " href="10-后续建议.html">十、后续建议</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../驾控台及智控系统-技术方案.docx">⬇ 下载 Word 版</a>
+  </div>
+</aside>
+
+<main class="content">
+  <div class="breadcrumb"><a href="index.html">总览</a> ／ <span>三、数据流架构</span></div>
+  <h1 class="chapter-h1">三、信号与数据流架构</h1><nav class="mini-toc"><div class="mini-toc-title">本页导航</div><ul><li><a href="#sec-1">3.1 四类总线一览</a></li><li><a href="#sec-2">3.2 按总线域拆分的数据流图</a></li></ul></nav><h2 id="sec-1">3.1 四类总线一览</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>总线/介质</th><th>典型信号</th><th>特点</th><th>是否经 VCU</th></tr></thead>
+<tbody>
+<tr><td>CAN(智控CAN/控制CAN/操控CAN)</td><td>推进转速、转向角度、智控指令、手柄/方向机操控</td><td>实时闭环控制</td><td>是(常规操作)</td></tr>
+<tr><td>以太网(RJ45,百兆/千兆)</td><td>直流板、电池、摄像头、声呐、4G路由</td><td>大带宽数据/视频</td><td>否(旁路,直连交换机→屏)</td></tr>
+<tr><td>RS485/RS232/模拟量</td><td>惯导、通用/火灾报警器、七氟丙烷复视器、液位、4-20mA转速反馈</td><td>状态采集</td><td>否(经专用采集单元→屏)</td></tr>
+<tr><td>硬接线</td><td>急停、电池急停、电源启停、故障灯</td><td><strong>安全关键</strong></td><td><strong>否,物理旁路 VCU</strong></td></tr>
+</tbody></table></div>
+<h2 id="sec-2">3.2 按总线域拆分的数据流图</h2>
+<figure class="diagram"><img src="assets/img/diagram2-hd.png" alt="图 2　按总线域拆分的信号数据流图" loading="lazy"><figcaption>图 2　按总线域拆分的信号数据流图</figcaption></figure>
+<hr class="divider">
+  <div class="prevnext">
+<a class="pn-btn pn-prev" href="02-总体架构.html">← 上一章：二、总体架构</a>
+<a class="pn-btn pn-next" href="04-关键设计主线.html">下一章：四、关键设计主线 →</a>
+</div>
+  <footer class="page-footer">
+    武汉东湖智能游艇示范项目 · 驾控台及智控系统技术方案 · 网页版 V1.0　|　依据材料:技术协议 V1.0 / 电气配盘框图 V1.1 / 接线定义清单 / 外装安装示意图
+  </footer>
+</main>
+</body>
+</html>

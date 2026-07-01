@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>九、交付物与验收表 · 驾控台及智控系统技术方案</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+<label for="nav-toggle" class="nav-toggle-btn" aria-label="打开导航">☰ 目录</label>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-title">驾控台及智控系统</div>
+    <div class="brand-sub">技术方案 · 网页版</div>
+  </div>
+  <nav class="chapter-nav">
+    <a class="nav-link " href="index.html">🏠 总览与导航</a>
+    <a class="nav-link " href="01-项目概述.html">一、项目概述</a>
+    <a class="nav-link " href="02-总体架构.html">二、总体架构</a>
+    <a class="nav-link " href="03-数据流架构.html">三、数据流架构</a>
+    <a class="nav-link " href="04-关键设计主线.html">四、关键设计主线</a>
+    <a class="nav-link " href="05-追溯矩阵.html">五、追溯矩阵</a>
+    <a class="nav-link " href="06-设备规格速查.html">六、设备规格速查</a>
+    <a class="nav-link " href="07-约束checklist.html">七、约束 Checklist</a>
+    <a class="nav-link " href="08-待定项与风险.html">八、待定项与风险登记</a>
+    <a class="nav-link active" href="09-交付物与验收.html">九、交付物与验收表</a>
+    <a class="nav-link " href="10-后续建议.html">十、后续建议</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../驾控台及智控系统-技术方案.docx">⬇ 下载 Word 版</a>
+  </div>
+</aside>
+
+<main class="content">
+  <div class="breadcrumb"><a href="index.html">总览</a> ／ <span>九、交付物与验收表</span></div>
+  <h1 class="chapter-h1">九、交付物与验收表</h1><blockquote class="callout">协议原文仅列"外观检查""电气性能检查"两项(§4.1),颗粒度不足以支撑交船验收。以下<strong>在协议基础上按招式9细化</strong>,标注"协议原文"与"建议新增"以示区分。</blockquote>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>交付物/验收项</th><th>验收标准</th><th>验收方式</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>外观检查</td><td>台体无划伤变形,IP44防护达标,颜色/铭牌符合认可图</td><td>现场目视+防护等级测试</td><td>协议原文</td></tr>
+<tr><td>2</td><td>电气性能检查</td><td>各回路绝缘电阻、耐压、接地电阻符合CCS要求</td><td>出厂测试报告</td><td>协议原文</td></tr>
+<tr><td>3</td><td>双路供电切换测试</td><td>AC220V/DC24V任一失电,系统在规定时间内无缝切至另一路,故障报警正确上屏</td><td>现场断电试验</td><td>建议新增</td></tr>
+<tr><td>4</td><td>急停多点串联测试</td><td>主台/副台/扩展急停任一触发,1#/2#推进在≤规定时间内停止,不经VCU仍生效</td><td>现场按压实测</td><td>建议新增</td></tr>
+<tr><td>5</td><td>智控/手动模式切换测试</td><td>满足切入条件后可正常切至EXT;退出条件按第八章#2确认后验证</td><td>现场联调实测</td><td>建议新增</td></tr>
+<tr><td>6</td><td>双驾控台权限切换测试</td><td>手柄回空挡后可正常切换;未回空挡时切换应被拒绝</td><td>现场联调实测</td><td>建议新增</td></tr>
+<tr><td>7</td><td>CAN总线通信稳定性测试</td><td>振动/温度环境下推进CAN、智控CAN、操控CAN无丢包/无误码</td><td>环境应力+通信抓包</td><td>建议新增</td></tr>
+<tr><td>8</td><td>报警与数采链路测试</td><td>淡黑水液位、舱底水高位、电池SOC低等信号触发后≤规定时延上屏</td><td>逐点模拟触发</td><td>建议新增</td></tr>
+<tr><td>9</td><td>视频/声呐/雷达功能测试</td><td>5路视频清晰可回放;声呐成像正常;雷达40m内目标正确预警</td><td>现场功能测试</td><td>建议新增</td></tr>
+<tr><td>10</td><td>4G/5G船岸通信测试</td><td>船端数据可正常上云,岸端可实时获取</td><td>联网测试</td><td>建议新增</td></tr>
+<tr><td>11</td><td>产品合格证/出厂试验报告</td><td>交付前齐套提供</td><td>文件审核</td><td>协议原文§3.4</td></tr>
+</tbody></table></div>
+<hr class="divider">
+  <div class="prevnext">
+<a class="pn-btn pn-prev" href="08-待定项与风险.html">← 上一章：八、待定项与风险登记</a>
+<a class="pn-btn pn-next" href="10-后续建议.html">下一章：十、后续建议 →</a>
+</div>
+  <footer class="page-footer">
+    武汉东湖智能游艇示范项目 · 驾控台及智控系统技术方案 · 网页版 V1.0　|　依据材料:技术协议 V1.0 / 电气配盘框图 V1.1 / 接线定义清单 / 外装安装示意图
+  </footer>
+</main>
+</body>
+</html>

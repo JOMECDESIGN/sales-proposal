@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五、追溯矩阵 · 驾控台及智控系统技术方案</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+<label for="nav-toggle" class="nav-toggle-btn" aria-label="打开导航">☰ 目录</label>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-title">驾控台及智控系统</div>
+    <div class="brand-sub">技术方案 · 网页版</div>
+  </div>
+  <nav class="chapter-nav">
+    <a class="nav-link " href="index.html">🏠 总览与导航</a>
+    <a class="nav-link " href="01-项目概述.html">一、项目概述</a>
+    <a class="nav-link " href="02-总体架构.html">二、总体架构</a>
+    <a class="nav-link " href="03-数据流架构.html">三、数据流架构</a>
+    <a class="nav-link " href="04-关键设计主线.html">四、关键设计主线</a>
+    <a class="nav-link active" href="05-追溯矩阵.html">五、追溯矩阵</a>
+    <a class="nav-link " href="06-设备规格速查.html">六、设备规格速查</a>
+    <a class="nav-link " href="07-约束checklist.html">七、约束 Checklist</a>
+    <a class="nav-link " href="08-待定项与风险.html">八、待定项与风险登记</a>
+    <a class="nav-link " href="09-交付物与验收.html">九、交付物与验收表</a>
+    <a class="nav-link " href="10-后续建议.html">十、后续建议</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../驾控台及智控系统-技术方案.docx">⬇ 下载 Word 版</a>
+  </div>
+</aside>
+
+<main class="content">
+  <div class="breadcrumb"><a href="index.html">总览</a> ／ <span>五、追溯矩阵</span></div>
+  <h1 class="chapter-h1">五、设备-总线-单元全链路追溯矩阵</h1><nav class="mini-toc"><div class="mini-toc-title">本页导航</div><ul><li><a href="#sec-1">5.1 动力与转向控制系统(协议§2.2.1)</a></li><li><a href="#sec-2">5.2 电池监测系统(协议§2.2.2)</a></li><li><a href="#sec-3">5.3 报警和数据采集与通信单元(协议§2.2.3)</a></li><li><a href="#sec-4">5.4 综合显示与报警单元(协议§2.2.4)</a></li><li><a href="#sec-5">5.5 导航集成单元(协议§2.2.5)</a></li><li><a href="#sec-6">5.6 声呐系统(协议§2.2.6)</a></li><li><a href="#sec-7">5.7 毫米波雷达(协议§2.2.7)</a></li><li><a href="#sec-8">5.8 视频监控系统(协议§2.2.8)</a></li><li><a href="#sec-9">5.9 音频系统(协议§2.2.9)</a></li><li><a href="#sec-10">5.10 4G/5G云端通信(协议§2.2.10)</a></li><li><a href="#sec-11">5.11 急停开关(协议§2.2.11)</a></li></ul></nav><blockquote class="callout">按协议 §2.2.1–2.2.11 的子系统划分,标注"现场设备 → 接口 → 汇入单元 → 是否经VCU → 上屏"及来源,便于详设阶段逐条核对。</blockquote>
+<h2 id="sec-1">5.1 动力与转向控制系统(协议§2.2.1)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>现场设备/信号</th><th>接口类型</th><th>汇入单元</th><th>经VCU</th><th>上屏</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>712 推进手柄(0-330°/4-20mA)</td><td>CAN+模拟量</td><td>VCU</td><td>—</td><td>双屏</td><td>Excel712#1;协议§2.2.1</td></tr>
+<tr><td>电子方向机/操控盒</td><td>CAN</td><td>VCU</td><td>—</td><td>双屏</td><td>框图P1注3-4;协议§2.2.1</td></tr>
+<tr><td>智控系统指令</td><td>智控CAN</td><td>VCU</td><td>—</td><td>双屏</td><td>框图P1;13f9d820 P9</td></tr>
+<tr><td>1#/2#推进启停/故障/复位</td><td>CAN航插</td><td>VCU→协议转换盒</td><td><strong>是</strong></td><td>双屏</td><td>Excel712#9-16,29-36</td></tr>
+<tr><td>1#/2#推进急停</td><td>硬接线</td><td>直连推进控制箱</td><td><strong>否</strong></td><td>报警显示</td><td>Excel712#11-12,31-32</td></tr>
+<tr><td>驾控台/扩展一键急停</td><td>硬接线串联</td><td>直连推进控制箱</td><td><strong>否</strong></td><td>报警显示</td><td>Excel712#47-54;13f9d820 P6</td></tr>
+</tbody></table></div>
+<h2 id="sec-2">5.2 电池监测系统(协议§2.2.2)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>现场设备/信号</th><th>接口类型</th><th>汇入单元</th><th>经VCU</th><th>上屏</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>1#/2#电源启停</td><td>硬接线</td><td>直流配电板</td><td>否</td><td>报警显示</td><td>Excel712#1-4,21-24</td></tr>
+<tr><td>1#/2#电池急停</td><td>硬接线</td><td>直流配电板</td><td>否</td><td>报警显示</td><td>Excel712#3-4,23-24</td></tr>
+<tr><td>1#/2#电源AC220V/DC24V失电</td><td>硬接线</td><td>按键/电源采集单元</td><td>否</td><td>双屏</td><td>Excel712#17-20,37-40</td></tr>
+<tr><td>1#/2#电池SOC低</td><td>硬接线信号灯</td><td>直流配电板</td><td>否</td><td>双屏</td><td>Excel712#43-46</td></tr>
+<tr><td>左/右电池控制箱数据</td><td>以太网</td><td>8口交换机</td><td>否</td><td>双屏</td><td>框图P1 LAN3/LAN4;协议§2.2.2</td></tr>
+<tr><td>左/右直流板数据</td><td>以太网</td><td>8口交换机</td><td>否</td><td>双屏</td><td>框图P1 LAN1/LAN2</td></tr>
+</tbody></table></div>
+<h2 id="sec-3">5.3 报警和数据采集与通信单元(协议§2.2.3)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>现场设备/信号</th><th>接口类型</th><th>汇入单元</th><th>经VCU</th><th>上屏</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>淡水箱液位</td><td>模拟量</td><td>报警和数据采集单元</td><td>否</td><td>双屏</td><td>Excel船体#27-28</td></tr>
+<tr><td>1#/2#黑水箱液位</td><td>模拟量</td><td>报警和数据采集单元</td><td>否</td><td>双屏</td><td>Excel船体#29-32</td></tr>
+<tr><td>舱底水高位×6</td><td>开关量</td><td>报警和数据采集单元</td><td>否</td><td>双屏</td><td>Excel船体#33-44</td></tr>
+<tr><td>电池仓风机运行状态</td><td>无源开关</td><td>报警和数据采集单元</td><td>否</td><td>双屏</td><td>Excel船体#5-6,11-12</td></tr>
+<tr><td>通用报警器</td><td>RS485</td><td>串口解析单元</td><td>否</td><td>双屏</td><td>Excel船体#21-22</td></tr>
+<tr><td>火灾报警器</td><td>RS485</td><td>串口解析单元</td><td>否</td><td>双屏</td><td>Excel船体#23-24</td></tr>
+<tr><td>七氟丙烷复视器</td><td>RS485</td><td>串口解析单元</td><td>否</td><td>双屏</td><td>Excel船体#25-26</td></tr>
+<tr><td>电池仓风机启/停</td><td>无源开关输出</td><td>数字量控制单元</td><td>否</td><td>—</td><td>Excel船体#1-4,7-10</td></tr>
+<tr><td>总用泵启/停/运行状态</td><td><strong>待定</strong></td><td>数字量控制单元/报警数据采集单元</td><td>否</td><td>双屏</td><td>Excel船体#13-18(标注"若有")</td></tr>
+</tbody></table></div>
+<h2 id="sec-4">5.4 综合显示与报警单元(协议§2.2.4)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>设备</th><th>型号</th><th>接口</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>15.6寸综合显控屏×2</td><td>IDT-156S-S1</td><td>4LAN+3CAN+2串口+1音频</td><td>协议P10-11</td></tr>
+<tr><td>8口千兆交换机</td><td>IE-SW-ELB-08-8TX</td><td>8×RJ45</td><td>协议P8-9</td></tr>
+<tr><td>5口千兆交换机</td><td>IE-SW-ELB-05-5GT</td><td>5×RJ45</td><td>协议P11-12</td></tr>
+</tbody></table></div>
+<p><strong>左/右屏端口归属(框图P3明确)</strong>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th></th><th>左屏</th><th>右屏</th></tr></thead>
+<tbody>
+<tr><td>5口交换机</td><td>摄像头+声呐</td><td>摄像头</td></tr>
+<tr><td>8口交换机</td><td>电池+直流板</td><td>电池+直流板</td></tr>
+<tr><td>CAN网集线器</td><td>有</td><td>有</td></tr>
+<tr><td>毫米波雷达</td><td><strong>有</strong>(仅左屏列出)</td><td>未列出</td></tr>
+<tr><td>音频功放</td><td><strong>有</strong>(仅左屏列出)</td><td>未列出</td></tr>
+</tbody></table></div>
+<blockquote class="callout">惯导落在哪个具体 CAN/串口口,材料未到端口级,见第八章待确认。</blockquote>
+<h2 id="sec-5">5.5 导航集成单元(协议§2.2.5)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>设备</th><th>型号</th><th>接口</th><th>关键参数</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>惯导控制器</td><td>HI32</td><td>RS232/RS422/CAN</td><td>定向精度0.2°(1m基线),俯仰/横滚0.1°</td><td>协议P12</td></tr>
+<tr><td>惯导天线×2</td><td>TNC</td><td>—</td><td>间距&gt;1.2m(协议)/1.5m(安装图),船顶开阔区域</td><td>协议P12;13f9d820 P2</td></tr>
+</tbody></table></div>
+<h2 id="sec-6">5.6 声呐系统(协议§2.2.6)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>设备</th><th>型号</th><th>接口</th><th>关键参数</th></tr></thead>
+<tbody>
+<tr><td>动态声呐</td><td>IUS-107U</td><td>以太网/HDMI/WiFi</td><td>135°成像,最大深度60m,DC10-18V</td></tr>
+</tbody></table></div>
+<h2 id="sec-7">5.7 毫米波雷达(协议§2.2.7)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>设备</th><th>型号</th><th>接口</th><th>关键参数</th></tr></thead>
+<tbody>
+<tr><td>毫米波雷达</td><td>CAR-A60</td><td>CAN</td><td>探测40m,水平±60°,IP67,船首内嵌</td></tr>
+</tbody></table></div>
+<h2 id="sec-8">5.8 视频监控系统(协议§2.2.8)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>设备</th><th>型号</th><th>数量</th><th>安装位置</th></tr></thead>
+<tbody>
+<tr><td>硬盘刻录机</td><td>DH-NVR4208-HDS3/I+ST6000</td><td>1</td><td>驾驶室内</td></tr>
+<tr><td>广角摄像头</td><td>DH-IPC-PFW4849-A180-E2-AST</td><td>4</td><td>船体外部前后左右</td></tr>
+<tr><td>电池仓摄像头</td><td>DH-IPC-HFW1433M3-A-IL4</td><td>1</td><td>电池仓</td></tr>
+<tr><td>监控边缘计算盒</td><td>16路智能分析盒</td><td>1</td><td>驾驶室内</td></tr>
+</tbody></table></div>
+<h2 id="sec-9">5.9 音频系统(协议§2.2.9)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>设备</th><th>型号</th><th>数量</th><th>备注</th></tr></thead>
+<tbody>
+<tr><td>音频功放</td><td>H-833</td><td>1</td><td>支持USB,30个预存电台</td></tr>
+<tr><td>语音喇叭</td><td>白色蓝灯</td><td>2(可扩展至4,协议注7)</td><td>IP66</td></tr>
+</tbody></table></div>
+<h2 id="sec-10">5.10 4G/5G云端通信(协议§2.2.10)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>设备</th><th>型号</th><th>接口</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>4G路由器</td><td>TL-TR903</td><td>3百兆口+双LTE天线</td><td>协议P15-16</td></tr>
+</tbody></table></div>
+<h2 id="sec-11">5.11 急停开关(协议§2.2.11)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>要素</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>型号</td><td>M22,两常闭+船型保护盖,红色蘑菇头40mm,开孔∅22mm</td></tr>
+<tr><td>隔离方式</td><td>两对常闭触点分别对应1#/2#推进急停</td></tr>
+<tr><td>接线原则</td><td>多点必须<strong>串联</strong>,任一路触发即整体推进急停</td></tr>
+</tbody></table></div>
+<hr class="divider">
+  <div class="prevnext">
+<a class="pn-btn pn-prev" href="04-关键设计主线.html">← 上一章：四、关键设计主线</a>
+<a class="pn-btn pn-next" href="06-设备规格速查.html">下一章：六、设备规格速查 →</a>
+</div>
+  <footer class="page-footer">
+    武汉东湖智能游艇示范项目 · 驾控台及智控系统技术方案 · 网页版 V1.0　|　依据材料:技术协议 V1.0 / 电气配盘框图 V1.1 / 接线定义清单 / 外装安装示意图
+  </footer>
+</main>
+</body>
+</html>
