@@ -12,3 +12,6 @@ feishu/03-automation/__pycache__/
 
 # Claude 本地设置(含凭证别名,勿入库)
 .claude/settings.local.json
+
+# 出片产线渲染产物(见 curriculum/06-排版篇),不入库,按需重新渲染
+build/
