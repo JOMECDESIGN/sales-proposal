@@ -430,6 +430,6 @@ fr.font.size = Pt(8)
 fr.font.color.rgb = GREY
 _cjk(fr)
 
-out = "/home/user/sales-proposal/飞书深度打通-技术选型与实施材料.docx"
+out = "/home/user/sales-proposal/feishu/00-选型调研.docx"
 doc.save(out)
 print("saved:", out)

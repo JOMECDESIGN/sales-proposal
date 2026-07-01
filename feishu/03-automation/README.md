@@ -56,7 +56,7 @@ source ../.env
 | [`feishu_api.py`](feishu_api.py) | 直连 OpenAPI 小工具(取 token / 请求 / 加载 .env),`init/grant/list` 共用;纯 urllib,网页版可用 |
 | [`lark_client.py`](lark_client.py) | 官方 SDK 鉴权(notify/pipeline 用) |
 
-> 另:[`../tools/gen_material_docx.py`](../tools/gen_material_docx.py) 生成《飞书深度打通-技术选型与实施材料》Word(依赖 `python-docx`)。
+> 另:[`../tools/gen_material_docx.py`](../tools/gen_material_docx.py) 生成 [`../00-选型调研.docx`](../00-选型调研.docx)(依赖 `python-docx`)。
 
 ### 一次性搭建三连(配 .env 前)
 
@@ -97,7 +97,7 @@ python pipeline_base.py set-stage --record recXXXX --stage "答辩自检"
 ```bash
 # 凭证用 FEISHU_APP_ID/SECRET 或 LARK_APP_ID/SECRET 均可
 python wiki_publish.py \
-  --md ../../飞书深度打通-技术选型与实施材料.md \
+  --md ../00-选型调研.md \
   --node "https://<租户>.feishu.cn/wiki/<父节点token>" \
   --title "文档标题"
 # 输出:✓ 已发布到知识库 + 新节点链接
