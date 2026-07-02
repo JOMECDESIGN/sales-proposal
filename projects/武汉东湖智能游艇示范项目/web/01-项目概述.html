@@ -35,7 +35,7 @@
 
 <main class="content">
   <div class="breadcrumb"><a href="index.html">总览</a> ／ <span>一、项目概述</span></div>
-  <h1 class="chapter-h1">一、项目概述</h1><nav class="mini-toc"><div class="mini-toc-title">本页导航</div><ul><li><a href="#sec-1">1.1 一句话定位</a></li><li><a href="#sec-2">1.2 船型与配置速记</a></li><li><a href="#sec-3">1.3 供货范围总览(协议§1.2)</a></li></ul></nav><h2 id="sec-1">1.1 一句话定位</h2>
+  <h1 class="chapter-h1">一、项目概述</h1><nav class="mini-toc"><div class="mini-toc-title">本页导航</div><ul><li><a href="#sec-1">1.1 一句话定位</a></li><li><a href="#sec-2">1.2 船型与配置速记</a></li><li><a href="#sec-3">1.3 供货范围总览(协议§1.2)</a></li><li><a href="#sec-4">1.4 驾控台 与 智控系统(含软件)边界划分</a></li></ul></nav><h2 id="sec-1">1.1 一句话定位</h2>
 <blockquote class="callout">一套<strong>双驾控台(主/副对等冗余) + 双 VCU 权限仲裁 + 8 类采控单元 + 四总线骨架</strong>的智能游艇驾驶舱,把推进/电池/导航/视频/报警/应急六大船载子系统汇聚到双屏,支持<strong>手动/智控双模、主/副台双站、电子/物理双通道、供电/急停双冗余</strong>。</blockquote>
 <h2 id="sec-2">1.2 船型与配置速记</h2>
 <div class="table-wrap"><table>
@@ -67,6 +67,15 @@
 <tr><td>智控系统·音频系统</td><td>音频功放 + 语音喇叭</td><td>3 只(可扩展)</td></tr>
 <tr><td>智控系统·4G/5G 云端通信</td><td>船岸数据交互</td><td>1 路由器</td></tr>
 <tr><td>智控系统·急停开关</td><td>两常闭+带保护盖,多点串联</td><td>—</td></tr>
+</tbody></table></div>
+<h2 id="sec-4">1.4 驾控台 与 智控系统(含软件)边界划分</h2>
+<blockquote class="callout">全文所有设备与任务均按下表三类归属标注:<strong>【驾控台】</strong>(台体及台上人机硬件+显控软件)、<strong>【智控】</strong>(采控/传感/网络/执行接口)、<strong>【软件】</strong>(跨两者的控制与显示逻辑)。注:技术协议 §1.2 把综合显控屏列在"智控系统"类别下,但其物理安装与人机职能在驾控台,本表按"驾控台(含软件)"口径归入驾控台,两种口径差异仅此一处,特此标明避免歧义。</blockquote>
+<div class="table-wrap"><table>
+<thead><tr><th>归属</th><th>硬件</th><th>软件</th></tr></thead>
+<tbody>
+<tr><td>【驾控台】(含软件)</td><td>台体(碳纤维,IP44)、控制接线板/按键面板、一键急停旋钮、推进手柄、电子方向机、供电模块(开关电源/DCDC隔离/二极管/应急电源)、端子排、15.6寸综合显控屏×4(主/副台各2)</td><td>显控软件:双屏页面、状态/报警上屏、权限切换 UI</td></tr>
+<tr><td>【智控】</td><td>VCU(712)×2、协议转换盒、按键/电源采集单元、报警和数据采集单元、串口解析单元、数字量控制单元、8口/5口交换机、CAN集线器、惯导(含天线)、动态声呐、毫米波雷达、摄像头×5+NVR+边缘计算盒、音频功放+喇叭、4G/5G路由器、现场急停开关(后甲板)</td><td>VCU 控制软件:主副权限仲裁、INT/EXT 模式切换、吊舱角度闭环</td></tr>
+<tr><td>【通用】</td><td>跨两者的线缆、安装附件、包装运输</td><td>检试大纲、随机文件、培训等交付类工作</td></tr>
 </tbody></table></div>
 <hr class="divider">
   <div class="prevnext">
